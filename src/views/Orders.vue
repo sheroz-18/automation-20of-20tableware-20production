@@ -291,7 +291,7 @@
     >
       <div class="space-y-4">
         <p class="text-slate-700">
-          Вы уверены, что хотите удалить заказ <strong>{{ modal.selectedItem?.orderNumber }}</strong
+          Вы уверены, что хотите удалить заказ <strong>{{ modal.selectedItem.value?.orderNumber }}</strong
           >?
         </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
