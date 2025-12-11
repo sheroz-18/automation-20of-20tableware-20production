@@ -184,7 +184,7 @@
           <div>
             <p class="text-sm text-slate-600">Последний учет</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.lastCounted }}
+              {{ modal.selectedItem.value?.lastCounted }}
             </p>
           </div>
           <div>
