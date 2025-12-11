@@ -71,6 +71,42 @@ export interface ProductionStage {
   completedDate?: string
 }
 
+export interface RawMaterial {
+  id: string
+  name: string
+  materialType: 'clay' | 'metal' | 'glass' | 'plastic' | 'other'
+  unit: string
+  quantity: number
+  minStockLevel: number
+  unitCost: number
+  supplier: string
+  lastRestocked: string
+  expiryDate?: string
+}
+
+export interface FinishedGood {
+  id: string
+  name: string
+  sku: string
+  quantity: number
+  minStockLevel: number
+  category: string
+  productionBatchId?: string
+  readyDate: string
+}
+
+export interface StockMovement {
+  id: string
+  itemId: string
+  itemName: string
+  itemType: 'raw_material' | 'finished_good'
+  movementType: 'in' | 'out'
+  quantity: number
+  date: string
+  reference: string
+  notes?: string
+}
+
 export interface ProductionBatch {
   id: string
   batchNumber: string
