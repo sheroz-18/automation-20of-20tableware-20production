@@ -178,7 +178,7 @@
           <p class="text-sm font-semibold text-slate-700 mb-3">Товары:</p>
           <div class="space-y-2">
             <div
-              v-for="item in modal.selectedItem?.items"
+              v-for="item in modal.selectedItem.value?.items"
               :key="item.productId"
               class="p-3 rounded-lg bg-slate-50"
             >
