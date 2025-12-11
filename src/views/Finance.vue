@@ -149,20 +149,20 @@
     </div>
 
     <ModalBase
-      :is-open="modal.isOpen && modal.contentType === 'finance'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'finance'"
       :title="
-        modal.isEditModal
+        modal.isEditModal.value
           ? 'Редактировать операцию'
-          : modal.isCreateModal
+          : modal.isCreateModal.value
             ? 'Новая финансовая операция'
             : 'Информация об операции'
       "
       :show-actions="true"
-      :show-save-button="modal.isEditModal || modal.isCreateModal"
+      :show-save-button="modal.isEditModal.value || modal.isCreateModal.value"
       @close="modal.closeModal"
       @save="saveRecord"
     >
-      <div v-if="modal.isViewModal" class="space-y-6">
+      <div v-if="modal.isViewModal.value" class="space-y-6">
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-slate-600">Описание</p>
