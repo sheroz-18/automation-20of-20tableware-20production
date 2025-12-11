@@ -190,7 +190,7 @@
           <div>
             <p class="text-sm text-slate-600">Тип</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.type === 'income' ? 'Доход' : 'Расход' }}
+              {{ modal.selectedItem.value?.type === 'income' ? 'Доход' : 'Расход' }}
             </p>
           </div>
           <div>
