@@ -467,6 +467,10 @@ const saveProduct = () => {
       quantity: formData.value.quantity || 0,
       reorderLevel: formData.value.reorderLevel || 100,
       unitCost: formData.value.unitCost || 0,
+      image: formData.value.image || '',
+      material: formData.value.material || '',
+      size: formData.value.size || '',
+      weight: formData.value.weight || 0,
       status: 'in_stock',
       lastUpdated: new Date().toISOString().split('T')[0],
     }
