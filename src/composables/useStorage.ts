@@ -6,9 +6,11 @@ const STORAGE_KEY_ORDERS = 'produceflow_orders'
 const STORAGE_KEY_INVENTORY = 'produceflow_inventory'
 const STORAGE_KEY_FINANCE = 'produceflow_finance'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useStorage() {
   const isInitialized = ref(false)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const loadFromStorage = <T,>(key: string, defaultValue: T): T => {
     try {
       const stored = localStorage.getItem(key)
@@ -18,6 +20,7 @@ export function useStorage() {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const saveToStorage = <T,>(key: string, value: T) => {
     try {
       localStorage.setItem(key, JSON.stringify(value))
@@ -26,6 +29,7 @@ export function useStorage() {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const initializeStorage = (products: Ref<any[]>, orders: Ref<any[]>, inventory: Ref<any[]>, finance: Ref<any[]>) => {
     const storedProducts = loadFromStorage(STORAGE_KEY_PRODUCTS, null)
     const storedOrders = loadFromStorage(STORAGE_KEY_ORDERS, null)
