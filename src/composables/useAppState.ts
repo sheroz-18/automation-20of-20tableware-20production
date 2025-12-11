@@ -5,14 +5,20 @@ import {
   financialRecords as mockFinance,
   inventoryItems as mockInventory,
   productionBatches as mockProductionBatches,
+  rawMaterials as mockRawMaterials,
+  finishedGoods as mockFinishedGoods,
+  stockMovements as mockStockMovements,
 } from '../data/mockData'
-import type { Order, Product, FinancialRecord, InventoryItem, ProductionBatch } from '../types'
+import type { Order, Product, FinancialRecord, InventoryItem, ProductionBatch, RawMaterial, FinishedGood, StockMovement } from '../types'
 
 const STORAGE_KEY_PRODUCTS = 'produceflow_products'
 const STORAGE_KEY_ORDERS = 'produceflow_orders'
 const STORAGE_KEY_INVENTORY = 'produceflow_inventory'
 const STORAGE_KEY_FINANCE = 'produceflow_finance'
 const STORAGE_KEY_PRODUCTION_BATCHES = 'produceflow_production_batches'
+const STORAGE_KEY_RAW_MATERIALS = 'produceflow_raw_materials'
+const STORAGE_KEY_FINISHED_GOODS = 'produceflow_finished_goods'
+const STORAGE_KEY_STOCK_MOVEMENTS = 'produceflow_stock_movements'
 
 let isInitialized = false
 
