@@ -1,8 +1,16 @@
 <template>
   <div class="space-y-8">
-    <div>
-      <h1 class="text-4xl font-bold text-slate-900">Финансовый контроль</h1>
-      <p class="text-slate-600 mt-2">Управление доходами, расходами и бюджетом</p>
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-4xl font-bold text-slate-900">Финансовый контроль</h1>
+        <p class="text-slate-600 mt-2">Управление доходами, расходами и бюджетом</p>
+      </div>
+      <button
+        @click="modal.openCreateModal('finance')"
+        class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition"
+      >
+        + Новая операция
+      </button>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -35,7 +43,8 @@
           <div
             v-for="record in financialRecords"
             :key="record.id"
-            class="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:bg-slate-50 transition"
+            class="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:bg-slate-50 transition cursor-pointer"
+            @click="modal.openViewModal(record, 'finance')"
           >
             <div class="flex items-center gap-4">
               <div :class="['w-12 h-12 rounded-lg flex items-center justify-center', record.type === 'income' ? 'bg-green-100' : 'bg-red-100']">
@@ -69,7 +78,7 @@
             <div
               v-for="category in expenseCategories"
               :key="category.name"
-              class="p-3 rounded-lg bg-slate-50"
+              class="p-3 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100 transition"
             >
               <div class="flex items-center justify-between mb-2">
                 <span class="text-sm font-medium text-slate-700">{{ category.name }}</span>
@@ -101,15 +110,185 @@
         </div>
       </div>
     </div>
+
+    <ModalBase
+      :is-open="modal.isOpen && modal.contentType === 'finance'"
+      :title="modal.isEditModal ? 'Редактировать операцию' : modal.isCreateModal ? 'Новая финансовая операция' : 'Информация об операции'"
+      :show-actions="true"
+      :show-save-button="modal.isEditModal || modal.isCreateModal"
+      @close="modal.closeModal"
+      @save="saveRecord"
+    >
+      <div v-if="modal.isViewModal" class="space-y-6">
+        <div class="grid grid-cols-2 gap-6">
+          <div>
+            <p class="text-sm text-slate-600">Описание</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.description }}</p>
+          </div>
+          <div>
+            <p class="text-sm text-slate-600">Сумма</p>
+            <p :class="['text-lg font-semibold', modal.selectedItem?.type === 'income' ? 'text-green-600' : 'text-red-600']">
+              {{ modal.selectedItem?.type === 'income' ? '+' : '-' }}₽{{ modal.selectedItem?.amount.toFixed(2) }}
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-slate-600">Категория</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.category }}</p>
+          </div>
+          <div>
+            <p class="text-sm text-slate-600">Тип</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem?.type === 'income' ? 'Доход' : 'Расход' }}
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-slate-600">Дата</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.date }}</p>
+          </div>
+          <div>
+            <p class="text-sm text-slate-600">Ссылка</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.reference }}</p>
+          </div>
+        </div>
+
+        <div class="flex gap-2 pt-4 border-t border-slate-200">
+          <button
+            @click="() => { modal.openEditModal(modal.selectedItem, 'finance') }"
+            class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition"
+          >
+            Редактировать
+          </button>
+          <button
+            @click="modal.openDeleteModal(modal.selectedItem, 'finance')"
+            class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition"
+          >
+            Удалить
+          </button>
+        </div>
+      </div>
+
+      <div v-else class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Описание</label>
+          <input
+            v-model="formData.description"
+            type="text"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Введите описание операции"
+          />
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Тип</label>
+            <select v-model="formData.type" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="income">Доход</option>
+              <option value="expense">Расход</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Сумма (₽)</label>
+            <input
+              v-model.number="formData.amount"
+              type="number"
+              step="0.01"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Категория</label>
+            <select v-model="formData.category" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="Продажи">Продажи</option>
+              <option value="Производство">Производство</option>
+              <option value="Заработная плата">Заработная плата</option>
+              <option value="Коммунальные услуги">Коммунальные услуги</option>
+              <option value="Доставка">Доставка</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Дата</label>
+            <input
+              v-model="formData.date"
+              type="date"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Ссылка/Ссылка (опционально)</label>
+          <input
+            v-model="formData.reference"
+            type="text"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="ORD-2024-001 или SUPP-001"
+          />
+        </div>
+      </div>
+    </ModalBase>
+
+    <ModalBase
+      v-if="modal.modalType === 'delete'"
+      :is-open="modal.isOpen && modal.contentType === 'finance'"
+      title="Подтвердить удаление"
+      :show-actions="true"
+      @close="modal.closeModal"
+    >
+      <div class="space-y-4">
+        <p class="text-slate-700">Вы уверены, что хотите удалить операцию <strong>{{ modal.selectedItem?.description }}</strong>?</p>
+        <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
+        <div class="flex gap-3 justify-end pt-4">
+          <button
+            @click="modal.closeModal"
+            class="px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 font-medium transition"
+          >
+            Отмена
+          </button>
+          <button
+            @click="deleteRecord"
+            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition"
+          >
+            Удалить
+          </button>
+        </div>
+      </div>
+    </ModalBase>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { financialRecords } from '../data/mockData'
+import { ref, computed, onMounted } from 'vue'
+import { financialRecords as mockRecords } from '../data/mockData'
+import { useModal } from '../composables/useModal'
+import { useStorage } from '../composables/useStorage'
+import ModalBase from '../components/ModalBase.vue'
+import type { FinancialRecord } from '../types'
 
-const incomeRecords = computed(() => financialRecords.filter(r => r.type === 'income'))
-const expenseRecords = computed(() => financialRecords.filter(r => r.type === 'expense'))
+const modal = useModal()
+const storage = useStorage()
+
+const financialRecords = ref<FinancialRecord[]>([...mockRecords])
+
+const formData = ref<Partial<FinancialRecord>>({
+  date: new Date().toISOString().split('T')[0],
+  description: '',
+  type: 'income',
+  amount: 0,
+  category: 'Продажи',
+  reference: '',
+})
+
+onMounted(() => {
+  storage.initializeStorage([], [], [], financialRecords)
+  storage.watchForChanges([], [], [], financialRecords)
+})
+
+const incomeRecords = computed(() => financialRecords.value.filter(r => r.type === 'income'))
+const expenseRecords = computed(() => financialRecords.value.filter(r => r.type === 'expense'))
 
 const totalIncome = computed(() => incomeRecords.value.reduce((sum, r) => sum + r.amount, 0))
 const totalExpense = computed(() => expenseRecords.value.reduce((sum, r) => sum + r.amount, 0))
@@ -122,4 +301,41 @@ const expenseCategories = computed(() => {
   })
   return Object.entries(categories).map(([name, amount]) => ({ name, amount })).sort((a, b) => b.amount - a.amount)
 })
+
+const saveRecord = () => {
+  if (!formData.value.description || !formData.value.amount) {
+    alert('Пожалуйста, заполните обязательные поля')
+    return
+  }
+
+  if (modal.isCreateModal) {
+    const newRecord: FinancialRecord = {
+      id: Math.random().toString(36).substr(2, 9),
+      date: formData.value.date || new Date().toISOString().split('T')[0],
+      description: formData.value.description || '',
+      type: formData.value.type as 'income' | 'expense' || 'income',
+      amount: formData.value.amount || 0,
+      category: formData.value.category || 'Продажи',
+      reference: formData.value.reference || '',
+    }
+    financialRecords.value.push(newRecord)
+  } else if (modal.isEditModal && modal.selectedItem) {
+    const index = financialRecords.value.findIndex(r => r.id === modal.selectedItem.id)
+    if (index !== -1) {
+      financialRecords.value[index] = {
+        ...modal.selectedItem,
+        ...formData.value,
+      }
+    }
+  }
+  modal.closeModal()
+}
+
+const deleteRecord = () => {
+  const index = financialRecords.value.findIndex(r => r.id === modal.selectedItem.id)
+  if (index !== -1) {
+    financialRecords.value.splice(index, 1)
+  }
+  modal.closeModal()
+}
 </script>
