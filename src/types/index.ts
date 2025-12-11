@@ -122,3 +122,13 @@ export interface ProductionBatch {
   currentStage: number
   stages: ProductionStage[]
 }
+
+export interface Notification {
+  id: string
+  type: 'success' | 'error' | 'warning' | 'info'
+  title: string
+  message: string
+  timestamp: string
+  read: boolean
+  actionUrl?: string
+}
