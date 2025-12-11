@@ -1,5 +1,10 @@
 import { ref, watch, onMounted } from 'vue'
-import { orders as mockOrders, products as mockProducts, financialRecords as mockFinance, inventoryItems as mockInventory } from '../data/mockData'
+import {
+  orders as mockOrders,
+  products as mockProducts,
+  financialRecords as mockFinance,
+  inventoryItems as mockInventory,
+} from '../data/mockData'
 import type { Order, Product, FinancialRecord, InventoryItem } from '../types'
 
 const STORAGE_KEY_PRODUCTS = 'produceflow_products'

@@ -69,9 +69,9 @@
               <p class="font-bold text-slate-900 text-lg">{{ product.quantity }}</p>
             </div>
             <div class="p-3 rounded-lg bg-slate-50">
-            <p class="text-xs text-gray-700">Цена</p>
-            <p class="font-bold text-slate-900 text-lg">ЅМ{{ product.unitCost }}</p>
-          </div>
+              <p class="text-xs text-gray-700">Цена</p>
+              <p class="font-bold text-slate-900 text-lg">ЅМ{{ product.unitCost }}</p>
+            </div>
           </div>
 
           <div class="mb-4">
