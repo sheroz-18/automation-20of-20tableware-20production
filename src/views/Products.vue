@@ -120,7 +120,7 @@
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-slate-600">Название</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.name }}</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.name }}</p>
           </div>
           <div>
             <p class="text-sm text-slate-600">SKU</p>
