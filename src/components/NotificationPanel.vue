@@ -1,14 +1,14 @@
 <template>
-  <div class="fixed right-0 top-0 h-screen w-96 bg-white shadow-xl border-l border-slate-200 flex flex-col z-40" :class="{ 'translate-x-full': !isOpen }">
+  <div
+    class="fixed right-0 top-0 h-screen w-96 bg-white shadow-xl border-l border-slate-200 flex flex-col z-40"
+    :class="{ 'translate-x-full': !isOpen }"
+  >
     <div class="border-b border-slate-200 p-4 flex items-center justify-between">
       <div>
         <h2 class="text-lg font-semibold text-slate-900">Уведомления</h2>
         <p class="text-sm text-slate-600">{{ unreadCount }} новых</p>
       </div>
-      <button
-        @click="$emit('close')"
-        class="p-2 hover:bg-slate-100 rounded-lg transition"
-      >
+      <button @click="$emit('close')" class="p-2 hover:bg-slate-100 rounded-lg transition">
         <svg class="w-5 h-5 text-slate-600" fill="currentColor" viewBox="0 0 20 20">
           <path
             fill-rule="evenodd"
@@ -82,7 +82,8 @@ defineEmits<{
   close: []
 }>()
 
-const { notifications, markAsRead, deleteNotification, clearNotifications, getUnreadCount } = useNotification()
+const { notifications, markAsRead, deleteNotification, clearNotifications, getUnreadCount } =
+  useNotification()
 
 const unreadCount = computed(() => getUnreadCount())
 

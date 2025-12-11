@@ -39,7 +39,9 @@
           <div class="flex-1">
             <div class="flex justify-between mb-1">
               <span class="text-sm font-medium text-slate-900">{{ category.category }}</span>
-              <span class="text-sm font-medium text-slate-900">ЅМ{{ category.amount.toFixed(2) }}</span>
+              <span class="text-sm font-medium text-slate-900"
+                >ЅМ{{ category.amount.toFixed(2) }}</span
+              >
             </div>
             <div class="w-full bg-slate-200 rounded-full h-2">
               <div
@@ -63,7 +65,9 @@
           <div class="flex-1">
             <div class="flex justify-between mb-1">
               <span class="text-sm font-medium text-slate-900">{{ category.category }}</span>
-              <span class="text-sm font-medium text-slate-900">ЅМ{{ category.amount.toFixed(2) }}</span>
+              <span class="text-sm font-medium text-slate-900"
+                >ЅМ{{ category.amount.toFixed(2) }}</span
+              >
             </div>
             <div class="w-full bg-slate-200 rounded-full h-2">
               <div

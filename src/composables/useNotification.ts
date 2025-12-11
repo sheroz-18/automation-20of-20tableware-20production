@@ -9,7 +9,7 @@ export function useNotification() {
     type: 'success' | 'error' | 'warning' | 'info',
     title: string,
     message: string,
-    options?: { autoClose?: number; actionUrl?: string }
+    options?: { autoClose?: number; actionUrl?: string },
   ) => {
     const id = `notif-${Date.now()}-${Math.random()}`
     const notification: Notification = {

@@ -6,11 +6,7 @@
     </div>
 
     <div class="flex items-end justify-around h-64 gap-2">
-      <div
-        v-for="status in statusCounts"
-        :key="status.label"
-        class="flex flex-col items-center"
-      >
+      <div v-for="status in statusCounts" :key="status.label" class="flex flex-col items-center">
         <div class="text-sm font-semibold text-slate-900 mb-2">{{ status.count }}</div>
         <div
           :style="{ height: getBarHeight(status.count) }"
@@ -49,18 +45,18 @@ const props = defineProps<Props>()
 
 const statusCounts = computed(() => {
   const counts: Record<string, number> = {
-    'Принят': 0,
+    Принят: 0,
     'В производстве': 0,
     'На складе': 0,
-    'Отправлен': 0,
+    Отправлен: 0,
   }
 
   props.orders.forEach((order) => {
     const statusMap: Record<string, string> = {
-      'принят': 'Принят',
+      принят: 'Принят',
       'в производстве': 'В производстве',
       'на складе': 'На складе',
-      'отправлен': 'Отправлен',
+      отправлен: 'Отправлен',
     }
     const mappedStatus = statusMap[order.status]
     if (mappedStatus) {
@@ -87,10 +83,10 @@ const getBarHeight = (count: number) => {
 
 const getBarColor = (label: string) => {
   const colors: Record<string, string> = {
-    'Принят': 'bg-blue-500',
+    Принят: 'bg-blue-500',
     'В производстве': 'bg-orange-500',
     'На складе': 'bg-purple-500',
-    'Отправлен': 'bg-green-500',
+    Отправлен: 'bg-green-500',
   }
   return colors[label] || 'bg-slate-500'
 }

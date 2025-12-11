@@ -45,7 +45,10 @@
       </div>
     </div>
 
-    <div v-if="criticalMaterials.length > 0" class="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+    <div
+      v-if="criticalMaterials.length > 0"
+      class="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg"
+    >
       <h4 class="font-semibold text-red-900 mb-2">⚠️ Критический уровень запасов</h4>
       <ul class="text-sm text-red-800 space-y-1">
         <li v-for="material in criticalMaterials" :key="material.id">

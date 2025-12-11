@@ -36,13 +36,13 @@ export function exportToCSV(data: unknown[], fileName: string) {
 export function exportOrdersToCSV(orders: Order[]) {
   const exportData = orders.map((order) => ({
     'Номер заказа': order.orderNumber,
-    'Клиент': order.customerName,
+    Клиент: order.customerName,
     'Тип клиента': order.customerType === 'wholesale' ? 'Оптовик' : 'Магазин',
-    'Статус': order.status,
+    Статус: order.status,
     'Кол-во товаров': order.items.length,
     'Сумма (ЅМ)': order.totalAmount.toFixed(2),
-    'Создан': order.createdDate,
-    'Срок': order.dueDate,
+    Создан: order.createdDate,
+    Срок: order.dueDate,
   }))
 
   exportToCSV(exportData, `Orders_${new Date().toISOString().split('T')[0]}`)
@@ -53,9 +53,9 @@ export function exportOrdersToCSV(orders: Order[]) {
  */
 export function exportOrderDetailToCSV(order: Order) {
   const exportData = order.items.map((item) => ({
-    'Заказ': order.orderNumber,
-    'Товар': item.productName,
-    'Количество': item.quantity,
+    Заказ: order.orderNumber,
+    Товар: item.productName,
+    Количество: item.quantity,
     'Цена за единицу (ЅМ)': item.unitPrice.toFixed(2),
     'Сумма (ЅМ)': item.subtotal.toFixed(2),
   }))
@@ -69,12 +69,12 @@ export function exportOrderDetailToCSV(order: Order) {
 export function exportBatchesToCSV(batches: ProductionBatch[]) {
   const exportData = batches.map((batch) => ({
     'Номер партии': batch.batchNumber,
-    'Товар': batch.productName,
-    'Количество': batch.quantity,
-    'Статус': batch.status,
+    Товар: batch.productName,
+    Количество: batch.quantity,
+    Статус: batch.status,
     'Текущий этап': batch.currentStage,
-    'Начало': batch.startDate,
-    'Окончание': batch.endDate,
+    Начало: batch.startDate,
+    Окончание: batch.endDate,
   }))
 
   exportToCSV(exportData, `ProductionBatches_${new Date().toISOString().split('T')[0]}`)
@@ -85,13 +85,13 @@ export function exportBatchesToCSV(batches: ProductionBatch[]) {
  */
 export function exportRawMaterialsToCSV(materials: RawMaterial[]) {
   const exportData = materials.map((material) => ({
-    'Материал': material.name,
-    'Тип': material.materialType,
-    'Единица': material.unit,
-    'Количество': material.quantity,
-    'Минимум': material.minStockLevel,
+    Материал: material.name,
+    Тип: material.materialType,
+    Единица: material.unit,
+    Количество: material.quantity,
+    Минимум: material.minStockLevel,
     'Стоимость за единицу (ЅМ)': material.unitCost.toFixed(2),
-    'Поставщик': material.supplier,
+    Поставщик: material.supplier,
     'Последний приход': material.lastRestocked,
   }))
 
@@ -103,15 +103,15 @@ export function exportRawMaterialsToCSV(materials: RawMaterial[]) {
  */
 export function exportProductsToCSV(products: Product[]) {
   const exportData = products.map((product) => ({
-    'SKU': product.sku,
-    'Название': product.name,
-    'Категория': product.category,
-    'Количество': product.quantity,
+    SKU: product.sku,
+    Название: product.name,
+    Категория: product.category,
+    Количество: product.quantity,
     'Уровень переказа': product.reorderLevel,
     'Стоимость (ЅМ)': product.unitCost.toFixed(2),
-    'Статус': product.status,
-    'Материал': product.material,
-    'Размер': product.size,
+    Статус: product.status,
+    Материал: product.material,
+    Размер: product.size,
     'Вес (кг)': product.weight.toFixed(3),
   }))
 
@@ -121,11 +121,7 @@ export function exportProductsToCSV(products: Product[]) {
 /**
  * Generate and download HTML-based report for printing
  */
-export function exportToPrintHTML(
-  title: string,
-  content: string,
-  styles?: string
-): Window | null {
+export function exportToPrintHTML(title: string, content: string, styles?: string): Window | null {
   const printWindow = window.open('', '', 'height=600,width=800')
   if (!printWindow) return null
 
@@ -219,7 +215,8 @@ export function exportOrdersToPrint(orders: Order[]) {
   let content = '<div class="section">'
   content += `<div class="section-title">Список заказов (${orders.length})</div>`
   content += '<table>'
-  content += '<tr><th>Номер</th><th>Клиент</th><th>Тип</th><th>Статус</th><th>Сумма (ЅМ)</th><th>Создан</th><th>Срок</th></tr>'
+  content +=
+    '<tr><th>Номер</th><th>Клиент</th><th>Тип</th><th>Статус</th><th>Сумма (ЅМ)</th><th>Создан</th><th>Срок</th></tr>'
 
   orders.forEach((order) => {
     content += `

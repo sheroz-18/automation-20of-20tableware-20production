@@ -246,7 +246,9 @@
         </div>
 
         <div>
-          <p class="text-sm font-semibold text-gray-700 mb-3">Товары ({{ modal.selectedItem.value?.items.length }}):</p>
+          <p class="text-sm font-semibold text-gray-700 mb-3">
+            Товары ({{ modal.selectedItem.value?.items.length }}):
+          </p>
           <div class="space-y-2">
             <div
               v-for="item in modal.selectedItem.value?.items"
@@ -445,17 +447,12 @@ const checkOverdueOrders = () => {
     const dueDate = new Date(order.dueDate)
     dueDate.setHours(0, 0, 0, 0)
 
-    if (
-      dueDate < today &&
-      (order.status === 'принят' || order.status === 'в производстве')
-    ) {
-      const daysOverdue = Math.floor(
-        (today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24)
-      )
+    if (dueDate < today && (order.status === 'принят' || order.status === 'в производстве')) {
+      const daysOverdue = Math.floor((today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24))
       addNotification(
         'error',
         `Заказ просрочен: ${order.orderNumber}`,
-        `${order.customerName} - просрочка ${daysOverdue} дней`
+        `${order.customerName} - просрочка ${daysOverdue} дней`,
       )
       notifiedOrderIds.value.add(order.id)
     }
@@ -466,9 +463,12 @@ onMounted(() => {
   checkOverdueOrders()
 })
 
-watch(() => orders.value.length, () => {
-  checkOverdueOrders()
-})
+watch(
+  () => orders.value.length,
+  () => {
+    checkOverdueOrders()
+  },
+)
 
 const filteredOrders = computed(() => {
   return orders.value.filter((order) => {
@@ -519,14 +519,11 @@ const deleteOrder = () => {
 const getStatusBadge = (status: string) => {
   const badges: Record<string, string> = {
     принят: 'px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium',
-    'в производстве':
-      'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium',
+    'в производстве': 'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium',
     'на складе': 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium',
     отправлен: 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium',
   }
-  return (
-    badges[status] || 'px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-medium'
-  )
+  return badges[status] || 'px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-medium'
 }
 
 const generateInvoice = (order: Order | undefined) => {

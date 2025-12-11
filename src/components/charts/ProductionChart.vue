@@ -6,20 +6,13 @@
     </div>
 
     <div class="space-y-4">
-      <div
-        v-for="batch in batches"
-        :key="batch.id"
-        class="border border-slate-200 rounded-lg p-4"
-      >
+      <div v-for="batch in batches" :key="batch.id" class="border border-slate-200 rounded-lg p-4">
         <div class="flex items-center justify-between mb-2">
           <div>
             <h4 class="font-semibold text-slate-900">{{ batch.batchNumber }}</h4>
             <p class="text-xs text-slate-600">{{ batch.productName }}</p>
           </div>
-          <span
-            :class="getStatusBadge(batch.status)"
-            class="px-2 py-1 rounded text-xs font-medium"
-          >
+          <span :class="getStatusBadge(batch.status)" class="px-2 py-1 rounded text-xs font-medium">
             {{ getStatusLabel(batch.status) }}
           </span>
         </div>
