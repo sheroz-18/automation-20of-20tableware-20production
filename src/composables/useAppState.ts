@@ -56,12 +56,18 @@ const initializeAppState = () => {
   inventory.value = loadFromStorage(STORAGE_KEY_INVENTORY, mockInventory)
   financialRecords.value = loadFromStorage(STORAGE_KEY_FINANCE, mockFinance)
   productionBatches.value = loadFromStorage(STORAGE_KEY_PRODUCTION_BATCHES, mockProductionBatches)
+  rawMaterials.value = loadFromStorage(STORAGE_KEY_RAW_MATERIALS, mockRawMaterials)
+  finishedGoods.value = loadFromStorage(STORAGE_KEY_FINISHED_GOODS, mockFinishedGoods)
+  stockMovements.value = loadFromStorage(STORAGE_KEY_STOCK_MOVEMENTS, mockStockMovements)
 
   watch(products, (newVal) => saveToStorage(STORAGE_KEY_PRODUCTS, newVal), { deep: true })
   watch(orders, (newVal) => saveToStorage(STORAGE_KEY_ORDERS, newVal), { deep: true })
   watch(inventory, (newVal) => saveToStorage(STORAGE_KEY_INVENTORY, newVal), { deep: true })
   watch(financialRecords, (newVal) => saveToStorage(STORAGE_KEY_FINANCE, newVal), { deep: true })
   watch(productionBatches, (newVal) => saveToStorage(STORAGE_KEY_PRODUCTION_BATCHES, newVal), { deep: true })
+  watch(rawMaterials, (newVal) => saveToStorage(STORAGE_KEY_RAW_MATERIALS, newVal), { deep: true })
+  watch(finishedGoods, (newVal) => saveToStorage(STORAGE_KEY_FINISHED_GOODS, newVal), { deep: true })
+  watch(stockMovements, (newVal) => saveToStorage(STORAGE_KEY_STOCK_MOVEMENTS, newVal), { deep: true })
 
   isInitialized = true
 }
