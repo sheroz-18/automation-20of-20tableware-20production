@@ -9,7 +9,16 @@ import {
   finishedGoods as mockFinishedGoods,
   stockMovements as mockStockMovements,
 } from '../data/mockData'
-import type { Order, Product, FinancialRecord, InventoryItem, ProductionBatch, RawMaterial, FinishedGood, StockMovement } from '../types'
+import type {
+  Order,
+  Product,
+  FinancialRecord,
+  InventoryItem,
+  ProductionBatch,
+  RawMaterial,
+  FinishedGood,
+  StockMovement,
+} from '../types'
 
 const STORAGE_KEY_PRODUCTS = 'produceflow_products'
 const STORAGE_KEY_ORDERS = 'produceflow_orders'
@@ -64,10 +73,16 @@ const initializeAppState = () => {
   watch(orders, (newVal) => saveToStorage(STORAGE_KEY_ORDERS, newVal), { deep: true })
   watch(inventory, (newVal) => saveToStorage(STORAGE_KEY_INVENTORY, newVal), { deep: true })
   watch(financialRecords, (newVal) => saveToStorage(STORAGE_KEY_FINANCE, newVal), { deep: true })
-  watch(productionBatches, (newVal) => saveToStorage(STORAGE_KEY_PRODUCTION_BATCHES, newVal), { deep: true })
+  watch(productionBatches, (newVal) => saveToStorage(STORAGE_KEY_PRODUCTION_BATCHES, newVal), {
+    deep: true,
+  })
   watch(rawMaterials, (newVal) => saveToStorage(STORAGE_KEY_RAW_MATERIALS, newVal), { deep: true })
-  watch(finishedGoods, (newVal) => saveToStorage(STORAGE_KEY_FINISHED_GOODS, newVal), { deep: true })
-  watch(stockMovements, (newVal) => saveToStorage(STORAGE_KEY_STOCK_MOVEMENTS, newVal), { deep: true })
+  watch(finishedGoods, (newVal) => saveToStorage(STORAGE_KEY_FINISHED_GOODS, newVal), {
+    deep: true,
+  })
+  watch(stockMovements, (newVal) => saveToStorage(STORAGE_KEY_STOCK_MOVEMENTS, newVal), {
+    deep: true,
+  })
 
   isInitialized = true
 }

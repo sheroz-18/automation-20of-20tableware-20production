@@ -46,7 +46,10 @@
         :key="product.id"
         class="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition overflow-hidden"
       >
-        <div class="h-48 bg-gradient-to-br overflow-hidden" :class="getGradientColor(product.category)">
+        <div
+          class="h-48 bg-gradient-to-br overflow-hidden"
+          :class="getGradientColor(product.category)"
+        >
           <img
             :src="product.image"
             :alt="product.name"

@@ -115,7 +115,9 @@
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-gray-700">Номер партии</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.batchNumber }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.batchNumber }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-gray-700">Статус</p>
@@ -125,15 +127,21 @@
           </div>
           <div>
             <p class="text-sm text-gray-700">Продукт</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.productName }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.productName }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-gray-700">Категория</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.category }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.category }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-gray-700">Количество</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.quantity }} шт</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.quantity }} шт
+            </p>
           </div>
           <div>
             <p class="text-sm text-gray-700">Дата начала</p>
@@ -190,10 +198,7 @@
                   Завершено: {{ formatDate(stage.completedDate) }}
                 </p>
               </div>
-              <div
-                v-if="stage.completed"
-                class="flex-shrink-0 text-green-600"
-              >
+              <div v-if="stage.completed" class="flex-shrink-0 text-green-600">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fill-rule="evenodd"
@@ -316,7 +321,8 @@
     >
       <div class="space-y-4">
         <p class="text-slate-700">
-          Вы уверены, что хотите удалить партию <strong>{{ modal.selectedItem.value?.batchNumber }}</strong
+          Вы уверены, что хотите удалить партию
+          <strong>{{ modal.selectedItem.value?.batchNumber }}</strong
           >?
         </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
@@ -479,7 +485,10 @@ const getStatusBadge = (status: string | undefined) => {
     completed: 'px-3 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-medium',
     cancelled: 'px-3 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-medium',
   }
-  return badges[status || 'planning'] || 'px-3 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-medium'
+  return (
+    badges[status || 'planning'] ||
+    'px-3 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-medium'
+  )
 }
 
 const getStatusLabel = (status: string | undefined) => {

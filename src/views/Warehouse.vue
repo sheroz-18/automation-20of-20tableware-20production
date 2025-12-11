@@ -85,7 +85,9 @@
           <div class="flex items-start justify-between mb-4">
             <div>
               <h3 class="text-lg font-semibold text-slate-900">{{ material.name }}</h3>
-              <p class="text-sm text-slate-600 mt-1">{{ getMaterialTypeLabel(material.materialType) }}</p>
+              <p class="text-sm text-slate-600 mt-1">
+                {{ getMaterialTypeLabel(material.materialType) }}
+              </p>
             </div>
             <span
               :class="[
@@ -110,11 +112,15 @@
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
             <div>
               <p class="text-xs text-slate-600">Количество</p>
-              <p class="text-xl font-bold text-slate-900">{{ material.quantity }} {{ material.unit }}</p>
+              <p class="text-xl font-bold text-slate-900">
+                {{ material.quantity }} {{ material.unit }}
+              </p>
             </div>
             <div>
               <p class="text-xs text-slate-600">Минимум</p>
-              <p class="text-xl font-bold text-slate-900">{{ material.minStockLevel }} {{ material.unit }}</p>
+              <p class="text-xl font-bold text-slate-900">
+                {{ material.minStockLevel }} {{ material.unit }}
+              </p>
             </div>
             <div>
               <p class="text-xs text-slate-600">Стоимость за ед.</p>
@@ -122,20 +128,32 @@
             </div>
             <div>
               <p class="text-xs text-slate-600">Общая стоимость</p>
-              <p class="text-xl font-bold text-slate-900">ЅМ{{ (material.quantity * material.unitCost).toFixed(2) }}</p>
+              <p class="text-xl font-bold text-slate-900">
+                ЅМ{{ (material.quantity * material.unitCost).toFixed(2) }}
+              </p>
             </div>
           </div>
 
           <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
             <div>
-              <p class="text-slate-600">Поставщик: <span class="font-semibold text-slate-900">{{ material.supplier }}</span></p>
+              <p class="text-slate-600">
+                Поставщик: <span class="font-semibold text-slate-900">{{ material.supplier }}</span>
+              </p>
             </div>
             <div>
-              <p class="text-slate-600">Последнее пополнение: <span class="font-semibold text-slate-900">{{ formatDate(material.lastRestocked) }}</span></p>
+              <p class="text-slate-600">
+                Последнее пополнение:
+                <span class="font-semibold text-slate-900">{{
+                  formatDate(material.lastRestocked)
+                }}</span>
+              </p>
             </div>
           </div>
 
-          <div v-if="material.expiryDate" class="mb-4 p-3 bg-orange-50 border border-orange-200 rounded">
+          <div
+            v-if="material.expiryDate"
+            class="mb-4 p-3 bg-orange-50 border border-orange-200 rounded"
+          >
             <p class="text-sm text-orange-700">
               <strong>Срок годности:</strong> {{ formatDate(material.expiryDate) }}
             </p>
@@ -241,12 +259,18 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-200">
-            <tr v-for="movement in stockMovements" :key="movement.id" class="hover:bg-slate-50 transition">
+            <tr
+              v-for="movement in stockMovements"
+              :key="movement.id"
+              class="hover:bg-slate-50 transition"
+            >
               <td class="px-6 py-4 text-sm text-slate-600">{{ formatDate(movement.date) }}</td>
               <td class="px-6 py-4 text-sm font-medium text-slate-900">
                 <div>
                   <p>{{ movement.itemName }}</p>
-                  <p class="text-xs text-slate-500">{{ movement.itemType === 'raw_material' ? 'Сырье' : 'Готовый товар' }}</p>
+                  <p class="text-xs text-slate-500">
+                    {{ movement.itemType === 'raw_material' ? 'Сырье' : 'Готовый товар' }}
+                  </p>
                 </div>
               </td>
               <td class="px-6 py-4 text-sm">
@@ -261,7 +285,9 @@
                   {{ movement.movementType === 'in' ? 'Приход' : 'Расход' }}
                 </span>
               </td>
-              <td class="px-6 py-4 text-sm font-semibold text-slate-900">{{ movement.quantity }}</td>
+              <td class="px-6 py-4 text-sm font-semibold text-slate-900">
+                {{ movement.quantity }}
+              </td>
               <td class="px-6 py-4 text-sm font-mono text-slate-600">{{ movement.reference }}</td>
               <td class="px-6 py-4 text-sm text-slate-600">{{ movement.notes || '-' }}</td>
             </tr>
@@ -271,7 +297,10 @@
     </div>
 
     <ModalBase
-      :is-open="modal.isOpen.value && (modal.contentType.value === 'raw' || modal.contentType.value === 'finished')"
+      :is-open="
+        modal.isOpen.value &&
+        (modal.contentType.value === 'raw' || modal.contentType.value === 'finished')
+      "
       :title="
         modal.isCreateModal.value
           ? activeTab === 'raw'
@@ -376,7 +405,9 @@
         </div>
 
         <div v-if="activeTab === 'raw'">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Срок годности (опционально)</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1"
+            >Срок годности (опционально)</label
+          >
           <input
             v-model="formData.expiryDate"
             type="date"
@@ -503,7 +534,8 @@ const filteredRawMaterials = computed(() => {
     const matchesSearch =
       material.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       material.supplier.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const matchesType = !materialTypeFilter.value || material.materialType === materialTypeFilter.value
+    const matchesType =
+      !materialTypeFilter.value || material.materialType === materialTypeFilter.value
     return matchesSearch && matchesType
   })
 })
@@ -574,7 +606,10 @@ const saveMaterial = () => {
     } else if (modal.isEditModal.value && modal.selectedItem.value) {
       const index = rawMaterials.value.findIndex((m) => m.id === modal.selectedItem.value?.id)
       if (index !== -1) {
-        rawMaterials.value[index] = { ...modal.selectedItem.value, ...formData.value } as RawMaterial
+        rawMaterials.value[index] = {
+          ...modal.selectedItem.value,
+          ...formData.value,
+        } as RawMaterial
       }
     }
   } else {
@@ -592,7 +627,10 @@ const saveMaterial = () => {
     } else if (modal.isEditModal.value && modal.selectedItem.value) {
       const index = finishedGoods.value.findIndex((g) => g.id === modal.selectedItem.value?.id)
       if (index !== -1) {
-        finishedGoods.value[index] = { ...modal.selectedItem.value, ...formData.value } as FinishedGood
+        finishedGoods.value[index] = {
+          ...modal.selectedItem.value,
+          ...formData.value,
+        } as FinishedGood
       }
     }
   }
@@ -620,14 +658,16 @@ const saveMovement = () => {
   stockMovements.value.unshift(newMovement)
 
   if (movementFormData.value.itemType === 'raw_material') {
-    const materialIndex = rawMaterials.value.findIndex((m) => m.id === movementFormData.value.itemId)
+    const materialIndex = rawMaterials.value.findIndex(
+      (m) => m.id === movementFormData.value.itemId,
+    )
     if (materialIndex !== -1) {
       if (movementFormData.value.movementType === 'in') {
         rawMaterials.value[materialIndex].quantity += movementFormData.value.quantity || 0
       } else {
         rawMaterials.value[materialIndex].quantity = Math.max(
           0,
-          rawMaterials.value[materialIndex].quantity - (movementFormData.value.quantity || 0)
+          rawMaterials.value[materialIndex].quantity - (movementFormData.value.quantity || 0),
         )
       }
     }
@@ -639,7 +679,7 @@ const saveMovement = () => {
       } else {
         finishedGoods.value[goodIndex].quantity = Math.max(
           0,
-          finishedGoods.value[goodIndex].quantity - (movementFormData.value.quantity || 0)
+          finishedGoods.value[goodIndex].quantity - (movementFormData.value.quantity || 0),
         )
       }
     }

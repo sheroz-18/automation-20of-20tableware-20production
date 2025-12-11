@@ -1,4 +1,14 @@
-import type { Product, Order, FinancialRecord, InventoryItem, DashboardMetrics, ProductionBatch, RawMaterial, FinishedGood, StockMovement } from '../types'
+import type {
+  Product,
+  Order,
+  FinancialRecord,
+  InventoryItem,
+  DashboardMetrics,
+  ProductionBatch,
+  RawMaterial,
+  FinishedGood,
+  StockMovement,
+} from '../types'
 
 export const products: Product[] = [
   {
@@ -610,7 +620,12 @@ export const productionBatches: ProductionBatch[] = [
     category: 'Тарелки',
     currentStage: 3,
     stages: [
-      { stageNumber: 1, stageName: 'подготовка сырья', completed: true, completedDate: '2024-12-08' },
+      {
+        stageNumber: 1,
+        stageName: 'подготовка сырья',
+        completed: true,
+        completedDate: '2024-12-08',
+      },
       { stageNumber: 2, stageName: 'формовка', completed: true, completedDate: '2024-12-09' },
       { stageNumber: 3, stageName: 'обжиг/обработка', completed: false },
       { stageNumber: 4, stageName: 'упаковка', completed: false },
@@ -650,9 +665,19 @@ export const productionBatches: ProductionBatch[] = [
     category: 'Миски',
     currentStage: 5,
     stages: [
-      { stageNumber: 1, stageName: 'подготовка сырья', completed: true, completedDate: '2024-12-01' },
+      {
+        stageNumber: 1,
+        stageName: 'подготовка сырья',
+        completed: true,
+        completedDate: '2024-12-01',
+      },
       { stageNumber: 2, stageName: 'формовка', completed: true, completedDate: '2024-12-02' },
-      { stageNumber: 3, stageName: 'обжиг/обработка', completed: true, completedDate: '2024-12-04' },
+      {
+        stageNumber: 3,
+        stageName: 'обжиг/обработка',
+        completed: true,
+        completedDate: '2024-12-04',
+      },
       { stageNumber: 4, stageName: 'упаковка', completed: true, completedDate: '2024-12-06' },
       { stageNumber: 5, stageName: 'готовность', completed: true, completedDate: '2024-12-08' },
     ],
@@ -690,7 +715,12 @@ export const productionBatches: ProductionBatch[] = [
     category: 'Приборы',
     currentStage: 2,
     stages: [
-      { stageNumber: 1, stageName: 'подготовка сырья', completed: true, completedDate: '2024-12-09' },
+      {
+        stageNumber: 1,
+        stageName: 'подготовка сырья',
+        completed: true,
+        completedDate: '2024-12-09',
+      },
       { stageNumber: 2, stageName: 'формовка', completed: false },
       { stageNumber: 3, stageName: 'обжиг/обработка', completed: false },
       { stageNumber: 4, stageName: 'упаковка', completed: false },
