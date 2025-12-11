@@ -411,6 +411,10 @@ const formData = ref<Partial<Product>>({
   quantity: 0,
   reorderLevel: 100,
   unitCost: 0,
+  image: '',
+  material: '',
+  size: '',
+  weight: 0,
 })
 
 const filteredProducts = computed(() => {
