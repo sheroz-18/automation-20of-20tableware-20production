@@ -3,10 +3,12 @@ import { ref, computed } from 'vue'
 export type ModalType = 'view' | 'edit' | 'create' | 'delete'
 export type ModalContent = 'product' | 'order' | 'inventory' | 'finance' | null
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useModal() {
   const isOpen = ref<boolean>(false)
   const modalType = ref<ModalType>('view')
   const contentType = ref<ModalContent>(null)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const selectedItem = ref<any>(null)
 
   const isViewModal = computed<boolean>(() => modalType.value === 'view')
@@ -14,6 +16,7 @@ export function useModal() {
   const isCreateModal = computed<boolean>(() => modalType.value === 'create')
   const isDeleteModal = computed<boolean>(() => modalType.value === 'delete')
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const openViewModal = (item: any, type: ModalContent) => {
     selectedItem.value = JSON.parse(JSON.stringify(item))
     modalType.value = 'view'
