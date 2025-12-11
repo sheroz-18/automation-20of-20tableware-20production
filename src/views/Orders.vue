@@ -59,7 +59,7 @@
         class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white shadow-sm"
       >
         <p class="text-purple-100 text-sm mb-1">Общая сумма</p>
-        <p class="text-3xl font-bold">₽{{ totalOrderValue.toFixed(0) }}</p>
+        <p class="text-3xl font-bold">ЅМ{{ totalOrderValue.toFixed(0) }}</p>
       </div>
     </div>
 
@@ -75,7 +75,7 @@
             <p class="text-slate-600 text-sm mt-1">{{ order.customerName }}</p>
           </div>
           <div class="text-right">
-            <p class="font-bold text-slate-900 text-lg">₽{{ order.totalAmount.toFixed(2) }}</p>
+            <p class="font-bold text-slate-900 text-lg">ЅМ{{ order.totalAmount.toFixed(2) }}</p>
             <span :class="getStatusBadge(order.status)">
               {{ getStatusLabel(order.status) }}
             </span>
@@ -91,11 +91,11 @@
               class="p-3 rounded-lg bg-slate-50"
             >
               <p class="text-sm font-medium text-slate-900">{{ item.productName }}</p>
-              <p class="text-xs text-slate-600 mt-1">
-                {{ item.quantity }} × ₽{{ item.unitPrice.toFixed(2) }}
+              <p class="text-xs text-gray-700 mt-1">
+                {{ item.quantity }} × ЅМ{{ item.unitPrice.toFixed(2) }}
               </p>
               <p class="text-sm font-semibold text-slate-900 mt-2">
-                ₽{{ item.subtotal.toFixed(2) }}
+                ЅМ{{ item.subtotal.toFixed(2) }}
               </p>
             </div>
           </div>
@@ -139,37 +139,37 @@
       <div v-if="modal.isViewModal.value" class="space-y-6">
         <div class="grid grid-cols-2 gap-6">
           <div>
-            <p class="text-sm text-slate-600">Номер заказа</p>
+            <p class="text-sm text-gray-700">Номер заказа</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.orderNumber }}
             </p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Клиент</p>
+            <p class="text-sm text-gray-700">Клиент</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.customerName }}
             </p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Статус</p>
+            <p class="text-sm text-gray-700">Статус</p>
             <span :class="getStatusBadge(modal.selectedItem.value?.status)">
               {{ getStatusLabel(modal.selectedItem.value?.status) }}
             </span>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Сумма</p>
+            <p class="text-sm text-gray-700">Сумма</p>
             <p class="text-lg font-semibold text-slate-900">
-              ₽{{ modal.selectedItem.value?.totalAmount.toFixed(2) }}
+              ЅМ{{ modal.selectedItem.value?.totalAmount.toFixed(2) }}
             </p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Создан</p>
+            <p class="text-sm text-gray-700">Создан</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.createdDate }}
             </p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Срок</p>
+            <p class="text-sm text-gray-700">Срок</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.dueDate }}
             </p>
@@ -177,7 +177,7 @@
         </div>
 
         <div>
-          <p class="text-sm font-semibold text-slate-700 mb-3">Товары:</p>
+          <p class="text-sm font-semibold text-gray-700 mb-3">Товары:</p>
           <div class="space-y-2">
             <div
               v-for="item in modal.selectedItem.value?.items"
@@ -187,11 +187,11 @@
               <div class="flex items-center justify-between">
                 <div>
                   <p class="font-medium text-slate-900">{{ item.productName }}</p>
-                  <p class="text-sm text-slate-600">
-                    {{ item.quantity }} × ₽{{ item.unitPrice.toFixed(2) }}
+                  <p class="text-sm text-gray-700">
+                    {{ item.quantity }} × ЅМ{{ item.unitPrice.toFixed(2) }}
                   </p>
                 </div>
-                <p class="font-semibold text-slate-900">₽{{ item.subtotal.toFixed(2) }}</p>
+                <p class="font-semibold text-slate-900">ЅМ{{ item.subtotal.toFixed(2) }}</p>
               </div>
             </div>
           </div>
@@ -209,7 +209,7 @@
             Редактировать
           </button>
           <button
-            @click="modal.openDeleteModal(modal.selectedItem, 'order')"
+            @click="modal.openDeleteModal(modal.selectedItem.value, 'order')"
             class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition"
           >
             Удалить
@@ -220,20 +220,20 @@
       <div v-else class="space-y-4">
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Номер заказа</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Номер заказа</label>
             <input
               v-model="formData.orderNumber"
               type="text"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
               placeholder="ORD-2024-001"
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Имя клиента</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Имя клиента</label>
             <input
               v-model="formData.customerName"
               type="text"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
               placeholder="Введите имя клиента"
             />
           </div>
@@ -241,28 +241,28 @@
 
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Дата создания</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Дата создания</label>
             <input
               v-model="formData.createdDate"
               type="date"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Срок выполнения</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Срок выполнения</label>
             <input
               v-model="formData.dueDate"
               type="date"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             />
           </div>
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1">Статус</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Статус</label>
           <select
             v-model="formData.status"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
           >
             <option value="pending">Ожидание</option>
             <option value="processing">Обработка</option>
@@ -272,12 +272,12 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1">Общая сумма (₽)</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Общая сумма (ЅМ)</label>
           <input
             v-model.number="formData.totalAmount"
             type="number"
             step="0.01"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             placeholder="0.00"
           />
         </div>
@@ -318,17 +318,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { orders as mockOrders } from '../data/mockData'
+import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
-import { useStorage } from '../composables/useStorage'
+import { useAppState } from '../composables/useAppState'
 import ModalBase from '../components/ModalBase.vue'
 import type { Order } from '../types'
 
 const modal = useModal()
-const storage = useStorage()
+const { orders } = useAppState()
 
-const orders = ref<Order[]>([...mockOrders])
 const searchQuery = ref('')
 const statusFilter = ref('')
 
@@ -340,11 +338,6 @@ const formData = ref<Partial<Order>>({
   dueDate: new Date().toISOString().split('T')[0],
   totalAmount: 0,
   items: [],
-})
-
-onMounted(() => {
-  storage.initializeStorage([], orders, [], [])
-  storage.watchForChanges([], orders, [], [])
 })
 
 const filteredOrders = computed(() => {

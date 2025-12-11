@@ -18,13 +18,13 @@
         class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-sm"
       >
         <p class="text-green-100 text-sm mb-2">Общий доход</p>
-        <p class="text-4xl font-bold">₽{{ totalIncome.toFixed(2) }}</p>
+        <p class="text-4xl font-bold">ЅМ{{ totalIncome.toFixed(2) }}</p>
         <p class="text-green-100 text-sm mt-2">+{{ incomeRecords.length }} операций</p>
       </div>
 
       <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-6 text-white shadow-sm">
         <p class="text-red-100 text-sm mb-2">Общие расходы</p>
-        <p class="text-4xl font-bold">₽{{ totalExpense.toFixed(2) }}</p>
+        <p class="text-4xl font-bold">ЅМ{{ totalExpense.toFixed(2) }}</p>
         <p class="text-red-100 text-sm mt-2">+{{ expenseRecords.length }} операций</p>
       </div>
 
@@ -33,7 +33,7 @@
         :class="{ 'from-slate-500 to-slate-600': netBalance < 0 }"
       >
         <p class="text-blue-100 text-sm mb-2">Чистый баланс</p>
-        <p class="text-4xl font-bold">₽{{ netBalance.toFixed(2) }}</p>
+        <p class="text-4xl font-bold">ЅМ{{ netBalance.toFixed(2) }}</p>
         <p :class="['text-sm mt-2', netBalance >= 0 ? 'text-blue-100' : 'text-slate-100']">
           {{ netBalance >= 0 ? '✓ Прибыль' : '⚠ Убыток' }}
         </p>
@@ -99,9 +99,9 @@
                   record.type === 'income' ? 'text-green-600' : 'text-red-600',
                 ]"
               >
-                {{ record.type === 'income' ? '+' : '-' }}₽{{ record.amount.toFixed(2) }}
+                {{ record.type === 'income' ? '+' : '-' }}ЅМ{{ record.amount.toFixed(2) }}
               </p>
-              <p class="text-xs text-slate-600 mt-1">{{ record.reference }}</p>
+              <p class="text-xs text-gray-700 mt-1">{{ record.reference }}</p>
             </div>
           </div>
         </div>
@@ -118,8 +118,8 @@
               class="p-3 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100 transition"
             >
               <div class="flex items-center justify-between mb-2">
-                <span class="text-sm font-medium text-slate-700">{{ category.name }}</span>
-                <span class="font-semibold text-slate-900">₽{{ category.amount.toFixed(2) }}</span>
+                <span class="text-sm font-medium text-gray-700">{{ category.name }}</span>
+                <span class="font-semibold text-slate-900">ЅМ{{ category.amount.toFixed(2) }}</span>
               </div>
               <div class="w-full bg-slate-200 rounded-full h-2">
                 <div
@@ -137,11 +137,11 @@
           <div class="space-y-3">
             <div class="flex items-center justify-between p-3 rounded-lg bg-green-50">
               <span class="text-sm font-medium text-green-700">Продажи</span>
-              <span class="font-semibold text-green-900">₽{{ totalIncome.toFixed(2) }}</span>
+              <span class="font-semibold text-green-900">ЅМ{{ totalIncome.toFixed(2) }}</span>
             </div>
             <div class="flex items-center justify-between p-3 rounded-lg bg-slate-100">
-              <span class="text-sm font-medium text-slate-700">Прочее</span>
-              <span class="font-semibold text-slate-900">₽0</span>
+              <span class="text-sm font-medium text-gray-700">Прочее</span>
+              <span class="font-semibold text-slate-900">ЅМ0</span>
             </div>
           </div>
         </div>
@@ -165,42 +165,42 @@
       <div v-if="modal.isViewModal.value" class="space-y-6">
         <div class="grid grid-cols-2 gap-6">
           <div>
-            <p class="text-sm text-slate-600">Описание</p>
+            <p class="text-sm text-gray-700">Описание</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.description }}
             </p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Сумма</p>
+            <p class="text-sm text-gray-700">Сумма</p>
             <p
               :class="[
                 'text-lg font-semibold',
                 modal.selectedItem.value?.type === 'income' ? 'text-green-600' : 'text-red-600',
               ]"
             >
-              {{ modal.selectedItem.value?.type === 'income' ? '+' : '-' }}₽{{
+              {{ modal.selectedItem.value?.type === 'income' ? '+' : '-' }}ЅМ{{
                 modal.selectedItem.value?.amount.toFixed(2)
               }}
             </p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Категория</p>
+            <p class="text-sm text-gray-700">Категория</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.category }}
             </p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Тип</p>
+            <p class="text-sm text-gray-700">Тип</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.type === 'income' ? 'Доход' : 'Расход' }}
             </p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Дата</p>
+            <p class="text-sm text-gray-700">Дата</p>
             <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.date }}</p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Ссылка</p>
+            <p class="text-sm text-gray-700">Ссылка</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.reference }}
             </p>
@@ -229,33 +229,33 @@
 
       <div v-else class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1">Описание</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Описание</label>
           <input
             v-model="formData.description"
             type="text"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             placeholder="Введите описание операции"
           />
         </div>
 
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Тип</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Тип</label>
             <select
               v-model="formData.type"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             >
               <option value="income">Доход</option>
               <option value="expense">Расход</option>
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Сумма (₽)</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Сумма (ЅМ)</label>
             <input
               v-model.number="formData.amount"
               type="number"
               step="0.01"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
               placeholder="0.00"
             />
           </div>
@@ -263,10 +263,10 @@
 
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Категория</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Категория</label>
             <select
               v-model="formData.category"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             >
               <option value="Продажи">Продажи</option>
               <option value="Производство">Производство</option>
@@ -276,23 +276,23 @@
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Дата</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Дата</label>
             <input
               v-model="formData.date"
               type="date"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             />
           </div>
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1"
+          <label class="block text-sm font-medium text-gray-700 mb-1"
             >Ссылка/Ссылка (опционально)</label
           >
           <input
             v-model="formData.reference"
             type="text"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             placeholder="ORD-2024-001 или SUPP-001"
           />
         </div>
@@ -333,17 +333,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { financialRecords as mockRecords } from '../data/mockData'
+import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
-import { useStorage } from '../composables/useStorage'
+import { useAppState } from '../composables/useAppState'
 import ModalBase from '../components/ModalBase.vue'
 import type { FinancialRecord } from '../types'
 
 const modal = useModal()
-const storage = useStorage()
-
-const financialRecords = ref<FinancialRecord[]>([...mockRecords])
+const { financialRecords } = useAppState()
 
 const formData = ref<Partial<FinancialRecord>>({
   date: new Date().toISOString().split('T')[0],
@@ -352,11 +349,6 @@ const formData = ref<Partial<FinancialRecord>>({
   amount: 0,
   category: 'Продажи',
   reference: '',
-})
-
-onMounted(() => {
-  storage.initializeStorage([], [], [], financialRecords)
-  storage.watchForChanges([], [], [], financialRecords)
 })
 
 const incomeRecords = computed(() => financialRecords.value.filter((r) => r.type === 'income'))
@@ -382,7 +374,7 @@ const saveRecord = () => {
     return
   }
 
-  if (modal.isCreateModal) {
+  if (modal.isCreateModal.value) {
     const newRecord: FinancialRecord = {
       id: Math.random().toString(36).substr(2, 9),
       date: formData.value.date || new Date().toISOString().split('T')[0],

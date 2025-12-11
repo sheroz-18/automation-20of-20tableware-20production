@@ -69,8 +69,8 @@
               <p class="font-bold text-slate-900 text-lg">{{ product.quantity }}</p>
             </div>
             <div class="p-3 rounded-lg bg-slate-50">
-              <p class="text-xs text-slate-600">Цена</p>
-              <p class="font-bold text-slate-900 text-lg">₽{{ product.unitCost }}</p>
+              <p class="text-xs text-gray-700">Цена</p>
+              <p class="font-bold text-slate-900 text-lg">ЅМ{{ product.unitCost }}</p>
             </div>
           </div>
 
@@ -119,45 +119,45 @@
       <div v-if="modal.isViewModal.value" class="space-y-6">
         <div class="grid grid-cols-2 gap-6">
           <div>
-            <p class="text-sm text-slate-600">Название</p>
+            <p class="text-sm text-gray-700">Название</p>
             <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.name }}</p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">SKU</p>
+            <p class="text-sm text-gray-700">SKU</p>
             <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.sku }}</p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Категория</p>
+            <p class="text-sm text-gray-700">Категория</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.category }}
             </p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Статус</p>
+            <p class="text-sm text-gray-700">Статус</p>
             <span :class="getStatusBadge(modal.selectedItem.value?.status)">
               {{ getStatusLabel(modal.selectedItem.value?.status) }}
             </span>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Количество</p>
+            <p class="text-sm text-gray-700">Количество</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.quantity }} шт
             </p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Уровень переказа</p>
+            <p class="text-sm text-gray-700">Уровень переказа</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.reorderLevel }} шт
             </p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Цена за единицу</p>
+            <p class="text-sm text-gray-700">Цена за единицу</p>
             <p class="text-lg font-semibold text-slate-900">
-              ₽{{ modal.selectedItem.value?.unitCost }}
+              ЅМ{{ modal.selectedItem.value?.unitCost }}
             </p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Последнее обновление</p>
+            <p class="text-sm text-gray-700">Последнее обновление</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.lastUpdated }}
             </p>
@@ -176,7 +176,7 @@
             Редактировать
           </button>
           <button
-            @click="modal.openDeleteModal(modal.selectedItem, 'product')"
+            @click="modal.openDeleteModal(modal.selectedItem.value, 'product')"
             class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition"
           >
             Удалить
@@ -186,30 +186,30 @@
 
       <div v-else class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1">Название товара</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Название товара</label>
           <input
             v-model="formData.name"
             type="text"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             placeholder="Введите название"
           />
         </div>
 
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">SKU</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">SKU</label>
             <input
               v-model="formData.sku"
               type="text"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
               placeholder="PLATE-001"
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Категория</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Категория</label>
             <select
               v-model="formData.category"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             >
               <option value="Тарелки">Тарелки</option>
               <option value="Чашки">Чашки</option>
@@ -223,32 +223,32 @@
 
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Количество</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Количество</label>
             <input
               v-model.number="formData.quantity"
               type="number"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
               placeholder="0"
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Уровень переказа</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Уровень переказа</label>
             <input
               v-model.number="formData.reorderLevel"
               type="number"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
               placeholder="100"
             />
           </div>
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1">Цена за единицу (₽)</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Цена за единицу (ЅМ)</label>
           <input
             v-model.number="formData.unitCost"
             type="number"
             step="0.01"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             placeholder="0.00"
           />
         </div>
@@ -288,17 +288,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { products as mockProducts } from '../data/mockData'
+import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
-import { useStorage } from '../composables/useStorage'
+import { useAppState } from '../composables/useAppState'
 import ModalBase from '../components/ModalBase.vue'
 import type { Product } from '../types'
 
 const modal = useModal()
-const storage = useStorage()
+const { products } = useAppState()
 
-const products = ref<Product[]>([...mockProducts])
 const searchQuery = ref('')
 const categoryFilter = ref('')
 
@@ -309,11 +307,6 @@ const formData = ref<Partial<Product>>({
   quantity: 0,
   reorderLevel: 100,
   unitCost: 0,
-})
-
-onMounted(() => {
-  storage.initializeStorage(products, [], [], [])
-  storage.watchForChanges(products, [], [], [])
 })
 
 const filteredProducts = computed(() => {
@@ -353,7 +346,7 @@ const saveProduct = () => {
     return
   }
 
-  if (modal.isCreateModal) {
+  if (modal.isCreateModal.value) {
     const newProduct: Product = {
       id: Math.random().toString(36).substr(2, 9),
       name: formData.value.name || '',

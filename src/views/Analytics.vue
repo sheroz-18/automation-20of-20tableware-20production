@@ -7,8 +7,8 @@
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-        <p class="text-slate-600 text-sm mb-2">Средний размер заказа</p>
-        <p class="text-3xl font-bold text-slate-900">₽{{ avgOrderValue.toFixed(2) }}</p>
+        <p class="text-gray-700 text-sm mb-2">Средний размер заказа</p>
+        <p class="text-3xl font-bold text-slate-900">ЅМ{{ avgOrderValue.toFixed(2) }}</p>
         <p class="text-xs text-green-600 mt-2">+5.2% от прошлого месяца</p>
       </div>
 
@@ -38,8 +38,8 @@
         <div class="space-y-4">
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="text-sm font-medium text-slate-700">Тарелки (52%)</span>
-              <span class="text-sm font-semibold text-slate-900">₽1,918</span>
+              <span class="text-sm font-medium text-gray-700">Тарелки (52%)</span>
+              <span class="text-sm font-semibold text-slate-900">ЅМ1,918</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-blue-600 h-3 rounded-full" style="width: 52%"></div>
@@ -48,8 +48,8 @@
 
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="text-sm font-medium text-slate-700">Приборы (18%)</span>
-              <span class="text-sm font-semibold text-slate-900">₽665</span>
+              <span class="text-sm font-medium text-gray-700">Приборы (18%)</span>
+              <span class="text-sm font-semibold text-slate-900">ЅМ665</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-green-600 h-3 rounded-full" style="width: 18%"></div>
@@ -58,8 +58,8 @@
 
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="text-sm font-medium text-slate-700">Чашки (16%)</span>
-              <span class="text-sm font-semibold text-slate-900">₽591</span>
+              <span class="text-sm font-medium text-gray-700">Чашки (16%)</span>
+              <span class="text-sm font-semibold text-slate-900">ЅМ591</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-orange-600 h-3 rounded-full" style="width: 16%"></div>
@@ -68,8 +68,8 @@
 
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="text-sm font-medium text-slate-700">Кухонная утварь (9%)</span>
-              <span class="text-sm font-semibold text-slate-900">₽332</span>
+              <span class="text-sm font-medium text-gray-700">Кухонная утварь (9%)</span>
+              <span class="text-sm font-semibold text-slate-900">ЅМ332</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-purple-600 h-3 rounded-full" style="width: 9%"></div>
@@ -78,8 +78,8 @@
 
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="text-sm font-medium text-slate-700">Миски (5%)</span>
-              <span class="text-sm font-semibold text-slate-900">₽185</span>
+              <span class="text-sm font-medium text-gray-700">Миски (5%)</span>
+              <span class="text-sm font-semibold text-slate-900">ЅМ185</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-cyan-600 h-3 rounded-full" style="width: 5%"></div>
@@ -141,10 +141,10 @@
               </div>
               <div>
                 <p class="font-medium text-slate-900">Столовая ложка</p>
-                <p class="text-xs text-slate-600">1200 продано</p>
+                <p class="text-xs text-gray-700">1200 продано</p>
               </div>
             </div>
-            <span class="font-bold text-slate-900">₽1,800</span>
+            <span class="font-bold text-slate-900">ЅМ1,800</span>
           </div>
 
           <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50">
@@ -156,10 +156,10 @@
               </div>
               <div>
                 <p class="font-medium text-slate-900">Обеденная тарелка</p>
-                <p class="text-xs text-slate-600">620 продано</p>
+                <p class="text-xs text-gray-700">620 продано</p>
               </div>
             </div>
-            <span class="font-bold text-slate-900">₽2,604</span>
+            <span class="font-bold text-slate-900">ЅМ2,604</span>
           </div>
 
           <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50">
@@ -171,10 +171,10 @@
               </div>
               <div>
                 <p class="font-medium text-slate-900">Фарфоровая чашка</p>
-                <p class="text-xs text-slate-600">200 продано</p>
+                <p class="text-xs text-gray-700">200 продано</p>
               </div>
             </div>
-            <span class="font-bold text-slate-900">₽640</span>
+            <span class="font-bold text-slate-900">ЅМ640</span>
           </div>
         </div>
       </div>
@@ -232,10 +232,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { orders } from '../data/mockData'
+import { useAppState } from '../composables/useAppState'
+
+const { orders } = useAppState()
 
 const avgOrderValue = computed(() => {
-  if (orders.length === 0) return 0
-  return orders.reduce((sum, order) => sum + order.totalAmount, 0) / orders.length
+  if (orders.value.length === 0) return 0
+  return orders.value.reduce((sum, order) => sum + order.totalAmount, 0) / orders.value.length
 })
 </script>
