@@ -152,8 +152,8 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">Статус</p>
-            <span :class="getStatusBadge(modal.selectedItem?.status)">
-              {{ getStatusLabel(modal.selectedItem?.status) }}
+            <span :class="getStatusBadge(modal.selectedItem.value?.status)">
+              {{ getStatusLabel(modal.selectedItem.value?.status) }}
             </span>
           </div>
           <div>
