@@ -232,10 +232,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { orders } from '../data/mockData'
+import { useAppState } from '../composables/useAppState'
+
+const { orders } = useAppState()
 
 const avgOrderValue = computed(() => {
-  if (orders.length === 0) return 0
-  return orders.reduce((sum, order) => sum + order.totalAmount, 0) / orders.length
+  if (orders.value.length === 0) return 0
+  return orders.value.reduce((sum, order) => sum + order.totalAmount, 0) / orders.value.length
 })
 </script>
