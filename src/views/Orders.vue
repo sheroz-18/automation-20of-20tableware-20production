@@ -141,7 +141,7 @@
           <div>
             <p class="text-sm text-slate-600">Номер заказа</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.orderNumber }}
+              {{ modal.selectedItem.value?.orderNumber }}
             </p>
           </div>
           <div>
