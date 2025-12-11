@@ -5,6 +5,19 @@
       <p class="text-slate-600 mt-2">Подробный анализ показателей производства</p>
     </div>
 
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <OrdersChart :orders="orders" />
+      <RevenueChart :records="financialRecords" />
+    </div>
+
+    <div class="grid grid-cols-1 gap-6">
+      <ProductionChart :batches="productionBatches" />
+    </div>
+
+    <div class="grid grid-cols-1 gap-6">
+      <StockChart :materials="rawMaterials" />
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <p class="text-gray-700 text-sm mb-2">Средний размер заказа</p>
