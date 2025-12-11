@@ -274,6 +274,57 @@
           </div>
         </div>
 
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">URL изображения товара</label>
+          <input
+            v-model="formData.image"
+            type="url"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+            placeholder="https://..."
+          />
+          <p v-if="formData.image" class="mt-2 text-xs text-slate-600">
+            Предпросмотр:
+            <img
+              :src="formData.image"
+              :alt="formData.name"
+              class="mt-2 h-32 rounded border border-slate-200 object-cover"
+              @error="handleImageError"
+            />
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Материал</label>
+            <input
+              v-model="formData.material"
+              type="text"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+              placeholder="Керамика, Фарфор, Стекло..."
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Размер</label>
+            <input
+              v-model="formData.size"
+              type="text"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+              placeholder="Ø 27 см, H 8 см..."
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Вес (кг)</label>
+          <input
+            v-model.number="formData.weight"
+            type="number"
+            step="0.01"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+            placeholder="0.65"
+          />
+        </div>
+
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Количество</label>
