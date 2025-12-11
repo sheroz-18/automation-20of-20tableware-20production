@@ -27,6 +27,9 @@ const orders = ref<Order[]>([])
 const inventory = ref<InventoryItem[]>([])
 const financialRecords = ref<FinancialRecord[]>([])
 const productionBatches = ref<ProductionBatch[]>([])
+const rawMaterials = ref<RawMaterial[]>([])
+const finishedGoods = ref<FinishedGood[]>([])
+const stockMovements = ref<StockMovement[]>([])
 
 const loadFromStorage = <T>(key: string, defaultValue: T[]): T[] => {
   try {
