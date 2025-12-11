@@ -128,7 +128,7 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">Категория</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.category }}</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.category }}</p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Статус</p>
