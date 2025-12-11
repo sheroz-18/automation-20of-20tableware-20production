@@ -8,6 +8,10 @@ export interface Product {
   unitCost: number
   status: 'in_stock' | 'low_stock' | 'out_of_stock'
   lastUpdated: string
+  image: string
+  material: string
+  size: string
+  weight: number
 }
 
 export interface InventoryItem {
