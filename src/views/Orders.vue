@@ -414,6 +414,7 @@ import type { Order } from '../types'
 
 const modal = useModal()
 const { orders } = useAppState()
+const { addNotification } = useNotification()
 
 const searchQuery = ref('')
 const statusFilter = ref('')
