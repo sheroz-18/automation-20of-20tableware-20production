@@ -260,7 +260,7 @@
     >
       <div class="space-y-4">
         <p class="text-slate-700">
-          Вы уверены, что хотите удалить товар <strong>{{ modal.selectedItem?.name }}</strong
+          Вы уверены, что хотите удалить товар <strong>{{ modal.selectedItem.value?.name }}</strong
           >?
         </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
