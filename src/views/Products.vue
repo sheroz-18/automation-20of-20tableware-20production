@@ -350,7 +350,7 @@ const saveProduct = () => {
     return
   }
 
-  if (modal.isCreateModal) {
+  if (modal.isCreateModal.value) {
     const newProduct: Product = {
       id: Math.random().toString(36).substr(2, 9),
       name: formData.value.name || '',
@@ -363,11 +363,11 @@ const saveProduct = () => {
       lastUpdated: new Date().toISOString().split('T')[0],
     }
     products.value.push(newProduct)
-  } else if (modal.isEditModal && modal.selectedItem) {
-    const index = products.value.findIndex((p) => p.id === modal.selectedItem.id)
+  } else if (modal.isEditModal.value && modal.selectedItem.value) {
+    const index = products.value.findIndex((p) => p.id === modal.selectedItem.value?.id)
     if (index !== -1) {
       products.value[index] = {
-        ...modal.selectedItem,
+        ...modal.selectedItem.value,
         ...formData.value,
         status:
           formData.value.quantity === 0
@@ -375,14 +375,14 @@ const saveProduct = () => {
             : formData.value.quantity! < formData.value.reorderLevel!
               ? 'low_stock'
               : 'in_stock',
-      }
+      } as Product
     }
   }
   modal.closeModal()
 }
 
 const deleteProduct = () => {
-  const index = products.value.findIndex((p) => p.id === modal.selectedItem.id)
+  const index = products.value.findIndex((p) => p.id === modal.selectedItem.value?.id)
   if (index !== -1) {
     products.value.splice(index, 1)
   }
