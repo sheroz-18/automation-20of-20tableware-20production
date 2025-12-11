@@ -305,7 +305,7 @@
       <div class="space-y-4">
         <p class="text-slate-700">
           Вы уверены, что хотите удалить операцию
-          <strong>{{ modal.selectedItem?.description }}</strong
+          <strong>{{ modal.selectedItem.value?.description }}</strong
           >?
         </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
