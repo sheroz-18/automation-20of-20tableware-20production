@@ -435,6 +435,8 @@ const saveBatch = () => {
       endDate: formData.value.endDate || '',
       createdDate: new Date().toISOString().split('T')[0],
       category: selectedProduct?.category || '',
+      currentStage: 1,
+      stages: initializeStages(),
     }
     productionBatches.value.push(newBatch)
   } else if (modal.isEditModal.value && modal.selectedItem.value) {
