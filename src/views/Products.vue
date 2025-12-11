@@ -308,8 +308,9 @@ const formData = ref<Partial<Product>>({
 })
 
 onMounted(() => {
-  storage.initializeStorage(products, [], [], [])
-  storage.watchForChanges(products, [], [], [])
+  const emptyArray = ref<any[]>([])
+  storage.initializeStorage(products, emptyArray, emptyArray, emptyArray)
+  storage.watchForChanges(products, emptyArray, emptyArray, emptyArray)
 })
 
 const filteredProducts = computed(() => {
