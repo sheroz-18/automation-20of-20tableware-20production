@@ -333,17 +333,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { financialRecords as mockRecords } from '../data/mockData'
+import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
-import { useStorage } from '../composables/useStorage'
+import { useAppState } from '../composables/useAppState'
 import ModalBase from '../components/ModalBase.vue'
 import type { FinancialRecord } from '../types'
 
 const modal = useModal()
-const storage = useStorage()
-
-const financialRecords = ref<FinancialRecord[]>([...mockRecords])
+const { financialRecords } = useAppState()
 
 const formData = ref<Partial<FinancialRecord>>({
   date: new Date().toISOString().split('T')[0],
@@ -352,11 +349,6 @@ const formData = ref<Partial<FinancialRecord>>({
   amount: 0,
   category: 'Продажи',
   reference: '',
-})
-
-onMounted(() => {
-  storage.initializeStorage([], [], [], financialRecords)
-  storage.watchForChanges([], [], [], financialRecords)
 })
 
 const incomeRecords = computed(() => financialRecords.value.filter((r) => r.type === 'income'))
