@@ -192,19 +192,19 @@
             <p
               :class="[
                 'text-lg font-semibold',
-                modal.selectedItem?.variance === 0
+                modal.selectedItem.value?.variance === 0
                   ? 'text-slate-900'
-                  : modal.selectedItem?.variance! > 0
+                  : modal.selectedItem.value?.variance! > 0
                     ? 'text-green-600'
                     : 'text-red-600',
               ]"
             >
               {{
-                modal.selectedItem?.variance === 0
+                modal.selectedItem.value?.variance === 0
                   ? '±0'
-                  : modal.selectedItem?.variance! > 0
-                    ? '+' + modal.selectedItem?.variance
-                    : modal.selectedItem?.variance
+                  : modal.selectedItem.value?.variance! > 0
+                    ? '+' + modal.selectedItem.value?.variance
+                    : modal.selectedItem.value?.variance
               }}
             </p>
           </div>
