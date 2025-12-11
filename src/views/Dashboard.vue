@@ -298,16 +298,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
+import { useWarningNotifications } from '../composables/useWarningNotifications'
 import MetricCard from '../components/MetricCard.vue'
 import ModalBase from '../components/ModalBase.vue'
 
 const router = useRouter()
 const modal = useModal()
-const { orders, products } = useAppState()
+const { orders, products, rawMaterials } = useAppState()
+const { checkMaterialWarnings, checkOrderWarnings, checkStockPrewarnings } =
+  useWarningNotifications()
+
+onMounted(() => {
+  setTimeout(() => {
+    checkMaterialWarnings(rawMaterials.value)
+    checkOrderWarnings(orders.value)
+    checkStockPrewarnings(rawMaterials.value)
+  }, 1000)
+})
 
 const recentOrders = computed(() => orders.value.slice(0, 3))
 
@@ -332,20 +343,20 @@ const getTotalItems = (order: any) => {
 
 const getOrderStatusBadge = (status: string) => {
   const badges: Record<string, string> = {
-    pending: 'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium',
-    processing: 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium',
-    completed: 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium',
-    shipped: 'px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium',
+    принят: 'px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium',
+    'в производстве': 'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium',
+    'на складе': 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium',
+    отправлен: 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium',
   }
   return badges[status] || 'px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium'
 }
 
 const getOrderStatusLabel = (status: string) => {
   const labels: Record<string, string> = {
-    pending: 'Ожидание',
-    processing: 'Обработка',
-    completed: 'Завершено',
-    shipped: 'Отправлено',
+    принят: 'Принят',
+    'в производстве': 'В производстве',
+    'на складе': 'На складе',
+    отправлен: 'Отправлен',
   }
   return labels[status] || 'Неизвестно'
 }

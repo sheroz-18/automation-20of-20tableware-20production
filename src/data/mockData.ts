@@ -138,6 +138,7 @@ export const orders: Order[] = [
     id: '1',
     orderNumber: 'ORD-2024-001',
     customerName: 'ООО Ресторан "Гурман"',
+    customerType: 'wholesale',
     items: [
       {
         productId: '1',
@@ -155,7 +156,7 @@ export const orders: Order[] = [
       },
     ],
     totalAmount: 360.0,
-    status: 'processing',
+    status: 'в производстве',
     createdDate: '2024-12-08',
     dueDate: '2024-12-15',
   },
@@ -163,6 +164,7 @@ export const orders: Order[] = [
     id: '2',
     orderNumber: 'ORD-2024-002',
     customerName: 'Отель "Премиум"',
+    customerType: 'wholesale',
     items: [
       {
         productId: '4',
@@ -180,7 +182,7 @@ export const orders: Order[] = [
       },
     ],
     totalAmount: 421.0,
-    status: 'completed',
+    status: 'на складе',
     createdDate: '2024-12-05',
     dueDate: '2024-12-12',
   },
@@ -188,6 +190,7 @@ export const orders: Order[] = [
     id: '3',
     orderNumber: 'ORD-2024-003',
     customerName: 'Café "Ароматный мир"',
+    customerType: 'shop',
     items: [
       {
         productId: '2',
@@ -198,7 +201,7 @@ export const orders: Order[] = [
       },
     ],
     totalAmount: 384.0,
-    status: 'pending',
+    status: 'принят',
     createdDate: '2024-12-10',
     dueDate: '2024-12-20',
   },
@@ -206,6 +209,7 @@ export const orders: Order[] = [
     id: '4',
     orderNumber: 'ORD-2024-004',
     customerName: 'Розничная сеть "Кухня"',
+    customerType: 'shop',
     items: [
       {
         productId: '1',
@@ -230,7 +234,7 @@ export const orders: Order[] = [
       },
     ],
     totalAmount: 1770.0,
-    status: 'shipped',
+    status: 'отправлен',
     createdDate: '2024-12-01',
     dueDate: '2024-12-10',
   },
@@ -238,6 +242,7 @@ export const orders: Order[] = [
     id: '5',
     orderNumber: 'ORD-2024-005',
     customerName: 'Гостиница "Континент"',
+    customerType: 'wholesale',
     items: [
       {
         productId: '6',
@@ -255,7 +260,7 @@ export const orders: Order[] = [
       },
     ],
     totalAmount: 550.0,
-    status: 'completed',
+    status: 'на складе',
     createdDate: '2024-12-06',
     dueDate: '2024-12-13',
   },
