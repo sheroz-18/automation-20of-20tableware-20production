@@ -246,8 +246,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useAppState } from '../composables/useAppState'
+import OrdersChart from '../components/charts/OrdersChart.vue'
+import ProductionChart from '../components/charts/ProductionChart.vue'
+import StockChart from '../components/charts/StockChart.vue'
+import RevenueChart from '../components/charts/RevenueChart.vue'
 
-const { orders } = useAppState()
+const { orders, financialRecords, productionBatches, rawMaterials } = useAppState()
 
 const avgOrderValue = computed(() => {
   if (orders.value.length === 0) return 0
