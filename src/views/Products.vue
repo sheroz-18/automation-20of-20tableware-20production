@@ -501,6 +501,11 @@ const deleteProduct = () => {
   modal.closeModal()
 }
 
+const handleImageError = (event: Event) => {
+  const img = event.target as HTMLImageElement
+  img.style.display = 'none'
+}
+
 const getGradientColor = (category: string): string => {
   const gradients: Record<string, string> = {
     Тарелки: 'from-blue-400 to-blue-600',
