@@ -234,14 +234,14 @@
     </div>
 
     <ModalBase
-      :is-open="modal.isOpen"
+      :is-open="modal.isOpen.value"
       :title="getModalTitle()"
       :show-actions="true"
-      :show-save-button="modal.isEditModal || modal.isCreateModal"
+      :show-save-button="modal.isEditModal.value || modal.isCreateModal.value"
       @close="modal.closeModal"
       @save="modal.closeModal"
     >
-      <div v-if="modal.contentType === 'order' && modal.selectedItem" class="space-y-4">
+      <div v-if="modal.contentType.value === 'order' && modal.selectedItem" class="space-y-4">
         <div class="grid grid-cols-2 gap-4">
           <div>
             <p class="text-sm text-slate-600">Номер заказа</p>
