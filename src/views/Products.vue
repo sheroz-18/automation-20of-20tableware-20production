@@ -143,6 +143,15 @@
       @save="saveProduct"
     >
       <div v-if="modal.isViewModal.value" class="space-y-6">
+        <div class="w-full h-64 rounded-lg overflow-hidden border border-slate-200">
+          <img
+            :src="modal.selectedItem.value?.image"
+            :alt="modal.selectedItem.value?.name"
+            class="w-full h-full object-cover"
+            @error="handleImageError"
+          />
+        </div>
+
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-gray-700">Название</p>
@@ -156,6 +165,24 @@
             <p class="text-sm text-gray-700">Категория</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.category }}
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-700">Материал</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.material }}
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-700">Размер</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.size }}
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-700">Вес</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.weight }} кг
             </p>
           </div>
           <div>
