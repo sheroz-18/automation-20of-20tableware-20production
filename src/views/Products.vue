@@ -150,7 +150,7 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">Цена за единицу</p>
-            <p class="text-lg font-semibold text-slate-900">₽{{ modal.selectedItem?.unitCost }}</p>
+            <p class="text-lg font-semibold text-slate-900">₽{{ modal.selectedItem.value?.unitCost }}</p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Последнее обновление</p>
