@@ -144,10 +144,22 @@
         </div>
       </div>
     </footer>
+
+    <NotificationToast />
+    <NotificationPanel :is-open="showNotificationPanel" @close="showNotificationPanel = false" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue'
+import { useNotification } from './composables/useNotification'
+import NotificationToast from './components/NotificationToast.vue'
+import NotificationPanel from './components/NotificationPanel.vue'
+
+const { getUnreadCount } = useNotification()
+const showNotificationPanel = ref(false)
+const unreadCount = computed(() => getUnreadCount())
+
 const navItems = [
   { path: '/', label: 'Панель управления' },
   { path: '/inventory', label: 'Инвентаризация' },
