@@ -67,5 +67,6 @@ export function useAppState() {
     orders,
     inventory,
     financialRecords,
+    productionBatches,
   }
 }
