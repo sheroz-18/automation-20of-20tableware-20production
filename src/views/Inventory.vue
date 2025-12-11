@@ -409,7 +409,7 @@ const saveInventory = () => {
 }
 
 const deleteInventory = () => {
-  const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.id)
+  const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
   if (index !== -1) {
     inventory.value.splice(index, 1)
   }
