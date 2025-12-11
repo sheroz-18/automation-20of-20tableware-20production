@@ -24,6 +24,7 @@ export function useModal() {
     isOpen.value = true
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const openEditModal = (item: any, type: ModalContent) => {
     selectedItem.value = JSON.parse(JSON.stringify(item))
     modalType.value = 'edit'
@@ -38,6 +39,7 @@ export function useModal() {
     isOpen.value = true
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const openDeleteModal = (item: any, type: ModalContent) => {
     selectedItem.value = item
     modalType.value = 'delete'
