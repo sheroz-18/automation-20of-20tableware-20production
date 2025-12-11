@@ -176,7 +176,7 @@
             Редактировать
           </button>
           <button
-            @click="modal.openDeleteModal(modal.selectedItem, 'product')"
+            @click="modal.openDeleteModal(modal.selectedItem.value, 'product')"
             class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition"
           >
             Удалить
