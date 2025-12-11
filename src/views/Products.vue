@@ -103,59 +103,63 @@
     </div>
 
     <ModalBase
-      :is-open="modal.isOpen && modal.contentType === 'product'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'product'"
       :title="
-        modal.isCreateModal
+        modal.isCreateModal.value
           ? 'Создать товар'
-          : modal.isEditModal
+          : modal.isEditModal.value
             ? 'Редактировать товар'
             : 'Информация о товаре'
       "
       :show-actions="true"
-      :show-save-button="modal.isCreateModal || modal.isEditModal"
+      :show-save-button="modal.isCreateModal.value || modal.isEditModal.value"
       @close="modal.closeModal"
       @save="saveProduct"
     >
-      <div v-if="modal.isViewModal" class="space-y-6">
+      <div v-if="modal.isViewModal.value" class="space-y-6">
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-slate-600">Название</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.name }}</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.name }}</p>
           </div>
           <div>
             <p class="text-sm text-slate-600">SKU</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.sku }}</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.sku }}</p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Категория</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.category }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.category }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Статус</p>
-            <span :class="getStatusBadge(modal.selectedItem?.status)">
-              {{ getStatusLabel(modal.selectedItem?.status) }}
+            <span :class="getStatusBadge(modal.selectedItem.value?.status)">
+              {{ getStatusLabel(modal.selectedItem.value?.status) }}
             </span>
           </div>
           <div>
             <p class="text-sm text-slate-600">Количество</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.quantity }} шт
+              {{ modal.selectedItem.value?.quantity }} шт
             </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Уровень переказа</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.reorderLevel }} шт
+              {{ modal.selectedItem.value?.reorderLevel }} шт
             </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Цена за единицу</p>
-            <p class="text-lg font-semibold text-slate-900">₽{{ modal.selectedItem?.unitCost }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              ₽{{ modal.selectedItem.value?.unitCost }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Последнее обновление</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.lastUpdated }}
+              {{ modal.selectedItem.value?.lastUpdated }}
             </p>
           </div>
         </div>
@@ -164,7 +168,7 @@
           <button
             @click="
               () => {
-                modal.openEditModal(modal.selectedItem, 'product')
+                modal.openEditModal(modal.selectedItem.value, 'product')
               }
             "
             class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition"
@@ -172,7 +176,7 @@
             Редактировать
           </button>
           <button
-            @click="modal.openDeleteModal(modal.selectedItem, 'product')"
+            @click="modal.openDeleteModal(modal.selectedItem.value, 'product')"
             class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition"
           >
             Удалить
@@ -252,15 +256,15 @@
     </ModalBase>
 
     <ModalBase
-      v-if="modal.modalType === 'delete'"
-      :is-open="modal.isOpen && modal.contentType === 'product'"
+      v-if="modal.modalType.value === 'delete'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'product'"
       title="Подтвердить удаление"
       :show-actions="true"
       @close="modal.closeModal"
     >
       <div class="space-y-4">
         <p class="text-slate-700">
-          Вы уверены, что хотите удалить товар <strong>{{ modal.selectedItem?.name }}</strong
+          Вы уверены, что хотите удалить товар <strong>{{ modal.selectedItem.value?.name }}</strong
           >?
         </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
@@ -308,8 +312,10 @@ const formData = ref<Partial<Product>>({
 })
 
 onMounted(() => {
-  storage.initializeStorage(products, [], [], [])
-  storage.watchForChanges(products, [], [], [])
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const emptyArray = ref<any[]>([])
+  storage.initializeStorage(products, emptyArray, emptyArray, emptyArray)
+  storage.watchForChanges(products, emptyArray, emptyArray, emptyArray)
 })
 
 const filteredProducts = computed(() => {
@@ -349,7 +355,7 @@ const saveProduct = () => {
     return
   }
 
-  if (modal.isCreateModal) {
+  if (modal.isCreateModal.value) {
     const newProduct: Product = {
       id: Math.random().toString(36).substr(2, 9),
       name: formData.value.name || '',
@@ -362,11 +368,11 @@ const saveProduct = () => {
       lastUpdated: new Date().toISOString().split('T')[0],
     }
     products.value.push(newProduct)
-  } else if (modal.isEditModal && modal.selectedItem) {
-    const index = products.value.findIndex((p) => p.id === modal.selectedItem.id)
+  } else if (modal.isEditModal.value && modal.selectedItem.value) {
+    const index = products.value.findIndex((p) => p.id === modal.selectedItem.value?.id)
     if (index !== -1) {
       products.value[index] = {
-        ...modal.selectedItem,
+        ...modal.selectedItem.value,
         ...formData.value,
         status:
           formData.value.quantity === 0
@@ -374,14 +380,14 @@ const saveProduct = () => {
             : formData.value.quantity! < formData.value.reorderLevel!
               ? 'low_stock'
               : 'in_stock',
-      }
+      } as Product
     }
   }
   modal.closeModal()
 }
 
 const deleteProduct = () => {
-  const index = products.value.findIndex((p) => p.id === modal.selectedItem.id)
+  const index = products.value.findIndex((p) => p.id === modal.selectedItem.value?.id)
   if (index !== -1) {
     products.value.splice(index, 1)
   }

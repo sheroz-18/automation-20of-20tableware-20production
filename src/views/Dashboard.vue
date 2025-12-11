@@ -234,33 +234,33 @@
     </div>
 
     <ModalBase
-      :is-open="modal.isOpen"
+      :is-open="modal.isOpen.value"
       :title="getModalTitle()"
       :show-actions="true"
-      :show-save-button="modal.isEditModal || modal.isCreateModal"
+      :show-save-button="modal.isEditModal.value || modal.isCreateModal.value"
       @close="modal.closeModal"
       @save="modal.closeModal"
     >
-      <div v-if="modal.contentType === 'order' && modal.selectedItem" class="space-y-4">
+      <div v-if="modal.contentType.value === 'order' && modal.selectedItem.value" class="space-y-4">
         <div class="grid grid-cols-2 gap-4">
           <div>
             <p class="text-sm text-slate-600">Номер заказа</p>
-            <p class="font-semibold text-slate-900">{{ modal.selectedItem.orderNumber }}</p>
+            <p class="font-semibold text-slate-900">{{ modal.selectedItem.value?.orderNumber }}</p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Клиент</p>
-            <p class="font-semibold text-slate-900">{{ modal.selectedItem.customerName }}</p>
+            <p class="font-semibold text-slate-900">{{ modal.selectedItem.value?.customerName }}</p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Статус</p>
-            <span :class="getOrderStatusBadge(modal.selectedItem.status)">
-              {{ getOrderStatusLabel(modal.selectedItem.status) }}
+            <span :class="getOrderStatusBadge(modal.selectedItem.value?.status)">
+              {{ getOrderStatusLabel(modal.selectedItem.value?.status) }}
             </span>
           </div>
           <div>
             <p class="text-sm text-slate-600">Сумма</p>
             <p class="font-semibold text-slate-900">
-              ₽{{ modal.selectedItem.totalAmount.toFixed(2) }}
+              ₽{{ modal.selectedItem.value?.totalAmount?.toFixed(2) }}
             </p>
           </div>
         </div>
@@ -271,16 +271,19 @@
         </div>
       </div>
 
-      <div v-else-if="modal.contentType === 'product' && modal.selectedItem" class="space-y-4">
+      <div
+        v-else-if="modal.contentType.value === 'product' && modal.selectedItem.value"
+        class="space-y-4"
+      >
         <div class="grid grid-cols-2 gap-4">
           <div>
             <p class="text-sm text-slate-600">Товар</p>
-            <p class="font-semibold text-slate-900">{{ modal.selectedItem.name }}</p>
+            <p class="font-semibold text-slate-900">{{ modal.selectedItem.value?.name }}</p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Статус</p>
-            <span :class="getProductStatusBadge(modal.selectedItem.status)">
-              {{ getProductStatusLabel(modal.selectedItem.status) }}
+            <span :class="getProductStatusBadge(modal.selectedItem.value?.status)">
+              {{ getProductStatusLabel(modal.selectedItem.value?.status) }}
             </span>
           </div>
         </div>
@@ -311,7 +314,9 @@ const orders = ref([...mockOrders])
 const products = ref([...mockProducts])
 
 onMounted(() => {
-  storage.initializeStorage(products, orders, [], [])
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const emptyArray = ref<any[]>([])
+  storage.initializeStorage(products, orders, emptyArray, emptyArray)
 })
 
 const recentOrders = computed(() => orders.value.slice(0, 3))
@@ -382,8 +387,8 @@ const navigateToFinance = (type: string) => {
 }
 
 const getModalTitle = () => {
-  if (modal.contentType === 'order') return 'Информация о заказе'
-  if (modal.contentType === 'product') return 'Информация о товаре'
+  if (modal.contentType.value === 'order') return 'Информация о заказе'
+  if (modal.contentType.value === 'product') return 'Информация о товаре'
   return 'Информация'
 }
 </script>

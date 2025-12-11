@@ -58,6 +58,7 @@ const changeTextColor = computed(() => {
 })
 
 const IconComponent = computed(() => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const icons: Record<string, any> = {
     'trending-up': defineComponent({
       template:
