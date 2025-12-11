@@ -376,6 +376,14 @@ export const dashboardMetrics: DashboardMetrics = {
   productionChange: 15.7,
 }
 
+const PRODUCTION_STAGES = [
+  { stageNumber: 1, stageName: 'подготовка сырья' },
+  { stageNumber: 2, stageName: 'формовка' },
+  { stageNumber: 3, stageName: 'обжиг/обработка' },
+  { stageNumber: 4, stageName: 'упаковка' },
+  { stageNumber: 5, stageName: 'готовность' },
+]
+
 export const productionBatches: ProductionBatch[] = [
   {
     id: '1',
@@ -388,6 +396,14 @@ export const productionBatches: ProductionBatch[] = [
     endDate: '2024-12-15',
     createdDate: '2024-12-08',
     category: 'Тарелки',
+    currentStage: 3,
+    stages: [
+      { stageNumber: 1, stageName: 'подготовка сырья', completed: true, completedDate: '2024-12-08' },
+      { stageNumber: 2, stageName: 'формовка', completed: true, completedDate: '2024-12-09' },
+      { stageNumber: 3, stageName: 'обжиг/обработка', completed: false },
+      { stageNumber: 4, stageName: 'упаковка', completed: false },
+      { stageNumber: 5, stageName: 'готовность', completed: false },
+    ],
   },
   {
     id: '2',
@@ -400,6 +416,14 @@ export const productionBatches: ProductionBatch[] = [
     endDate: '2024-12-20',
     createdDate: '2024-12-10',
     category: 'Чашки',
+    currentStage: 1,
+    stages: [
+      { stageNumber: 1, stageName: 'подготовка сырья', completed: false },
+      { stageNumber: 2, stageName: 'формовка', completed: false },
+      { stageNumber: 3, stageName: 'обжиг/обработка', completed: false },
+      { stageNumber: 4, stageName: 'упаковка', completed: false },
+      { stageNumber: 5, stageName: 'готовность', completed: false },
+    ],
   },
   {
     id: '3',
@@ -412,6 +436,14 @@ export const productionBatches: ProductionBatch[] = [
     endDate: '2024-12-08',
     createdDate: '2024-12-01',
     category: 'Миски',
+    currentStage: 5,
+    stages: [
+      { stageNumber: 1, stageName: 'подготовка сырья', completed: true, completedDate: '2024-12-01' },
+      { stageNumber: 2, stageName: 'формовка', completed: true, completedDate: '2024-12-02' },
+      { stageNumber: 3, stageName: 'обжиг/обработка', completed: true, completedDate: '2024-12-04' },
+      { stageNumber: 4, stageName: 'упаковка', completed: true, completedDate: '2024-12-06' },
+      { stageNumber: 5, stageName: 'готовность', completed: true, completedDate: '2024-12-08' },
+    ],
   },
   {
     id: '4',
@@ -424,6 +456,14 @@ export const productionBatches: ProductionBatch[] = [
     endDate: '2024-12-28',
     createdDate: '2024-12-10',
     category: 'Кухонная утварь',
+    currentStage: 1,
+    stages: [
+      { stageNumber: 1, stageName: 'подготовка сырья', completed: false },
+      { stageNumber: 2, stageName: 'формовка', completed: false },
+      { stageNumber: 3, stageName: 'обжиг/обработка', completed: false },
+      { stageNumber: 4, stageName: 'упаковка', completed: false },
+      { stageNumber: 5, stageName: 'готовность', completed: false },
+    ],
   },
   {
     id: '5',
@@ -436,6 +476,14 @@ export const productionBatches: ProductionBatch[] = [
     endDate: '2024-12-18',
     createdDate: '2024-12-09',
     category: 'Приборы',
+    currentStage: 2,
+    stages: [
+      { stageNumber: 1, stageName: 'подготовка сырья', completed: true, completedDate: '2024-12-09' },
+      { stageNumber: 2, stageName: 'формовка', completed: false },
+      { stageNumber: 3, stageName: 'обжиг/обработка', completed: false },
+      { stageNumber: 4, stageName: 'упаковка', completed: false },
+      { stageNumber: 5, stageName: 'готовность', completed: false },
+    ],
   },
   {
     id: '6',
@@ -448,5 +496,13 @@ export const productionBatches: ProductionBatch[] = [
     endDate: '2024-12-17',
     createdDate: '2024-12-09',
     category: 'Стеклянная посуда',
+    currentStage: 1,
+    stages: [
+      { stageNumber: 1, stageName: 'подготовка сырья', completed: false },
+      { stageNumber: 2, stageName: 'формовка', completed: false },
+      { stageNumber: 3, stageName: 'обжиг/обработка', completed: false },
+      { stageNumber: 4, stageName: 'упаковка', completed: false },
+      { stageNumber: 5, stageName: 'готовность', completed: false },
+    ],
   },
 ]
