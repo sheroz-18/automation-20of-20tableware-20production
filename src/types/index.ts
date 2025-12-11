@@ -30,9 +30,10 @@ export interface Order {
   customerName: string
   items: OrderItem[]
   totalAmount: number
-  status: 'pending' | 'processing' | 'completed' | 'shipped'
+  status: 'принят' | 'в производстве' | 'на складе' | 'отправлен'
   createdDate: string
   dueDate: string
+  customerType?: 'shop' | 'wholesale'
 }
 
 export interface OrderItem {
