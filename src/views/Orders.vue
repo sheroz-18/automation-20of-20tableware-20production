@@ -557,4 +557,22 @@ ${index + 1}. ${item.productName}
   element.click()
   document.body.removeChild(element)
 }
+
+const exportToExcel = () => {
+  if (filteredOrders.value.length === 0) {
+    addNotification('warning', 'Экспорт', 'Нет данных для экспорта')
+    return
+  }
+  exportOrdersToCSV(filteredOrders.value)
+  addNotification('success', 'Экспорт', 'Заказы успешно экспортированы в Excel')
+}
+
+const exportToPdf = () => {
+  if (filteredOrders.value.length === 0) {
+    addNotification('warning', 'Экспорт', 'Нет данных для экспорта')
+    return
+  }
+  exportOrdersToPrint(filteredOrders.value)
+  addNotification('success', 'Экспорт', 'Заказы готовы к печати в PDF')
+}
 </script>
