@@ -30,10 +30,21 @@
           class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">Все статусы</option>
-          <option value="pending">Ожидание</option>
-          <option value="processing">Обработка</option>
-          <option value="completed">Завершено</option>
-          <option value="shipped">Отправлено</option>
+          <option value="принят">Принят</option>
+          <option value="в производстве">В производстве</option>
+          <option value="на складе">На складе</option>
+          <option value="отправлен">Отправлен</option>
+        </select>
+      </div>
+      <div class="bg-white rounded-lg border border-slate-200 p-4">
+        <label class="text-sm font-medium text-slate-700 block mb-2">Тип клиента</label>
+        <select
+          v-model="customerTypeFilter"
+          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Все типы</option>
+          <option value="shop">Магазин</option>
+          <option value="wholesale">Оптовик</option>
         </select>
       </div>
     </div>
@@ -46,19 +57,19 @@
       <div
         class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-6 text-white shadow-sm"
       >
-        <p class="text-orange-100 text-sm mb-1">На обработке</p>
-        <p class="text-3xl font-bold">{{ ordersByStatus('pending', 'processing').length }}</p>
-      </div>
-      <div
-        class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-sm"
-      >
-        <p class="text-green-100 text-sm mb-1">Завершено</p>
-        <p class="text-3xl font-bold">{{ ordersByStatus('completed', 'shipped').length }}</p>
+        <p class="text-orange-100 text-sm mb-1">В производстве</p>
+        <p class="text-3xl font-bold">{{ ordersByStatus('в производстве').length }}</p>
       </div>
       <div
         class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white shadow-sm"
       >
-        <p class="text-purple-100 text-sm mb-1">Общая сумма</p>
+        <p class="text-purple-100 text-sm mb-1">На складе</p>
+        <p class="text-3xl font-bold">{{ ordersByStatus('на складе').length }}</p>
+      </div>
+      <div
+        class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-sm"
+      >
+        <p class="text-green-100 text-sm mb-1">Общая сумма</p>
         <p class="text-3xl font-bold">ЅМ{{ totalOrderValue.toFixed(0) }}</p>
       </div>
     </div>
@@ -72,18 +83,30 @@
         <div class="flex items-start justify-between mb-4">
           <div>
             <h3 class="font-semibold text-slate-900 text-lg">{{ order.orderNumber }}</h3>
-            <p class="text-slate-600 text-sm mt-1">{{ order.customerName }}</p>
+            <p class="text-slate-600 text-sm mt-1">
+              {{ order.customerName }}
+              <span
+                class="ml-2 px-2 py-1 rounded text-xs font-medium"
+                :class="
+                  order.customerType === 'wholesale'
+                    ? 'bg-indigo-100 text-indigo-700'
+                    : 'bg-amber-100 text-amber-700'
+                "
+              >
+                {{ order.customerType === 'wholesale' ? 'Оптовик' : 'Магазин' }}
+              </span>
+            </p>
           </div>
           <div class="text-right">
             <p class="font-bold text-slate-900 text-lg">ЅМ{{ order.totalAmount.toFixed(2) }}</p>
             <span :class="getStatusBadge(order.status)">
-              {{ getStatusLabel(order.status) }}
+              {{ order.status }}
             </span>
           </div>
         </div>
 
         <div class="mb-4 pb-4 border-b border-slate-200">
-          <p class="text-sm text-slate-600 mb-3">Товары:</p>
+          <p class="text-sm text-slate-600 mb-3">Товары ({{ order.items.length }}):</p>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
             <div
               v-for="item in order.items"
@@ -123,6 +146,12 @@
             >
               Редактировать
             </button>
+            <button
+              @click="generateInvoice(order)"
+              class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-medium transition"
+            >
+              Накладная
+            </button>
           </div>
         </div>
       </div>
@@ -151,9 +180,22 @@
             </p>
           </div>
           <div>
+            <p class="text-sm text-gray-700">Тип клиента</p>
+            <span
+              class="inline-block px-2 py-1 rounded text-xs font-medium"
+              :class="
+                modal.selectedItem.value?.customerType === 'wholesale'
+                  ? 'bg-indigo-100 text-indigo-700'
+                  : 'bg-amber-100 text-amber-700'
+              "
+            >
+              {{ modal.selectedItem.value?.customerType === 'wholesale' ? 'Оптовик' : 'Магазин' }}
+            </span>
+          </div>
+          <div>
             <p class="text-sm text-gray-700">Статус</p>
             <span :class="getStatusBadge(modal.selectedItem.value?.status)">
-              {{ getStatusLabel(modal.selectedItem.value?.status) }}
+              {{ modal.selectedItem.value?.status }}
             </span>
           </div>
           <div>
@@ -177,7 +219,7 @@
         </div>
 
         <div>
-          <p class="text-sm font-semibold text-gray-700 mb-3">Товары:</p>
+          <p class="text-sm font-semibold text-gray-700 mb-3">Товары ({{ modal.selectedItem.value?.items.length }}):</p>
           <div class="space-y-2">
             <div
               v-for="item in modal.selectedItem.value?.items"
@@ -198,6 +240,12 @@
         </div>
 
         <div class="flex gap-2 pt-4 border-t border-slate-200">
+          <button
+            @click="generateInvoice(modal.selectedItem.value)"
+            class="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition"
+          >
+            Сгенерировать накладную
+          </button>
           <button
             @click="
               () => {
@@ -239,6 +287,17 @@
           </div>
         </div>
 
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Тип клиента</label>
+          <select
+            v-model="formData.customerType"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+          >
+            <option value="shop">Магазин</option>
+            <option value="wholesale">Оптовик</option>
+          </select>
+        </div>
+
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Дата создания</label>
@@ -264,10 +323,10 @@
             v-model="formData.status"
             class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
           >
-            <option value="pending">Ожидание</option>
-            <option value="processing">Обработка</option>
-            <option value="completed">Завершено</option>
-            <option value="shipped">Отправлено</option>
+            <option value="принят">Принят</option>
+            <option value="в производстве">В производстве</option>
+            <option value="на складе">На складе</option>
+            <option value="отправлен">Отправлен</option>
           </select>
         </div>
 
@@ -329,11 +388,13 @@ const { orders } = useAppState()
 
 const searchQuery = ref('')
 const statusFilter = ref('')
+const customerTypeFilter = ref('')
 
 const formData = ref<Partial<Order>>({
   orderNumber: '',
   customerName: '',
-  status: 'pending',
+  customerType: 'shop',
+  status: 'принят',
   createdDate: new Date().toISOString().split('T')[0],
   dueDate: new Date().toISOString().split('T')[0],
   totalAmount: 0,
@@ -346,7 +407,9 @@ const filteredOrders = computed(() => {
       order.orderNumber.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       order.customerName.toLowerCase().includes(searchQuery.value.toLowerCase())
     const matchesStatus = !statusFilter.value || order.status === statusFilter.value
-    return matchesSearch && matchesStatus
+    const matchesCustomerType =
+      !customerTypeFilter.value || order.customerType === customerTypeFilter.value
+    return matchesSearch && matchesStatus && matchesCustomerType
   })
 })
 
@@ -354,8 +417,8 @@ const totalOrderValue = computed(() => {
   return orders.value.reduce((sum, order) => sum + order.totalAmount, 0)
 })
 
-const ordersByStatus = (status1: string, status2: string) => {
-  return orders.value.filter((o) => o.status === status1 || o.status === status2)
+const ordersByStatus = (status: string) => {
+  return orders.value.filter((o) => o.status === status)
 }
 
 const saveOrder = () => {
@@ -370,7 +433,7 @@ const saveOrder = () => {
       orders.value[index] = {
         ...modal.selectedItem.value,
         ...formData.value,
-      }
+      } as Order
     }
   }
   modal.closeModal()
@@ -386,21 +449,82 @@ const deleteOrder = () => {
 
 const getStatusBadge = (status: string) => {
   const badges: Record<string, string> = {
-    pending: 'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium',
-    processing: 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium',
-    completed: 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium',
-    shipped: 'px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium',
+    принят: 'px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium',
+    'в производстве':
+      'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium',
+    'на складе': 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium',
+    отправлен: 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium',
   }
-  return badges[status] || 'px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-medium'
+  return (
+    badges[status] || 'px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-medium'
+  )
 }
 
-const getStatusLabel = (status: string) => {
-  const labels: Record<string, string> = {
-    pending: 'Ожидание',
-    processing: 'Обработка',
-    completed: 'Завершено',
-    shipped: 'Отправлено',
-  }
-  return labels[status] || 'Неизвестно'
+const generateInvoice = (order: Order | undefined) => {
+  if (!order) return
+
+  const invoiceNumber = `НАК-${order.orderNumber.split('-')[1]}-${new Date().getTime()}`
+  const currentDate = new Date().toLocaleDateString('ru-RU')
+
+  let invoiceContent = `
+╔════════════════════════════════════════════════════════════════╗
+║                        НАКЛАДНАЯ                               ║
+║                   (Delivery Note)                              ║
+╚════════════════════════════════════════════════════════════════╝
+
+Номер накладной: ${invoiceNumber}
+Дата выдачи: ${currentDate}
+Номер заказа: ${order.orderNumber}
+
+─────────────────────────────────────────────────────────────────
+
+ПОЛУЧАТЕЛЬ:
+${order.customerName}
+Тип: ${order.customerType === 'wholesale' ? 'Оптовик' : 'Магазин'}
+
+─────────────────────────────────────────────────────────────────
+
+ТОВАРЫ И УСЛУГИ:
+
+`
+
+  order.items.forEach((item, index) => {
+    invoiceContent += `
+${index + 1}. ${item.productName}
+   Кол-во: ${item.quantity} шт
+   Цена за единицу: ЅМ${item.unitPrice.toFixed(2)}
+   Сумма: ЅМ${item.subtotal.toFixed(2)}
+`
+  })
+
+  invoiceContent += `
+─────────────────────────────────────────────────────────────────
+
+ИТОГО:
+Количество позиций: ${order.items.length}
+Общее количество товара: ${order.items.reduce((sum, item) => sum + item.quantity, 0)} шт
+Сумма к оплате: ЅМ${order.totalAmount.toFixed(2)}
+
+─────────────────────────────────────────────────────────────────
+
+СТАТУС ЗАКАЗА: ${order.status}
+Дата создания заказа: ${order.createdDate}
+Срок выполнения: ${order.dueDate}
+
+─────────────────────────────────────────────────────────────────
+
+Подпись ответственного лица: _________________
+Дата подписи: _________________
+
+═════════════════════════════════════════════════════════════════
+`
+
+  const element = document.createElement('a')
+  const file = new Blob([invoiceContent], { type: 'text/plain;charset=utf-8' })
+  element.href = URL.createObjectURL(file)
+  element.download = `Nakladnaya_${invoiceNumber}.txt`
+  document.body.appendChild(element)
+  element.click()
+  document.body.removeChild(element)
 }
 </script>
