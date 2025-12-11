@@ -1,4 +1,5 @@
-import { ref, watch, Ref } from 'vue'
+import { ref, watch } from 'vue'
+import type { Ref } from 'vue'
 
 const STORAGE_KEY_PRODUCTS = 'produceflow_products'
 const STORAGE_KEY_ORDERS = 'produceflow_orders'
