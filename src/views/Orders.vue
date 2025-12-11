@@ -165,7 +165,7 @@
           <div>
             <p class="text-sm text-slate-600">Создан</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.createdDate }}
+              {{ modal.selectedItem.value?.createdDate }}
             </p>
           </div>
           <div>
