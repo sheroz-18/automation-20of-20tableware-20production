@@ -352,6 +352,14 @@ const { products, productionBatches } = useAppState()
 const searchQuery = ref('')
 const statusFilter = ref('')
 
+const PRODUCTION_STAGES_LIST: ProductionStage[] = [
+  { stageNumber: 1, stageName: 'подготовка сырья', completed: false },
+  { stageNumber: 2, stageName: 'формовка', completed: false },
+  { stageNumber: 3, stageName: 'обжиг/обработка', completed: false },
+  { stageNumber: 4, stageName: 'упаковка', completed: false },
+  { stageNumber: 5, stageName: 'готовность', completed: false },
+]
+
 const formData = ref<Partial<ProductionBatch>>({
   batchNumber: '',
   productId: '',
@@ -359,6 +367,8 @@ const formData = ref<Partial<ProductionBatch>>({
   startDate: '',
   endDate: '',
   status: 'planning',
+  currentStage: 1,
+  stages: [],
 })
 
 const filteredBatches = computed(() => {
