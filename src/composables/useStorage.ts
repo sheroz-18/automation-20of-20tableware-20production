@@ -33,25 +33,29 @@ export function useStorage() {
     const storedFinance = loadFromStorage(STORAGE_KEY_FINANCE, null)
 
     if (storedProducts && Array.isArray(storedProducts)) {
-      products.value.splice(0, products.value.length, ...storedProducts)
+      const arr = storedProducts as any[]
+      products.value.splice(0, products.value.length, ...arr)
     } else {
       saveToStorage(STORAGE_KEY_PRODUCTS, products.value)
     }
 
     if (storedOrders && Array.isArray(storedOrders)) {
-      orders.value.splice(0, orders.value.length, ...storedOrders)
+      const arr = storedOrders as any[]
+      orders.value.splice(0, orders.value.length, ...arr)
     } else {
       saveToStorage(STORAGE_KEY_ORDERS, orders.value)
     }
 
     if (storedInventory && Array.isArray(storedInventory)) {
-      inventory.value.splice(0, inventory.value.length, ...storedInventory)
+      const arr = storedInventory as any[]
+      inventory.value.splice(0, inventory.value.length, ...arr)
     } else {
       saveToStorage(STORAGE_KEY_INVENTORY, inventory.value)
     }
 
     if (storedFinance && Array.isArray(storedFinance)) {
-      finance.value.splice(0, finance.value.length, ...storedFinance)
+      const arr = storedFinance as any[]
+      finance.value.splice(0, finance.value.length, ...arr)
     } else {
       saveToStorage(STORAGE_KEY_FINANCE, finance.value)
     }
