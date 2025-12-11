@@ -1,18 +1,18 @@
-import { ref, computed } from 'vue'
+import { ref, computed, Ref } from 'vue'
 
 export type ModalType = 'view' | 'edit' | 'create' | 'delete'
 export type ModalContent = 'product' | 'order' | 'inventory' | 'finance' | null
 
 export function useModal() {
-  const isOpen = ref(false)
+  const isOpen = ref<boolean>(false)
   const modalType = ref<ModalType>('view')
   const contentType = ref<ModalContent>(null)
   const selectedItem = ref<any>(null)
 
-  const isViewModal = computed(() => modalType.value === 'view')
-  const isEditModal = computed(() => modalType.value === 'edit')
-  const isCreateModal = computed(() => modalType.value === 'create')
-  const isDeleteModal = computed(() => modalType.value === 'delete')
+  const isViewModal = computed<boolean>(() => modalType.value === 'view')
+  const isEditModal = computed<boolean>(() => modalType.value === 'edit')
+  const isCreateModal = computed<boolean>(() => modalType.value === 'create')
+  const isDeleteModal = computed<boolean>(() => modalType.value === 'delete')
 
   const openViewModal = (item: any, type: ModalContent) => {
     selectedItem.value = JSON.parse(JSON.stringify(item))
