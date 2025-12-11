@@ -155,7 +155,7 @@
           <div>
             <p class="text-sm text-slate-600">Последнее обновление</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.lastUpdated }}
+              {{ modal.selectedItem.value?.lastUpdated }}
             </p>
           </div>
         </div>
