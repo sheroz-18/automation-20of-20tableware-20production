@@ -83,5 +83,8 @@ export function useAppState() {
     inventory,
     financialRecords,
     productionBatches,
+    rawMaterials,
+    finishedGoods,
+    stockMovements,
   }
 }
