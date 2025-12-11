@@ -159,7 +159,7 @@
           <div>
             <p class="text-sm text-slate-600">Сумма</p>
             <p class="text-lg font-semibold text-slate-900">
-              ₽{{ modal.selectedItem?.totalAmount.toFixed(2) }}
+              ₽{{ modal.selectedItem.value?.totalAmount.toFixed(2) }}
             </p>
           </div>
           <div>
