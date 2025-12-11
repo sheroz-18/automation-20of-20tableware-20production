@@ -175,11 +175,11 @@
             <p
               :class="[
                 'text-lg font-semibold',
-                modal.selectedItem?.type === 'income' ? 'text-green-600' : 'text-red-600',
+                modal.selectedItem.value?.type === 'income' ? 'text-green-600' : 'text-red-600',
               ]"
             >
-              {{ modal.selectedItem?.type === 'income' ? '+' : '-' }}₽{{
-                modal.selectedItem?.amount.toFixed(2)
+              {{ modal.selectedItem.value?.type === 'income' ? '+' : '-' }}₽{{
+                modal.selectedItem.value?.amount.toFixed(2)
               }}
             </p>
           </div>
