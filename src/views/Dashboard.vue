@@ -11,7 +11,7 @@
       <MetricCard
         icon="trending-up"
         label="Общая выручка"
-        value="₽4,651"
+        value="ЅМ4,651"
         change="+12.5%"
         changeType="positive"
       />
@@ -157,7 +157,7 @@
           >
             <div>
               <p class="text-sm text-green-700">Доход от продаж</p>
-              <p class="font-semibold text-green-900">₽3,681</p>
+              <p class="font-semibold text-green-900">ЅМ3,681</p>
             </div>
             <svg
               class="w-8 h-8 text-green-600"
@@ -180,7 +180,7 @@
           >
             <div>
               <p class="text-sm text-red-700">Расходы</p>
-              <p class="font-semibold text-red-900">₽6,650</p>
+              <p class="font-semibold text-red-900">ЅМ6,650</p>
             </div>
             <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -198,7 +198,7 @@
           >
             <div>
               <p class="text-sm text-slate-700">Баланс</p>
-              <p class="font-semibold text-slate-900">-₽2,969</p>
+              <p class="font-semibold text-slate-900">-ЅМ2,969</p>
             </div>
             <svg
               class="w-8 h-8 text-slate-600"
@@ -244,23 +244,23 @@
       <div v-if="modal.contentType.value === 'order' && modal.selectedItem" class="space-y-4">
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <p class="text-sm text-slate-600">Номер заказа</p>
+            <p class="text-sm text-gray-700">Номер заказа</p>
             <p class="font-semibold text-slate-900">{{ modal.selectedItem.value?.orderNumber }}</p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Клиент</p>
+            <p class="text-sm text-gray-700">Клиент</p>
             <p class="font-semibold text-slate-900">{{ modal.selectedItem.value?.customerName }}</p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Статус</p>
+            <p class="text-sm text-gray-700">Статус</p>
             <span :class="getOrderStatusBadge(modal.selectedItem.value?.status)">
               {{ getOrderStatusLabel(modal.selectedItem.value?.status) }}
             </span>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Сумма</p>
+            <p class="text-sm text-gray-700">Сумма</p>
             <p class="font-semibold text-slate-900">
-              ₽{{ modal.selectedItem.value?.totalAmount.toFixed(2) }}
+              ЅМ{{ modal.selectedItem.value?.totalAmount.toFixed(2) }}
             </p>
           </div>
         </div>
@@ -277,11 +277,11 @@
       >
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <p class="text-sm text-slate-600">Товар</p>
+            <p class="text-sm text-gray-700">Товар</p>
             <p class="font-semibold text-slate-900">{{ modal.selectedItem.value?.name }}</p>
           </div>
           <div>
-            <p class="text-sm text-slate-600">Статус</p>
+            <p class="text-sm text-gray-700">Статус</p>
             <span :class="getProductStatusBadge(modal.selectedItem.value?.status)">
               {{ getProductStatusLabel(modal.selectedItem.value?.status) }}
             </span>
