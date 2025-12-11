@@ -381,6 +381,10 @@ const filteredBatches = computed(() => {
   })
 })
 
+const initializeStages = (): ProductionStage[] => {
+  return JSON.parse(JSON.stringify(PRODUCTION_STAGES_LIST))
+}
+
 const openCreateModal = (type: any) => {
   const nextBatchNumber = `BATCH-2024-${String(productionBatches.value.length + 1).padStart(3, '0')}`
   formData.value = {
@@ -390,6 +394,8 @@ const openCreateModal = (type: any) => {
     startDate: new Date().toISOString().split('T')[0],
     endDate: '',
     status: 'planning',
+    currentStage: 1,
+    stages: initializeStages(),
   }
   modal.openCreateModal(type)
 }
