@@ -67,6 +67,7 @@ export function useStorage() {
     isInitialized.value = true
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const watchForChanges = (products: Ref<any[]>, orders: Ref<any[]>, inventory: Ref<any[]>, finance: Ref<any[]>) => {
     watch(products, (newVal) => saveToStorage(STORAGE_KEY_PRODUCTS, newVal), { deep: true })
     watch(orders, (newVal) => saveToStorage(STORAGE_KEY_ORDERS, newVal), { deep: true })
