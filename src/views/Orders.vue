@@ -283,15 +283,15 @@
     </ModalBase>
 
     <ModalBase
-      v-if="modal.modalType === 'delete'"
-      :is-open="modal.isOpen && modal.contentType === 'order'"
+      v-if="modal.modalType.value === 'delete'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'order'"
       title="Подтвердить удаление"
       :show-actions="true"
       @close="modal.closeModal"
     >
       <div class="space-y-4">
         <p class="text-slate-700">
-          Вы уверены, что хотите удалить заказ <strong>{{ modal.selectedItem?.orderNumber }}</strong
+          Вы уверены, что хотите удалить заказ <strong>{{ modal.selectedItem.value?.orderNumber }}</strong
           >?
         </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
