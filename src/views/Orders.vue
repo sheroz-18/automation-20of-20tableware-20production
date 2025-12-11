@@ -283,8 +283,8 @@
     </ModalBase>
 
     <ModalBase
-      v-if="modal.modalType === 'delete'"
-      :is-open="modal.isOpen && modal.contentType === 'order'"
+      v-if="modal.modalType.value === 'delete'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'order'"
       title="Подтвердить удаление"
       :show-actions="true"
       @close="modal.closeModal"
