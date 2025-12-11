@@ -46,7 +46,14 @@
         :key="product.id"
         class="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition overflow-hidden"
       >
-        <div class="h-40 bg-gradient-to-br" :class="getGradientColor(product.category)"></div>
+        <div class="h-48 bg-gradient-to-br overflow-hidden" :class="getGradientColor(product.category)">
+          <img
+            :src="product.image"
+            :alt="product.name"
+            class="w-full h-full object-cover"
+            @error="handleImageError"
+          />
+        </div>
 
         <div class="p-6">
           <div class="flex items-start justify-between mb-3">
@@ -63,14 +70,33 @@
             product.sku
           }}</code>
 
+          <div class="grid grid-cols-2 gap-3 mb-4 text-xs">
+            <div class="p-2 rounded bg-slate-50">
+              <p class="text-slate-600">Материал</p>
+              <p class="font-semibold text-slate-900">{{ product.material }}</p>
+            </div>
+            <div class="p-2 rounded bg-slate-50">
+              <p class="text-slate-600">Размер</p>
+              <p class="font-semibold text-slate-900">{{ product.size }}</p>
+            </div>
+            <div class="p-2 rounded bg-slate-50">
+              <p class="text-slate-600">Вес</p>
+              <p class="font-semibold text-slate-900">{{ product.weight }} кг</p>
+            </div>
+            <div class="p-2 rounded bg-slate-50">
+              <p class="text-slate-600">Цена</p>
+              <p class="font-semibold text-slate-900">ЅМ{{ product.unitCost }}</p>
+            </div>
+          </div>
+
           <div class="grid grid-cols-2 gap-4 mb-4">
             <div class="p-3 rounded-lg bg-slate-50">
               <p class="text-xs text-slate-600">Количество</p>
               <p class="font-bold text-slate-900 text-lg">{{ product.quantity }}</p>
             </div>
             <div class="p-3 rounded-lg bg-slate-50">
-              <p class="text-xs text-gray-700">Цена</p>
-              <p class="font-bold text-slate-900 text-lg">ЅМ{{ product.unitCost }}</p>
+              <p class="text-xs text-slate-600">Уровень переказа</p>
+              <p class="font-bold text-slate-900 text-lg">{{ product.reorderLevel }}</p>
             </div>
           </div>
 
