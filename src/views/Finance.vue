@@ -195,7 +195,7 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">Дата</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.date }}</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.date }}</p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Ссылка</p>
