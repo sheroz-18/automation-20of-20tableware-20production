@@ -139,7 +139,7 @@
           <div>
             <p class="text-sm text-slate-600">Количество</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.quantity }} шт
+              {{ modal.selectedItem.value?.quantity }} шт
             </p>
           </div>
           <div>
