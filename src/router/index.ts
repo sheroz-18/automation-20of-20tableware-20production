@@ -44,6 +44,11 @@ const routes = [
     name: 'ProductionPlanning',
     component: ProductionPlanning,
   },
+  {
+    path: '/warehouse',
+    name: 'Warehouse',
+    component: Warehouse,
+  },
 ]
 
 const router = createRouter({
