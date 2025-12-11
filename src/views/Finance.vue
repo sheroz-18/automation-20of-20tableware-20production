@@ -185,7 +185,9 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">Категория</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.category }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.category }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Тип</p>
@@ -199,7 +201,9 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">Ссылка</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.reference }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.reference }}
+            </p>
           </div>
         </div>
 
