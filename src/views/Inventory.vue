@@ -318,18 +318,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { inventoryItems as mockInventory, products as mockProducts } from '../data/mockData'
+import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
-import { useStorage } from '../composables/useStorage'
+import { useAppState } from '../composables/useAppState'
 import ModalBase from '../components/ModalBase.vue'
 import type { InventoryItem } from '../types'
 
 const modal = useModal()
-const storage = useStorage()
+const { inventory, products } = useAppState()
 
-const inventory = ref<InventoryItem[]>([...mockInventory])
-const products = ref([...mockProducts])
 const searchQuery = ref('')
 const statusFilter = ref('')
 
@@ -340,11 +337,6 @@ const formData = ref<Partial<InventoryItem>>({
   location: '',
   lastCounted: new Date().toISOString().split('T')[0],
   variance: 0,
-})
-
-onMounted(() => {
-  storage.initializeStorage(products, [], inventory, [])
-  storage.watchForChanges(products, [], inventory, [])
 })
 
 const filteredInventory = computed(() => {
