@@ -124,7 +124,7 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">SKU</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.sku }}</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.sku }}</p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Категория</p>
