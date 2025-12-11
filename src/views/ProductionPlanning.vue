@@ -60,8 +60,11 @@
               </div>
             </td>
             <td class="px-6 py-4 text-sm text-slate-900 font-semibold">{{ batch.quantity }} шт</td>
-            <td class="px-6 py-4 text-sm text-slate-600">{{ formatDate(batch.startDate) }}</td>
-            <td class="px-6 py-4 text-sm text-slate-600">{{ formatDate(batch.endDate) }}</td>
+            <td class="px-6 py-4 text-sm">
+              <span class="px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs font-medium">
+                {{ batch.currentStage }}/5: {{ getCurrentStageName(batch) }}
+              </span>
+            </td>
             <td class="px-6 py-4 text-sm">
               <span :class="getStatusBadge(batch.status)">
                 {{ getStatusLabel(batch.status) }}
