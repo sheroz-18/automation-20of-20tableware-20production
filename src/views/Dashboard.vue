@@ -298,16 +298,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
+import { useWarningNotifications } from '../composables/useWarningNotifications'
 import MetricCard from '../components/MetricCard.vue'
 import ModalBase from '../components/ModalBase.vue'
 
 const router = useRouter()
 const modal = useModal()
-const { orders, products } = useAppState()
+const { orders, products, rawMaterials } = useAppState()
+const { checkMaterialWarnings, checkOrderWarnings, checkStockPrewarnings } =
+  useWarningNotifications()
+
+onMounted(() => {
+  setTimeout(() => {
+    checkMaterialWarnings(rawMaterials.value)
+    checkOrderWarnings(orders.value)
+    checkStockPrewarnings(rawMaterials.value)
+  }, 1000)
+})
 
 const recentOrders = computed(() => orders.value.slice(0, 3))
 
