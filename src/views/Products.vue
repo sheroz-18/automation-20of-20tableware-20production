@@ -103,20 +103,20 @@
     </div>
 
     <ModalBase
-      :is-open="modal.isOpen && modal.contentType === 'product'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'product'"
       :title="
-        modal.isCreateModal
+        modal.isCreateModal.value
           ? 'Создать товар'
-          : modal.isEditModal
+          : modal.isEditModal.value
             ? 'Редактировать товар'
             : 'Информация о товаре'
       "
       :show-actions="true"
-      :show-save-button="modal.isCreateModal || modal.isEditModal"
+      :show-save-button="modal.isCreateModal.value || modal.isEditModal.value"
       @close="modal.closeModal"
       @save="saveProduct"
     >
-      <div v-if="modal.isViewModal" class="space-y-6">
+      <div v-if="modal.isViewModal.value" class="space-y-6">
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-slate-600">Название</p>
