@@ -11,6 +11,10 @@ export const products: Product[] = [
     unitCost: 3.5,
     status: 'in_stock',
     lastUpdated: '2024-12-10',
+    image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=500&h=500&fit=crop',
+    material: 'Керамика',
+    size: 'Ø 27 см',
+    weight: 0.65,
   },
   {
     id: '2',
@@ -22,6 +26,10 @@ export const products: Product[] = [
     unitCost: 2.8,
     status: 'low_stock',
     lastUpdated: '2024-12-10',
+    image: 'https://images.unsplash.com/photo-1514432324607-2e467f4af3fb?w=500&h=500&fit=crop',
+    material: 'Фарфор',
+    size: 'H 8 см, Ø 8 см',
+    weight: 0.25,
   },
   {
     id: '3',
@@ -33,6 +41,10 @@ export const products: Product[] = [
     unitCost: 1.2,
     status: 'in_stock',
     lastUpdated: '2024-12-10',
+    image: 'https://images.unsplash.com/photo-1584268645947-e4ed5a4d6ab8?w=500&h=500&fit=crop',
+    material: 'Нержавеющая сталь',
+    size: 'L 21 см',
+    weight: 0.08,
   },
   {
     id: '4',
@@ -44,6 +56,10 @@ export const products: Product[] = [
     unitCost: 4.5,
     status: 'in_stock',
     lastUpdated: '2024-12-09',
+    image: 'https://images.unsplash.com/photo-1610701596888-11498caaae70?w=500&h=500&fit=crop',
+    material: 'Керамика',
+    size: 'Ø 25 см, H 12 см',
+    weight: 1.2,
   },
   {
     id: '5',
@@ -55,6 +71,10 @@ export const products: Product[] = [
     unitCost: 1.8,
     status: 'out_of_stock',
     lastUpdated: '2024-12-10',
+    image: 'https://images.unsplash.com/photo-1596527729126-c6c4fbd38fb1?w=500&h=500&fit=crop',
+    material: 'Стекло',
+    size: 'H 12 см, Ø 8 см',
+    weight: 0.3,
   },
   {
     id: '6',
@@ -66,6 +86,10 @@ export const products: Product[] = [
     unitCost: 18.0,
     status: 'in_stock',
     lastUpdated: '2024-12-08',
+    image: 'https://images.unsplash.com/photo-1578500494198-246f612d782b?w=500&h=500&fit=crop',
+    material: 'Нержавеющая сталь',
+    size: 'Ø 24 см, H 15 см',
+    weight: 1.85,
   },
   {
     id: '7',
@@ -77,6 +101,10 @@ export const products: Product[] = [
     unitCost: 2.1,
     status: 'in_stock',
     lastUpdated: '2024-12-10',
+    image: 'https://images.unsplash.com/photo-1610701596888-11498caaae70?w=500&h=500&fit=crop',
+    material: 'Керамика',
+    size: 'L 18 см',
+    weight: 0.05,
   },
   {
     id: '8',
@@ -88,6 +116,10 @@ export const products: Product[] = [
     unitCost: 2.8,
     status: 'in_stock',
     lastUpdated: '2024-12-10',
+    image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=500&h=500&fit=crop',
+    material: 'Фарфор',
+    size: 'Ø 21 см',
+    weight: 0.35,
   },
 ]
 
