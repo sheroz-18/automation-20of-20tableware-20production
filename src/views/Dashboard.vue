@@ -311,7 +311,8 @@ const orders = ref([...mockOrders])
 const products = ref([...mockProducts])
 
 onMounted(() => {
-  storage.initializeStorage(products, orders, [], [])
+  const emptyArray = ref<any[]>([])
+  storage.initializeStorage(products, orders, emptyArray, emptyArray)
 })
 
 const recentOrders = computed(() => orders.value.slice(0, 3))
