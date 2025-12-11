@@ -379,7 +379,7 @@ const saveRecord = () => {
     return
   }
 
-  if (modal.isCreateModal) {
+  if (modal.isCreateModal.value) {
     const newRecord: FinancialRecord = {
       id: Math.random().toString(36).substr(2, 9),
       date: formData.value.date || new Date().toISOString().split('T')[0],
@@ -390,20 +390,20 @@ const saveRecord = () => {
       reference: formData.value.reference || '',
     }
     financialRecords.value.push(newRecord)
-  } else if (modal.isEditModal && modal.selectedItem) {
-    const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.id)
+  } else if (modal.isEditModal.value && modal.selectedItem.value) {
+    const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
     if (index !== -1) {
       financialRecords.value[index] = {
-        ...modal.selectedItem,
+        ...modal.selectedItem.value,
         ...formData.value,
-      }
+      } as FinancialRecord
     }
   }
   modal.closeModal()
 }
 
 const deleteRecord = () => {
-  const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.id)
+  const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
   if (index !== -1) {
     financialRecords.value.splice(index, 1)
   }
