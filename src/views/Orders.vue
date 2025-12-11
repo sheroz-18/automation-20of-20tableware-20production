@@ -340,6 +340,7 @@ const formData = ref<Partial<Order>>({
 })
 
 onMounted(() => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const emptyArray = ref<any[]>([])
   storage.initializeStorage(emptyArray, orders, emptyArray, emptyArray)
   storage.watchForChanges(emptyArray, orders, emptyArray, emptyArray)
