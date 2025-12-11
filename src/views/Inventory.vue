@@ -292,7 +292,7 @@
       <div class="space-y-4">
         <p class="text-slate-700">
           Вы уверены, что хотите удалить запись
-          <strong>{{ modal.selectedItem?.productName }}</strong
+          <strong>{{ modal.selectedItem.value?.productName }}</strong
           >?
         </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
