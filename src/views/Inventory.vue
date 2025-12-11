@@ -386,7 +386,7 @@ const saveInventory = () => {
     return
   }
 
-  if (modal.isCreateModal) {
+  if (modal.isCreateModal.value) {
     const newItem: InventoryItem = {
       id: Math.random().toString(36).substr(2, 9),
       productId: formData.value.productId || '',
@@ -397,20 +397,20 @@ const saveInventory = () => {
       variance: formData.value.variance || 0,
     }
     inventory.value.push(newItem)
-  } else if (modal.isEditModal && modal.selectedItem) {
-    const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.id)
+  } else if (modal.isEditModal.value && modal.selectedItem.value) {
+    const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
     if (index !== -1) {
       inventory.value[index] = {
-        ...modal.selectedItem,
+        ...modal.selectedItem.value,
         ...formData.value,
-      }
+      } as InventoryItem
     }
   }
   modal.closeModal()
 }
 
 const deleteInventory = () => {
-  const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.id)
+  const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
   if (index !== -1) {
     inventory.value.splice(index, 1)
   }
