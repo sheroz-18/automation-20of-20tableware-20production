@@ -156,14 +156,14 @@
     </div>
 
     <ModalBase
-      :is-open="modal.isOpen && modal.contentType === 'inventory'"
-      :title="modal.isEditModal ? 'Обновить инвентаризацию' : 'Информация об инвентаризации'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'inventory'"
+      :title="modal.isEditModal.value ? 'Обновить инвентаризацию' : 'Информация об инвентаризации'"
       :show-actions="true"
-      :show-save-button="modal.isEditModal || modal.isCreateModal"
+      :show-save-button="modal.isEditModal.value || modal.isCreateModal.value"
       @close="modal.closeModal"
       @save="saveInventory"
     >
-      <div v-if="modal.isViewModal" class="space-y-6">
+      <div v-if="modal.isViewModal.value" class="space-y-6">
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-slate-600">Товар</p>
