@@ -362,11 +362,11 @@ const saveProduct = () => {
       lastUpdated: new Date().toISOString().split('T')[0],
     }
     products.value.push(newProduct)
-  } else if (modal.isEditModal && modal.selectedItem) {
-    const index = products.value.findIndex((p) => p.id === modal.selectedItem.id)
+  } else if (modal.isEditModal.value && modal.selectedItem.value) {
+    const index = products.value.findIndex((p) => p.id === modal.selectedItem.value?.id)
     if (index !== -1) {
       products.value[index] = {
-        ...modal.selectedItem,
+        ...modal.selectedItem.value,
         ...formData.value,
         status:
           formData.value.quantity === 0
