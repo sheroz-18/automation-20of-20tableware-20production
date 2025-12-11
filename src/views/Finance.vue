@@ -296,8 +296,8 @@
     </ModalBase>
 
     <ModalBase
-      v-if="modal.modalType === 'delete'"
-      :is-open="modal.isOpen && modal.contentType === 'finance'"
+      v-if="modal.modalType.value === 'delete'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'finance'"
       title="Подтвердить удаление"
       :show-actions="true"
       @close="modal.closeModal"
