@@ -351,6 +351,7 @@ const formData = ref<Partial<FinancialRecord>>({
 })
 
 onMounted(() => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const emptyArray = ref<any[]>([])
   storage.initializeStorage(emptyArray, emptyArray, emptyArray, financialRecords)
   storage.watchForChanges(emptyArray, emptyArray, emptyArray, financialRecords)
