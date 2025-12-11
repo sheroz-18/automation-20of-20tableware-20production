@@ -45,8 +45,7 @@
             <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Номер партии</th>
             <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Продукт</th>
             <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Количество</th>
-            <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Дата начала</th>
-            <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Дата завершения</th>
+            <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Текущий этап</th>
             <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Статус</th>
             <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Действия</th>
           </tr>
