@@ -402,7 +402,7 @@ const saveRecord = () => {
 }
 
 const deleteRecord = () => {
-  const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.id)
+  const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
   if (index !== -1) {
     financialRecords.value.splice(index, 1)
   }
