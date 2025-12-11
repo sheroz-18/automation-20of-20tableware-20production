@@ -129,14 +129,14 @@
     </div>
 
     <ModalBase
-      :is-open="modal.isOpen && modal.contentType === 'order'"
-      :title="modal.isEditModal ? 'Редактировать заказ' : 'Информация о заказе'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'order'"
+      :title="modal.isEditModal.value ? 'Редактировать заказ' : 'Информация о заказе'"
       :show-actions="true"
-      :show-save-button="modal.isEditModal"
+      :show-save-button="modal.isEditModal.value"
       @close="modal.closeModal"
       @save="saveOrder"
     >
-      <div v-if="modal.isViewModal" class="space-y-6">
+      <div v-if="modal.isViewModal.value" class="space-y-6">
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-slate-600">Номер заказа</p>
