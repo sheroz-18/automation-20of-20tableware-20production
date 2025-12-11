@@ -170,7 +170,9 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">Срок</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.dueDate }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.dueDate }}
+            </p>
           </div>
         </div>
 
@@ -291,7 +293,8 @@
     >
       <div class="space-y-4">
         <p class="text-slate-700">
-          Вы уверены, что хотите удалить заказ <strong>{{ modal.selectedItem.value?.orderNumber }}</strong
+          Вы уверены, что хотите удалить заказ
+          <strong>{{ modal.selectedItem.value?.orderNumber }}</strong
           >?
         </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>

@@ -271,7 +271,10 @@
         </div>
       </div>
 
-      <div v-else-if="modal.contentType.value === 'product' && modal.selectedItem.value" class="space-y-4">
+      <div
+        v-else-if="modal.contentType.value === 'product' && modal.selectedItem.value"
+        class="space-y-4"
+      >
         <div class="grid grid-cols-2 gap-4">
           <div>
             <p class="text-sm text-slate-600">Товар</p>

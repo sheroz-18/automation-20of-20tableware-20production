@@ -11,7 +11,7 @@ export function useStorage() {
   const isInitialized = ref(false)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const loadFromStorage = <T,>(key: string, defaultValue: T): T => {
+  const loadFromStorage = <T>(key: string, defaultValue: T): T => {
     try {
       const stored = localStorage.getItem(key)
       return stored ? JSON.parse(stored) : defaultValue
@@ -21,7 +21,7 @@ export function useStorage() {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const saveToStorage = <T,>(key: string, value: T) => {
+  const saveToStorage = <T>(key: string, value: T) => {
     try {
       localStorage.setItem(key, JSON.stringify(value))
     } catch (error) {
@@ -30,7 +30,12 @@ export function useStorage() {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const initializeStorage = (products: Ref<any[]>, orders: Ref<any[]>, inventory: Ref<any[]>, finance: Ref<any[]>) => {
+  const initializeStorage = (
+    products: Ref<any[]>,
+    orders: Ref<any[]>,
+    inventory: Ref<any[]>,
+    finance: Ref<any[]>,
+  ) => {
     const storedProducts = loadFromStorage(STORAGE_KEY_PRODUCTS, null)
     const storedOrders = loadFromStorage(STORAGE_KEY_ORDERS, null)
     const storedInventory = loadFromStorage(STORAGE_KEY_INVENTORY, null)
@@ -68,7 +73,12 @@ export function useStorage() {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const watchForChanges = (products: Ref<any[]>, orders: Ref<any[]>, inventory: Ref<any[]>, finance: Ref<any[]>) => {
+  const watchForChanges = (
+    products: Ref<any[]>,
+    orders: Ref<any[]>,
+    inventory: Ref<any[]>,
+    finance: Ref<any[]>,
+  ) => {
     watch(products, (newVal) => saveToStorage(STORAGE_KEY_PRODUCTS, newVal), { deep: true })
     watch(orders, (newVal) => saveToStorage(STORAGE_KEY_ORDERS, newVal), { deep: true })
     watch(inventory, (newVal) => saveToStorage(STORAGE_KEY_INVENTORY, newVal), { deep: true })
