@@ -145,7 +145,7 @@
           <div>
             <p class="text-sm text-slate-600">Уровень переказа</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.reorderLevel }} шт
+              {{ modal.selectedItem.value?.reorderLevel }} шт
             </p>
           </div>
           <div>
