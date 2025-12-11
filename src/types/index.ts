@@ -63,3 +63,16 @@ export interface DashboardMetrics {
   inventoryChange: number
   productionChange: number
 }
+
+export interface ProductionBatch {
+  id: string
+  batchNumber: string
+  productId: string
+  productName: string
+  quantity: number
+  status: 'planning' | 'in_progress' | 'completed' | 'cancelled'
+  startDate: string
+  endDate: string
+  createdDate: string
+  category: string
+}
