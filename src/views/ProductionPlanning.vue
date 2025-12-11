@@ -344,7 +344,7 @@ import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
 import ModalBase from '../components/ModalBase.vue'
-import type { ProductionBatch } from '../types'
+import type { ProductionBatch, ProductionStage } from '../types'
 
 const modal = useModal()
 const { products, productionBatches } = useAppState()
