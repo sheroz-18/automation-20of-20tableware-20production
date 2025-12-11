@@ -25,7 +25,10 @@
       </div>
       <div class="bg-white rounded-lg border border-slate-200 p-4">
         <label class="text-sm font-medium text-slate-700 block mb-2">Фильтр по статусу</label>
-        <select v-model="statusFilter" class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <select
+          v-model="statusFilter"
+          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
           <option value="">Все товары</option>
           <option value="in_stock">На складе</option>
           <option value="low_stock">Низкий запас</option>
@@ -42,9 +45,15 @@
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Товар</th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">SKU</th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Количество</th>
-              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Уровень переказа</th>
-              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Место хранения</th>
-              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Последний учет</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">
+                Уровень переказа
+              </th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">
+                Место хранения
+              </th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">
+                Последний учет
+              </th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Статус</th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Действие</th>
             </tr>
@@ -59,7 +68,9 @@
                 <p class="font-medium text-slate-900">{{ item.productName }}</p>
               </td>
               <td class="px-6 py-4">
-                <code class="text-sm text-slate-600 bg-slate-100 px-2 py-1 rounded">{{ item.productId }}</code>
+                <code class="text-sm text-slate-600 bg-slate-100 px-2 py-1 rounded">{{
+                  item.productId
+                }}</code>
               </td>
               <td class="px-6 py-4">
                 <p class="font-semibold text-slate-900">{{ item.quantity }}</p>
@@ -156,11 +167,15 @@
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-slate-600">Товар</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.productName }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem?.productName }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Количество</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.quantity }} шт</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem?.quantity }} шт
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Место хранения</p>
@@ -168,19 +183,40 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">Последний учет</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.lastCounted }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem?.lastCounted }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Отклонение</p>
-            <p :class="['text-lg font-semibold', modal.selectedItem?.variance === 0 ? 'text-slate-900' : modal.selectedItem?.variance! > 0 ? 'text-green-600' : 'text-red-600']">
-              {{ modal.selectedItem?.variance === 0 ? '±0' : modal.selectedItem?.variance! > 0 ? '+' + modal.selectedItem?.variance : modal.selectedItem?.variance }}
+            <p
+              :class="[
+                'text-lg font-semibold',
+                modal.selectedItem?.variance === 0
+                  ? 'text-slate-900'
+                  : modal.selectedItem?.variance! > 0
+                    ? 'text-green-600'
+                    : 'text-red-600',
+              ]"
+            >
+              {{
+                modal.selectedItem?.variance === 0
+                  ? '±0'
+                  : modal.selectedItem?.variance! > 0
+                    ? '+' + modal.selectedItem?.variance
+                    : modal.selectedItem?.variance
+              }}
             </p>
           </div>
         </div>
 
         <div class="flex gap-2 pt-4 border-t border-slate-200">
           <button
-            @click="() => { modal.openEditModal(modal.selectedItem, 'inventory') }"
+            @click="
+              () => {
+                modal.openEditModal(modal.selectedItem, 'inventory')
+              }
+            "
             class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition"
           >
             Обновить
@@ -254,7 +290,11 @@
       @close="modal.closeModal"
     >
       <div class="space-y-4">
-        <p class="text-slate-700">Вы уверены, что хотите удалить запись <strong>{{ modal.selectedItem?.productName }}</strong>?</p>
+        <p class="text-slate-700">
+          Вы уверены, что хотите удалить запись
+          <strong>{{ modal.selectedItem?.productName }}</strong
+          >?
+        </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
         <div class="flex gap-3 justify-end pt-4">
           <button
@@ -306,29 +346,29 @@ onMounted(() => {
 })
 
 const filteredInventory = computed(() => {
-  return inventory.value.filter(item => {
+  return inventory.value.filter((item) => {
     const matchesSearch = item.productName.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const product = products.value.find(p => p.id === item.productId)
-    
+    const product = products.value.find((p) => p.id === item.productId)
+
     let matchesStatus = true
     if (statusFilter.value) {
       matchesStatus = product?.status === statusFilter.value
     }
-    
+
     return matchesSearch && matchesStatus
   })
 })
 
 const inStockCount = computed(() => {
-  return filteredInventory.value.filter(item => item.quantity > 0).length
+  return filteredInventory.value.filter((item) => item.quantity > 0).length
 })
 
 const lowStockCount = computed(() => {
-  return filteredInventory.value.filter(item => item.quantity > 0 && item.quantity < 100).length
+  return filteredInventory.value.filter((item) => item.quantity > 0 && item.quantity < 100).length
 })
 
 const outOfStockCount = computed(() => {
-  return filteredInventory.value.filter(item => item.quantity === 0).length
+  return filteredInventory.value.filter((item) => item.quantity === 0).length
 })
 
 const topItems = computed(() => {
@@ -336,7 +376,7 @@ const topItems = computed(() => {
 })
 
 const needsRestock = computed(() => {
-  return filteredInventory.value.filter(item => item.quantity === 0 || item.quantity < 100)
+  return filteredInventory.value.filter((item) => item.quantity === 0 || item.quantity < 100)
 })
 
 const saveInventory = () => {
@@ -357,7 +397,7 @@ const saveInventory = () => {
     }
     inventory.value.push(newItem)
   } else if (modal.isEditModal && modal.selectedItem) {
-    const index = inventory.value.findIndex(i => i.id === modal.selectedItem.id)
+    const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.id)
     if (index !== -1) {
       inventory.value[index] = {
         ...modal.selectedItem,
@@ -369,7 +409,7 @@ const saveInventory = () => {
 }
 
 const deleteInventory = () => {
-  const index = inventory.value.findIndex(i => i.id === modal.selectedItem.id)
+  const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.id)
   if (index !== -1) {
     inventory.value.splice(index, 1)
   }

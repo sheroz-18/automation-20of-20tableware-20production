@@ -25,12 +25,7 @@ export function useStorage() {
     }
   }
 
-  const initializeStorage = (
-    products: any,
-    orders: any,
-    inventory: any,
-    finance: any
-  ) => {
+  const initializeStorage = (products: any, orders: any, inventory: any, finance: any) => {
     const storedProducts = loadFromStorage(STORAGE_KEY_PRODUCTS, null)
     const storedOrders = loadFromStorage(STORAGE_KEY_ORDERS, null)
     const storedInventory = loadFromStorage(STORAGE_KEY_INVENTORY, null)

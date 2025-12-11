@@ -25,7 +25,10 @@
       </div>
       <div class="bg-white rounded-lg border border-slate-200 p-4">
         <label class="text-sm font-medium text-slate-700 block mb-2">Категория</label>
-        <select v-model="categoryFilter" class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <select
+          v-model="categoryFilter"
+          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
           <option value="">Все категории</option>
           <option value="Тарелки">Тарелки</option>
           <option value="Чашки">Чашки</option>
@@ -44,7 +47,7 @@
         class="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition overflow-hidden"
       >
         <div class="h-40 bg-gradient-to-br" :class="getGradientColor(product.category)"></div>
-        
+
         <div class="p-6">
           <div class="flex items-start justify-between mb-3">
             <div>
@@ -56,7 +59,9 @@
             </span>
           </div>
 
-          <code class="text-xs text-slate-600 bg-slate-100 px-2 py-1 rounded block mb-4">{{ product.sku }}</code>
+          <code class="text-xs text-slate-600 bg-slate-100 px-2 py-1 rounded block mb-4">{{
+            product.sku
+          }}</code>
 
           <div class="grid grid-cols-2 gap-4 mb-4">
             <div class="p-3 rounded-lg bg-slate-50">
@@ -72,7 +77,10 @@
           <div class="mb-4">
             <p class="text-xs text-slate-600 mb-2">Прогресс запаса</p>
             <div class="w-full bg-slate-200 rounded-full h-2">
-              <div class="bg-blue-600 h-2 rounded-full" :style="{ width: getProgressPercent(product.quantity, product.reorderLevel) + '%' }"></div>
+              <div
+                class="bg-blue-600 h-2 rounded-full"
+                :style="{ width: getProgressPercent(product.quantity, product.reorderLevel) + '%' }"
+              ></div>
             </div>
           </div>
 
@@ -96,7 +104,13 @@
 
     <ModalBase
       :is-open="modal.isOpen && modal.contentType === 'product'"
-      :title="modal.isCreateModal ? 'Создать товар' : modal.isEditModal ? 'Редактировать товар' : 'Информация о товаре'"
+      :title="
+        modal.isCreateModal
+          ? 'Создать товар'
+          : modal.isEditModal
+            ? 'Редактировать товар'
+            : 'Информация о товаре'
+      "
       :show-actions="true"
       :show-save-button="modal.isCreateModal || modal.isEditModal"
       @close="modal.closeModal"
@@ -124,11 +138,15 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">Количество</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.quantity }} шт</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem?.quantity }} шт
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Уровень переказа</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.reorderLevel }} шт</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem?.reorderLevel }} шт
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Цена за единицу</p>
@@ -136,13 +154,19 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">Последнее обновление</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.lastUpdated }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem?.lastUpdated }}
+            </p>
           </div>
         </div>
 
         <div class="flex gap-2 pt-4 border-t border-slate-200">
           <button
-            @click="() => { modal.openEditModal(modal.selectedItem, 'product') }"
+            @click="
+              () => {
+                modal.openEditModal(modal.selectedItem, 'product')
+              }
+            "
             class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition"
           >
             Редактировать
@@ -179,7 +203,10 @@
           </div>
           <div>
             <label class="block text-sm font-medium text-slate-700 mb-1">Категория</label>
-            <select v-model="formData.category" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select
+              v-model="formData.category"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               <option value="Тарелки">Тарелки</option>
               <option value="Чашки">Чашки</option>
               <option value="Приборы">Приборы</option>
@@ -232,7 +259,10 @@
       @close="modal.closeModal"
     >
       <div class="space-y-4">
-        <p class="text-slate-700">Вы уверены, что хотите удалить товар <strong>{{ modal.selectedItem?.name }}</strong>?</p>
+        <p class="text-slate-700">
+          Вы уверены, что хотите удалить товар <strong>{{ modal.selectedItem?.name }}</strong
+          >?
+        </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
         <div class="flex gap-3 justify-end pt-4">
           <button
@@ -283,9 +313,10 @@ onMounted(() => {
 })
 
 const filteredProducts = computed(() => {
-  return products.value.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-                         product.sku.toLowerCase().includes(searchQuery.value.toLowerCase())
+  return products.value.filter((product) => {
+    const matchesSearch =
+      product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      product.sku.toLowerCase().includes(searchQuery.value.toLowerCase())
     const matchesCategory = !categoryFilter.value || product.category === categoryFilter.value
     return matchesSearch && matchesCategory
   })
@@ -332,13 +363,17 @@ const saveProduct = () => {
     }
     products.value.push(newProduct)
   } else if (modal.isEditModal && modal.selectedItem) {
-    const index = products.value.findIndex(p => p.id === modal.selectedItem.id)
+    const index = products.value.findIndex((p) => p.id === modal.selectedItem.id)
     if (index !== -1) {
       products.value[index] = {
         ...modal.selectedItem,
         ...formData.value,
-        status: formData.value.quantity === 0 ? 'out_of_stock' : 
-                formData.value.quantity! < formData.value.reorderLevel! ? 'low_stock' : 'in_stock',
+        status:
+          formData.value.quantity === 0
+            ? 'out_of_stock'
+            : formData.value.quantity! < formData.value.reorderLevel!
+              ? 'low_stock'
+              : 'in_stock',
       }
     }
   }
@@ -346,7 +381,7 @@ const saveProduct = () => {
 }
 
 const deleteProduct = () => {
-  const index = products.value.findIndex(p => p.id === modal.selectedItem.id)
+  const index = products.value.findIndex((p) => p.id === modal.selectedItem.id)
   if (index !== -1) {
     products.value.splice(index, 1)
   }
@@ -355,10 +390,10 @@ const deleteProduct = () => {
 
 const getGradientColor = (category: string): string => {
   const gradients: Record<string, string> = {
-    'Тарелки': 'from-blue-400 to-blue-600',
-    'Чашки': 'from-orange-400 to-orange-600',
-    'Приборы': 'from-green-400 to-green-600',
-    'Миски': 'from-purple-400 to-purple-600',
+    Тарелки: 'from-blue-400 to-blue-600',
+    Чашки: 'from-orange-400 to-orange-600',
+    Приборы: 'from-green-400 to-green-600',
+    Миски: 'from-purple-400 to-purple-600',
     'Стеклянная посуда': 'from-cyan-400 to-cyan-600',
     'Кухонная утварь': 'from-rose-400 to-rose-600',
   }
@@ -367,18 +402,18 @@ const getGradientColor = (category: string): string => {
 
 const getStatusBadge = (status: string) => {
   const badges: Record<string, string> = {
-    'in_stock': 'px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium',
-    'low_stock': 'px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs font-medium',
-    'out_of_stock': 'px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-medium',
+    in_stock: 'px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium',
+    low_stock: 'px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs font-medium',
+    out_of_stock: 'px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-medium',
   }
   return badges[status] || 'px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs font-medium'
 }
 
 const getStatusLabel = (status: string) => {
   const labels: Record<string, string> = {
-    'in_stock': 'В наличии',
-    'low_stock': 'Низкий запас',
-    'out_of_stock': 'Нет в наличии',
+    in_stock: 'В наличии',
+    low_stock: 'Низкий запас',
+    out_of_stock: 'Нет в наличии',
   }
   return labels[status] || 'Неизвестно'
 }

@@ -25,7 +25,10 @@
       </div>
       <div class="bg-white rounded-lg border border-slate-200 p-4">
         <label class="text-sm font-medium text-slate-700 block mb-2">Статус</label>
-        <select v-model="statusFilter" class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <select
+          v-model="statusFilter"
+          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
           <option value="">Все статусы</option>
           <option value="pending">Ожидание</option>
           <option value="processing">Обработка</option>
@@ -40,15 +43,21 @@
         <p class="text-blue-100 text-sm mb-1">Всего заказов</p>
         <p class="text-3xl font-bold">{{ orders.length }}</p>
       </div>
-      <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-6 text-white shadow-sm">
+      <div
+        class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-6 text-white shadow-sm"
+      >
         <p class="text-orange-100 text-sm mb-1">На обработке</p>
         <p class="text-3xl font-bold">{{ ordersByStatus('pending', 'processing').length }}</p>
       </div>
-      <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-sm">
+      <div
+        class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-sm"
+      >
         <p class="text-green-100 text-sm mb-1">Завершено</p>
         <p class="text-3xl font-bold">{{ ordersByStatus('completed', 'shipped').length }}</p>
       </div>
-      <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white shadow-sm">
+      <div
+        class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white shadow-sm"
+      >
         <p class="text-purple-100 text-sm mb-1">Общая сумма</p>
         <p class="text-3xl font-bold">₽{{ totalOrderValue.toFixed(0) }}</p>
       </div>
@@ -82,8 +91,12 @@
               class="p-3 rounded-lg bg-slate-50"
             >
               <p class="text-sm font-medium text-slate-900">{{ item.productName }}</p>
-              <p class="text-xs text-slate-600 mt-1">{{ item.quantity }} × ₽{{ item.unitPrice.toFixed(2) }}</p>
-              <p class="text-sm font-semibold text-slate-900 mt-2">₽{{ item.subtotal.toFixed(2) }}</p>
+              <p class="text-xs text-slate-600 mt-1">
+                {{ item.quantity }} × ₽{{ item.unitPrice.toFixed(2) }}
+              </p>
+              <p class="text-sm font-semibold text-slate-900 mt-2">
+                ₽{{ item.subtotal.toFixed(2) }}
+              </p>
             </div>
           </div>
         </div>
@@ -127,11 +140,15 @@
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-slate-600">Номер заказа</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.orderNumber }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem?.orderNumber }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Клиент</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.customerName }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem?.customerName }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Статус</p>
@@ -141,11 +158,15 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">Сумма</p>
-            <p class="text-lg font-semibold text-slate-900">₽{{ modal.selectedItem?.totalAmount.toFixed(2) }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              ₽{{ modal.selectedItem?.totalAmount.toFixed(2) }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Создан</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.createdDate }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem?.createdDate }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Срок</p>
@@ -156,11 +177,17 @@
         <div>
           <p class="text-sm font-semibold text-slate-700 mb-3">Товары:</p>
           <div class="space-y-2">
-            <div v-for="item in modal.selectedItem?.items" :key="item.productId" class="p-3 rounded-lg bg-slate-50">
+            <div
+              v-for="item in modal.selectedItem?.items"
+              :key="item.productId"
+              class="p-3 rounded-lg bg-slate-50"
+            >
               <div class="flex items-center justify-between">
                 <div>
                   <p class="font-medium text-slate-900">{{ item.productName }}</p>
-                  <p class="text-sm text-slate-600">{{ item.quantity }} × ₽{{ item.unitPrice.toFixed(2) }}</p>
+                  <p class="text-sm text-slate-600">
+                    {{ item.quantity }} × ₽{{ item.unitPrice.toFixed(2) }}
+                  </p>
                 </div>
                 <p class="font-semibold text-slate-900">₽{{ item.subtotal.toFixed(2) }}</p>
               </div>
@@ -170,7 +197,11 @@
 
         <div class="flex gap-2 pt-4 border-t border-slate-200">
           <button
-            @click="() => { modal.openEditModal(modal.selectedItem, 'order') }"
+            @click="
+              () => {
+                modal.openEditModal(modal.selectedItem, 'order')
+              }
+            "
             class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition"
           >
             Редактировать
@@ -227,7 +258,10 @@
 
         <div>
           <label class="block text-sm font-medium text-slate-700 mb-1">Статус</label>
-          <select v-model="formData.status" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select
+            v-model="formData.status"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
             <option value="pending">Ожидание</option>
             <option value="processing">Обработка</option>
             <option value="completed">Завершено</option>
@@ -256,7 +290,10 @@
       @close="modal.closeModal"
     >
       <div class="space-y-4">
-        <p class="text-slate-700">Вы уверены, что хотите удалить заказ <strong>{{ modal.selectedItem?.orderNumber }}</strong>?</p>
+        <p class="text-slate-700">
+          Вы уверены, что хотите удалить заказ <strong>{{ modal.selectedItem?.orderNumber }}</strong
+          >?
+        </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
         <div class="flex gap-3 justify-end pt-4">
           <button
@@ -308,9 +345,10 @@ onMounted(() => {
 })
 
 const filteredOrders = computed(() => {
-  return orders.value.filter(order => {
-    const matchesSearch = order.orderNumber.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-                         order.customerName.toLowerCase().includes(searchQuery.value.toLowerCase())
+  return orders.value.filter((order) => {
+    const matchesSearch =
+      order.orderNumber.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      order.customerName.toLowerCase().includes(searchQuery.value.toLowerCase())
     const matchesStatus = !statusFilter.value || order.status === statusFilter.value
     return matchesSearch && matchesStatus
   })
@@ -321,7 +359,7 @@ const totalOrderValue = computed(() => {
 })
 
 const ordersByStatus = (status1: string, status2: string) => {
-  return orders.value.filter(o => o.status === status1 || o.status === status2)
+  return orders.value.filter((o) => o.status === status1 || o.status === status2)
 }
 
 const saveOrder = () => {
@@ -331,7 +369,7 @@ const saveOrder = () => {
   }
 
   if (modal.isEditModal && modal.selectedItem) {
-    const index = orders.value.findIndex(o => o.id === modal.selectedItem.id)
+    const index = orders.value.findIndex((o) => o.id === modal.selectedItem.id)
     if (index !== -1) {
       orders.value[index] = {
         ...modal.selectedItem,
@@ -343,7 +381,7 @@ const saveOrder = () => {
 }
 
 const deleteOrder = () => {
-  const index = orders.value.findIndex(o => o.id === modal.selectedItem.id)
+  const index = orders.value.findIndex((o) => o.id === modal.selectedItem.id)
   if (index !== -1) {
     orders.value.splice(index, 1)
   }
@@ -352,20 +390,20 @@ const deleteOrder = () => {
 
 const getStatusBadge = (status: string) => {
   const badges: Record<string, string> = {
-    'pending': 'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium',
-    'processing': 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium',
-    'completed': 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium',
-    'shipped': 'px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium',
+    pending: 'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium',
+    processing: 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium',
+    completed: 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium',
+    shipped: 'px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium',
   }
   return badges[status] || 'px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-medium'
 }
 
 const getStatusLabel = (status: string) => {
   const labels: Record<string, string> = {
-    'pending': 'Ожидание',
-    'processing': 'Обработка',
-    'completed': 'Завершено',
-    'shipped': 'Отправлено',
+    pending: 'Ожидание',
+    processing: 'Обработка',
+    completed: 'Завершено',
+    shipped: 'Отправлено',
   }
   return labels[status] || 'Неизвестно'
 }

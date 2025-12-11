@@ -11,7 +11,7 @@
         <p class="text-3xl font-bold text-slate-900">₽{{ avgOrderValue.toFixed(2) }}</p>
         <p class="text-xs text-green-600 mt-2">+5.2% от прошлого месяца</p>
       </div>
-      
+
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <p class="text-slate-600 text-sm mb-2">Скорость обработки</p>
         <p class="text-3xl font-bold text-slate-900">2.4 дн</p>
@@ -34,7 +34,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <h2 class="text-lg font-semibold text-slate-900 mb-6">Продажи по категориям</h2>
-        
+
         <div class="space-y-4">
           <div>
             <div class="flex items-center justify-between mb-2">
@@ -90,7 +90,7 @@
 
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <h2 class="text-lg font-semibold text-slate-900 mb-6">Ключевые показатели</h2>
-        
+
         <div class="space-y-4">
           <div class="p-4 rounded-lg bg-blue-50 border border-blue-200">
             <div class="flex items-center justify-between">
@@ -130,11 +130,15 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <h2 class="text-lg font-semibold text-slate-900 mb-6">Лучшие продавцы</h2>
-        
+
         <div class="space-y-3">
           <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">1</div>
+              <div
+                class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm"
+              >
+                1
+              </div>
               <div>
                 <p class="font-medium text-slate-900">Столовая ложка</p>
                 <p class="text-xs text-slate-600">1200 продано</p>
@@ -145,7 +149,11 @@
 
           <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white font-bold text-sm">2</div>
+              <div
+                class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white font-bold text-sm"
+              >
+                2
+              </div>
               <div>
                 <p class="font-medium text-slate-900">Обеденная тарелка</p>
                 <p class="text-xs text-slate-600">620 продано</p>
@@ -156,7 +164,11 @@
 
           <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold text-sm">3</div>
+              <div
+                class="w-10 h-10 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold text-sm"
+              >
+                3
+              </div>
               <div>
                 <p class="font-medium text-slate-900">Фарфоровая чашка</p>
                 <p class="text-xs text-slate-600">200 продано</p>
@@ -169,7 +181,7 @@
 
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <h2 class="text-lg font-semibold text-slate-900 mb-6">Тренды спроса</h2>
-        
+
         <div class="space-y-4">
           <div>
             <div class="flex items-center justify-between mb-2">
@@ -177,9 +189,13 @@
               <span class="text-xs font-semibold text-green-600">↑ 23%</span>
             </div>
             <div class="flex flex-wrap gap-2">
-              <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Столовые приборы</span>
+              <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded"
+                >Столовые приборы</span
+              >
               <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Кастрюли</span>
-              <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Обеденные наборы</span>
+              <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded"
+                >Обеденные наборы</span
+              >
             </div>
           </div>
 
@@ -189,7 +205,9 @@
               <span class="text-xs font-semibold text-slate-600">→ 5%</span>
             </div>
             <div class="flex flex-wrap gap-2">
-              <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">Десертные тарелки</span>
+              <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded"
+                >Десертные тарелки</span
+              >
               <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">Чашки</span>
             </div>
           </div>
@@ -200,7 +218,9 @@
               <span class="text-xs font-semibold text-orange-600">↓ 12%</span>
             </div>
             <div class="flex flex-wrap gap-2">
-              <span class="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">Стеклянные стаканы</span>
+              <span class="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded"
+                >Стеклянные стаканы</span
+              >
               <span class="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">Салатники</span>
             </div>
           </div>
