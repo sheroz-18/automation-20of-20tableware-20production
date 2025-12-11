@@ -351,8 +351,9 @@ const formData = ref<Partial<FinancialRecord>>({
 })
 
 onMounted(() => {
-  storage.initializeStorage([], [], [], financialRecords)
-  storage.watchForChanges([], [], [], financialRecords)
+  const emptyArray = ref<any[]>([])
+  storage.initializeStorage(emptyArray, emptyArray, emptyArray, financialRecords)
+  storage.watchForChanges(emptyArray, emptyArray, emptyArray, financialRecords)
 })
 
 const incomeRecords = computed(() => financialRecords.value.filter((r) => r.type === 'income'))
