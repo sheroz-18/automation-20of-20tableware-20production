@@ -383,8 +383,8 @@ const navigateToFinance = (type: string) => {
 }
 
 const getModalTitle = () => {
-  if (modal.contentType === 'order') return 'Информация о заказе'
-  if (modal.contentType === 'product') return 'Информация о товаре'
+  if (modal.contentType.value === 'order') return 'Информация о заказе'
+  if (modal.contentType.value === 'product') return 'Информация о товаре'
   return 'Информация'
 }
 </script>
