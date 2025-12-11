@@ -396,11 +396,11 @@ const saveInventory = () => {
       variance: formData.value.variance || 0,
     }
     inventory.value.push(newItem)
-  } else if (modal.isEditModal && modal.selectedItem) {
-    const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.id)
+  } else if (modal.isEditModal.value && modal.selectedItem.value) {
+    const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
     if (index !== -1) {
       inventory.value[index] = {
-        ...modal.selectedItem,
+        ...modal.selectedItem.value,
         ...formData.value,
       }
     }
