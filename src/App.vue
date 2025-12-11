@@ -150,5 +150,6 @@ const navItems = [
   { path: '/orders', label: 'Заказы' },
   { path: '/finance', label: 'Финансы' },
   { path: '/analytics', label: 'Аналитика' },
+  { path: '/production-planning', label: 'Производство' },
 ]
 </script>
