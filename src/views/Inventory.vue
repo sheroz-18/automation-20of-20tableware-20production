@@ -156,35 +156,35 @@
     </div>
 
     <ModalBase
-      :is-open="modal.isOpen && modal.contentType === 'inventory'"
-      :title="modal.isEditModal ? 'Обновить инвентаризацию' : 'Информация об инвентаризации'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'inventory'"
+      :title="modal.isEditModal.value ? 'Обновить инвентаризацию' : 'Информация об инвентаризации'"
       :show-actions="true"
-      :show-save-button="modal.isEditModal || modal.isCreateModal"
+      :show-save-button="modal.isEditModal.value || modal.isCreateModal.value"
       @close="modal.closeModal"
       @save="saveInventory"
     >
-      <div v-if="modal.isViewModal" class="space-y-6">
+      <div v-if="modal.isViewModal.value" class="space-y-6">
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-slate-600">Товар</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.productName }}
+              {{ modal.selectedItem.value?.productName }}
             </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Количество</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.quantity }} шт
+              {{ modal.selectedItem.value?.quantity }} шт
             </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Место хранения</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.location }}</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.location }}</p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Последний учет</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.lastCounted }}
+              {{ modal.selectedItem.value?.lastCounted }}
             </p>
           </div>
           <div>
@@ -192,19 +192,19 @@
             <p
               :class="[
                 'text-lg font-semibold',
-                modal.selectedItem?.variance === 0
+                modal.selectedItem.value?.variance === 0
                   ? 'text-slate-900'
-                  : modal.selectedItem?.variance! > 0
+                  : (modal.selectedItem.value?.variance ?? 0) > 0
                     ? 'text-green-600'
                     : 'text-red-600',
               ]"
             >
               {{
-                modal.selectedItem?.variance === 0
+                modal.selectedItem.value?.variance === 0
                   ? '±0'
-                  : modal.selectedItem?.variance! > 0
-                    ? '+' + modal.selectedItem?.variance
-                    : modal.selectedItem?.variance
+                  : (modal.selectedItem.value?.variance ?? 0) > 0
+                    ? '+' + modal.selectedItem.value?.variance
+                    : modal.selectedItem.value?.variance
               }}
             </p>
           </div>
@@ -214,7 +214,7 @@
           <button
             @click="
               () => {
-                modal.openEditModal(modal.selectedItem, 'inventory')
+                modal.openEditModal(modal.selectedItem.value, 'inventory')
               }
             "
             class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition"
@@ -222,7 +222,7 @@
             Обновить
           </button>
           <button
-            @click="modal.openDeleteModal(modal.selectedItem, 'inventory')"
+            @click="modal.openDeleteModal(modal.selectedItem.value, 'inventory')"
             class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition"
           >
             Удалить
