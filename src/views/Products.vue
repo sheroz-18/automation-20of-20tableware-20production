@@ -346,7 +346,7 @@ const saveProduct = () => {
     return
   }
 
-  if (modal.isCreateModal) {
+  if (modal.isCreateModal.value) {
     const newProduct: Product = {
       id: Math.random().toString(36).substr(2, 9),
       name: formData.value.name || '',
