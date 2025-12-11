@@ -431,6 +431,45 @@ const formData = ref<Partial<Order>>({
   items: [],
 })
 
+// Track notified orders to avoid duplicate notifications
+const notifiedOrderIds = ref<Set<string>>(new Set())
+
+// Check for overdue orders on mount and when orders change
+const checkOverdueOrders = () => {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  orders.value.forEach((order) => {
+    if (notifiedOrderIds.value.has(order.id)) return
+
+    const dueDate = new Date(order.dueDate)
+    dueDate.setHours(0, 0, 0, 0)
+
+    if (
+      dueDate < today &&
+      (order.status === 'принят' || order.status === 'в производстве')
+    ) {
+      const daysOverdue = Math.floor(
+        (today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24)
+      )
+      addNotification(
+        'error',
+        `Заказ просрочен: ${order.orderNumber}`,
+        `${order.customerName} - просрочка ${daysOverdue} дней`
+      )
+      notifiedOrderIds.value.add(order.id)
+    }
+  })
+}
+
+onMounted(() => {
+  checkOverdueOrders()
+})
+
+watch(() => orders.value.length, () => {
+  checkOverdueOrders()
+})
+
 const filteredOrders = computed(() => {
   return orders.value.filter((order) => {
     const matchesSearch =
