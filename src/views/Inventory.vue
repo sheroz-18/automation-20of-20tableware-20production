@@ -341,8 +341,9 @@ const formData = ref<Partial<InventoryItem>>({
 })
 
 onMounted(() => {
-  storage.initializeStorage(products, [], inventory, [])
-  storage.watchForChanges(products, [], inventory, [])
+  const emptyArray = ref<any[]>([])
+  storage.initializeStorage(products, emptyArray, inventory, emptyArray)
+  storage.watchForChanges(products, emptyArray, inventory, emptyArray)
 })
 
 const filteredInventory = computed(() => {
