@@ -155,6 +155,69 @@
           </div>
         </div>
 
+        <div class="border-t border-slate-200 pt-6">
+          <p class="text-sm font-semibold text-gray-700 mb-4">Этапы производства</p>
+          <div class="space-y-3">
+            <div
+              v-for="stage in modal.selectedItem.value?.stages"
+              :key="stage.stageNumber"
+              class="flex items-center gap-4 p-4 rounded-lg"
+              :class="[
+                stage.completed
+                  ? 'bg-green-50 border border-green-200'
+                  : stage.stageNumber === modal.selectedItem.value?.currentStage
+                    ? 'bg-blue-50 border border-blue-200'
+                    : 'bg-slate-50 border border-slate-200',
+              ]"
+            >
+              <div class="flex-shrink-0">
+                <div
+                  class="w-10 h-10 rounded-full flex items-center justify-center font-semibold text-white"
+                  :class="[
+                    stage.completed
+                      ? 'bg-green-600'
+                      : stage.stageNumber === modal.selectedItem.value?.currentStage
+                        ? 'bg-blue-600'
+                        : 'bg-slate-400',
+                  ]"
+                >
+                  {{ stage.stageNumber }}
+                </div>
+              </div>
+              <div class="flex-1">
+                <p class="font-medium text-slate-900 capitalize">{{ stage.stageName }}</p>
+                <p v-if="stage.completedDate" class="text-sm text-slate-600">
+                  Завершено: {{ formatDate(stage.completedDate) }}
+                </p>
+              </div>
+              <div
+                v-if="stage.completed"
+                class="flex-shrink-0 text-green-600"
+              >
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <button
+            v-if="
+              modal.selectedItem.value?.currentStage &&
+              modal.selectedItem.value.currentStage < 5 &&
+              modal.selectedItem.value?.status !== 'completed'
+            "
+            @click="advanceStage"
+            class="mt-4 w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition"
+          >
+            Перейти к следующему этапу ({{ (modal.selectedItem.value?.currentStage || 0) + 1 }}/5)
+          </button>
+        </div>
+
         <div class="flex gap-2 pt-4 border-t border-slate-200">
           <button
             @click="
