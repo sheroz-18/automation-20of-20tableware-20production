@@ -199,7 +199,7 @@
           </div>
           <div>
             <p class="text-sm text-slate-600">Ссылка</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.reference }}</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.reference }}</p>
           </div>
         </div>
 
