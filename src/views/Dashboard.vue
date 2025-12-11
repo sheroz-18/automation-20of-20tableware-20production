@@ -298,24 +298,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { orders as mockOrders, products as mockProducts } from '../data/mockData'
 import { useModal } from '../composables/useModal'
-import { useStorage } from '../composables/useStorage'
+import { useAppState } from '../composables/useAppState'
 import MetricCard from '../components/MetricCard.vue'
 import ModalBase from '../components/ModalBase.vue'
 
 const router = useRouter()
 const modal = useModal()
-const storage = useStorage()
-
-const orders = ref([...mockOrders])
-const products = ref([...mockProducts])
-
-onMounted(() => {
-  storage.initializeStorage(products, orders, [], [])
-})
+const { orders, products } = useAppState()
 
 const recentOrders = computed(() => orders.value.slice(0, 3))
 
