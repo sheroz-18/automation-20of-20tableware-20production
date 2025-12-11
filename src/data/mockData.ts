@@ -1,4 +1,4 @@
-import type { Product, Order, FinancialRecord, InventoryItem, DashboardMetrics, ProductionBatch } from '../types'
+import type { Product, Order, FinancialRecord, InventoryItem, DashboardMetrics, ProductionBatch, RawMaterial, FinishedGood, StockMovement } from '../types'
 
 export const products: Product[] = [
   {
