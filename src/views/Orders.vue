@@ -369,20 +369,20 @@ const saveOrder = () => {
     return
   }
 
-  if (modal.isEditModal && modal.selectedItem) {
-    const index = orders.value.findIndex((o) => o.id === modal.selectedItem.id)
+  if (modal.isEditModal.value && modal.selectedItem.value) {
+    const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
     if (index !== -1) {
       orders.value[index] = {
-        ...modal.selectedItem,
+        ...modal.selectedItem.value,
         ...formData.value,
-      }
+      } as Order
     }
   }
   modal.closeModal()
 }
 
 const deleteOrder = () => {
-  const index = orders.value.findIndex((o) => o.id === modal.selectedItem.id)
+  const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
   if (index !== -1) {
     orders.value.splice(index, 1)
   }
