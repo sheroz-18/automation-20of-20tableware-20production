@@ -332,20 +332,20 @@ const getTotalItems = (order: any) => {
 
 const getOrderStatusBadge = (status: string) => {
   const badges: Record<string, string> = {
-    pending: 'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium',
-    processing: 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium',
-    completed: 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium',
-    shipped: 'px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium',
+    'принят': 'px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium',
+    'в производстве': 'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium',
+    'на складе': 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium',
+    'отправлен': 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium',
   }
   return badges[status] || 'px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium'
 }
 
 const getOrderStatusLabel = (status: string) => {
   const labels: Record<string, string> = {
-    pending: 'Ожидание',
-    processing: 'Обработка',
-    completed: 'Завершено',
-    shipped: 'Отправлено',
+    'принят': 'Принят',
+    'в производстве': 'В производстве',
+    'на складе': 'На складе',
+    'отправлен': 'Отправлен',
   }
   return labels[status] || 'Неизвестно'
 }
