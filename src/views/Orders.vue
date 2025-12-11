@@ -381,7 +381,7 @@ const saveOrder = () => {
 }
 
 const deleteOrder = () => {
-  const index = orders.value.findIndex((o) => o.id === modal.selectedItem.id)
+  const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
   if (index !== -1) {
     orders.value.splice(index, 1)
   }
