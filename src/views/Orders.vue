@@ -318,17 +318,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { orders as mockOrders } from '../data/mockData'
+import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
-import { useStorage } from '../composables/useStorage'
+import { useAppState } from '../composables/useAppState'
 import ModalBase from '../components/ModalBase.vue'
 import type { Order } from '../types'
 
 const modal = useModal()
-const storage = useStorage()
+const { orders } = useAppState()
 
-const orders = ref<Order[]>([...mockOrders])
 const searchQuery = ref('')
 const statusFilter = ref('')
 
@@ -340,11 +338,6 @@ const formData = ref<Partial<Order>>({
   dueDate: new Date().toISOString().split('T')[0],
   totalAmount: 0,
   items: [],
-})
-
-onMounted(() => {
-  storage.initializeStorage([], orders, [], [])
-  storage.watchForChanges([], orders, [], [])
 })
 
 const filteredOrders = computed(() => {
