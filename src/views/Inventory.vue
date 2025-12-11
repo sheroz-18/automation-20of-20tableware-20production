@@ -168,7 +168,7 @@
           <div>
             <p class="text-sm text-slate-600">Товар</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.productName }}
+              {{ modal.selectedItem.value?.productName }}
             </p>
           </div>
           <div>
