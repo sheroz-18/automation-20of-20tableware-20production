@@ -46,11 +46,13 @@ const initializeAppState = () => {
   orders.value = loadFromStorage(STORAGE_KEY_ORDERS, mockOrders)
   inventory.value = loadFromStorage(STORAGE_KEY_INVENTORY, mockInventory)
   financialRecords.value = loadFromStorage(STORAGE_KEY_FINANCE, mockFinance)
+  productionBatches.value = loadFromStorage(STORAGE_KEY_PRODUCTION_BATCHES, mockProductionBatches)
 
   watch(products, (newVal) => saveToStorage(STORAGE_KEY_PRODUCTS, newVal), { deep: true })
   watch(orders, (newVal) => saveToStorage(STORAGE_KEY_ORDERS, newVal), { deep: true })
   watch(inventory, (newVal) => saveToStorage(STORAGE_KEY_INVENTORY, newVal), { deep: true })
   watch(financialRecords, (newVal) => saveToStorage(STORAGE_KEY_FINANCE, newVal), { deep: true })
+  watch(productionBatches, (newVal) => saveToStorage(STORAGE_KEY_PRODUCTION_BATCHES, newVal), { deep: true })
 
   isInitialized = true
 }
