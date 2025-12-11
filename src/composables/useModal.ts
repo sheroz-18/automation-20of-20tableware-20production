@@ -1,5 +1,4 @@
 import { ref, computed } from 'vue'
-import type { Ref } from 'vue'
 
 export type ModalType = 'view' | 'edit' | 'create' | 'delete'
 export type ModalContent = 'product' | 'order' | 'inventory' | 'finance' | null
