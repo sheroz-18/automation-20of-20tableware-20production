@@ -379,7 +379,7 @@ const saveInventory = () => {
     return
   }
 
-  if (modal.isCreateModal) {
+  if (modal.isCreateModal.value) {
     const newItem: InventoryItem = {
       id: Math.random().toString(36).substr(2, 9),
       productId: formData.value.productId || '',
