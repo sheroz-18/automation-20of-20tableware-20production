@@ -5,6 +5,8 @@ import Products from '../views/Products.vue'
 import Orders from '../views/Orders.vue'
 import Finance from '../views/Finance.vue'
 import Analytics from '../views/Analytics.vue'
+import ProductionPlanning from '../views/ProductionPlanning.vue'
+import Warehouse from '../views/Warehouse.vue'
 
 const routes = [
   {
@@ -36,6 +38,16 @@ const routes = [
     path: '/analytics',
     name: 'Analytics',
     component: Analytics,
+  },
+  {
+    path: '/production-planning',
+    name: 'ProductionPlanning',
+    component: ProductionPlanning,
+  },
+  {
+    path: '/warehouse',
+    name: 'Warehouse',
+    component: Warehouse,
   },
 ]
 

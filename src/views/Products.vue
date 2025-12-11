@@ -46,7 +46,17 @@
         :key="product.id"
         class="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition overflow-hidden"
       >
-        <div class="h-40 bg-gradient-to-br" :class="getGradientColor(product.category)"></div>
+        <div
+          class="h-48 bg-gradient-to-br overflow-hidden"
+          :class="getGradientColor(product.category)"
+        >
+          <img
+            :src="product.image"
+            :alt="product.name"
+            class="w-full h-full object-cover"
+            @error="handleImageError"
+          />
+        </div>
 
         <div class="p-6">
           <div class="flex items-start justify-between mb-3">
@@ -63,14 +73,33 @@
             product.sku
           }}</code>
 
+          <div class="grid grid-cols-2 gap-3 mb-4 text-xs">
+            <div class="p-2 rounded bg-slate-50">
+              <p class="text-slate-600">Материал</p>
+              <p class="font-semibold text-slate-900">{{ product.material }}</p>
+            </div>
+            <div class="p-2 rounded bg-slate-50">
+              <p class="text-slate-600">Размер</p>
+              <p class="font-semibold text-slate-900">{{ product.size }}</p>
+            </div>
+            <div class="p-2 rounded bg-slate-50">
+              <p class="text-slate-600">Вес</p>
+              <p class="font-semibold text-slate-900">{{ product.weight }} кг</p>
+            </div>
+            <div class="p-2 rounded bg-slate-50">
+              <p class="text-slate-600">Цена</p>
+              <p class="font-semibold text-slate-900">ЅМ{{ product.unitCost }}</p>
+            </div>
+          </div>
+
           <div class="grid grid-cols-2 gap-4 mb-4">
             <div class="p-3 rounded-lg bg-slate-50">
               <p class="text-xs text-slate-600">Количество</p>
               <p class="font-bold text-slate-900 text-lg">{{ product.quantity }}</p>
             </div>
             <div class="p-3 rounded-lg bg-slate-50">
-              <p class="text-xs text-gray-700">Цена</p>
-              <p class="font-bold text-slate-900 text-lg">ЅМ{{ product.unitCost }}</p>
+              <p class="text-xs text-slate-600">Уровень переказа</p>
+              <p class="font-bold text-slate-900 text-lg">{{ product.reorderLevel }}</p>
             </div>
           </div>
 
@@ -117,6 +146,15 @@
       @save="saveProduct"
     >
       <div v-if="modal.isViewModal.value" class="space-y-6">
+        <div class="w-full h-64 rounded-lg overflow-hidden border border-slate-200">
+          <img
+            :src="modal.selectedItem.value?.image"
+            :alt="modal.selectedItem.value?.name"
+            class="w-full h-full object-cover"
+            @error="handleImageError"
+          />
+        </div>
+
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-gray-700">Название</p>
@@ -130,6 +168,24 @@
             <p class="text-sm text-gray-700">Категория</p>
             <p class="text-lg font-semibold text-slate-900">
               {{ modal.selectedItem.value?.category }}
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-700">Материал</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.material }}
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-700">Размер</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.size }}
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-700">Вес</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.weight }} кг
             </p>
           </div>
           <div>
@@ -221,6 +277,57 @@
           </div>
         </div>
 
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">URL изображения товара</label>
+          <input
+            v-model="formData.image"
+            type="url"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+            placeholder="https://..."
+          />
+          <p v-if="formData.image" class="mt-2 text-xs text-slate-600">
+            Предпросмотр:
+            <img
+              :src="formData.image"
+              :alt="formData.name"
+              class="mt-2 h-32 rounded border border-slate-200 object-cover"
+              @error="handleImageError"
+            />
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Материал</label>
+            <input
+              v-model="formData.material"
+              type="text"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+              placeholder="Керамика, Фарфор, Стекло..."
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Размер</label>
+            <input
+              v-model="formData.size"
+              type="text"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+              placeholder="Ø 27 см, H 8 см..."
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Вес (кг)</label>
+          <input
+            v-model.number="formData.weight"
+            type="number"
+            step="0.01"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+            placeholder="0.65"
+          />
+        </div>
+
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Количество</label>
@@ -307,6 +414,10 @@ const formData = ref<Partial<Product>>({
   quantity: 0,
   reorderLevel: 100,
   unitCost: 0,
+  image: '',
+  material: '',
+  size: '',
+  weight: 0,
 })
 
 const filteredProducts = computed(() => {
@@ -327,6 +438,10 @@ const openCreateModal = (type: any) => {
     quantity: 0,
     reorderLevel: 100,
     unitCost: 0,
+    image: '',
+    material: '',
+    size: '',
+    weight: 0,
   }
   modal.openCreateModal(type)
 }
@@ -355,6 +470,10 @@ const saveProduct = () => {
       quantity: formData.value.quantity || 0,
       reorderLevel: formData.value.reorderLevel || 100,
       unitCost: formData.value.unitCost || 0,
+      image: formData.value.image || '',
+      material: formData.value.material || '',
+      size: formData.value.size || '',
+      weight: formData.value.weight || 0,
       status: 'in_stock',
       lastUpdated: new Date().toISOString().split('T')[0],
     }
@@ -383,6 +502,11 @@ const deleteProduct = () => {
     products.value.splice(index, 1)
   }
   modal.closeModal()
+}
+
+const handleImageError = (event: Event) => {
+  const img = event.target as HTMLImageElement
+  img.style.display = 'none'
 }
 
 const getGradientColor = (category: string): string => {

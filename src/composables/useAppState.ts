@@ -4,13 +4,30 @@ import {
   products as mockProducts,
   financialRecords as mockFinance,
   inventoryItems as mockInventory,
+  productionBatches as mockProductionBatches,
+  rawMaterials as mockRawMaterials,
+  finishedGoods as mockFinishedGoods,
+  stockMovements as mockStockMovements,
 } from '../data/mockData'
-import type { Order, Product, FinancialRecord, InventoryItem } from '../types'
+import type {
+  Order,
+  Product,
+  FinancialRecord,
+  InventoryItem,
+  ProductionBatch,
+  RawMaterial,
+  FinishedGood,
+  StockMovement,
+} from '../types'
 
 const STORAGE_KEY_PRODUCTS = 'produceflow_products'
 const STORAGE_KEY_ORDERS = 'produceflow_orders'
 const STORAGE_KEY_INVENTORY = 'produceflow_inventory'
 const STORAGE_KEY_FINANCE = 'produceflow_finance'
+const STORAGE_KEY_PRODUCTION_BATCHES = 'produceflow_production_batches'
+const STORAGE_KEY_RAW_MATERIALS = 'produceflow_raw_materials'
+const STORAGE_KEY_FINISHED_GOODS = 'produceflow_finished_goods'
+const STORAGE_KEY_STOCK_MOVEMENTS = 'produceflow_stock_movements'
 
 let isInitialized = false
 
@@ -18,6 +35,10 @@ const products = ref<Product[]>([])
 const orders = ref<Order[]>([])
 const inventory = ref<InventoryItem[]>([])
 const financialRecords = ref<FinancialRecord[]>([])
+const productionBatches = ref<ProductionBatch[]>([])
+const rawMaterials = ref<RawMaterial[]>([])
+const finishedGoods = ref<FinishedGood[]>([])
+const stockMovements = ref<StockMovement[]>([])
 
 const loadFromStorage = <T>(key: string, defaultValue: T[]): T[] => {
   try {
@@ -43,11 +64,25 @@ const initializeAppState = () => {
   orders.value = loadFromStorage(STORAGE_KEY_ORDERS, mockOrders)
   inventory.value = loadFromStorage(STORAGE_KEY_INVENTORY, mockInventory)
   financialRecords.value = loadFromStorage(STORAGE_KEY_FINANCE, mockFinance)
+  productionBatches.value = loadFromStorage(STORAGE_KEY_PRODUCTION_BATCHES, mockProductionBatches)
+  rawMaterials.value = loadFromStorage(STORAGE_KEY_RAW_MATERIALS, mockRawMaterials)
+  finishedGoods.value = loadFromStorage(STORAGE_KEY_FINISHED_GOODS, mockFinishedGoods)
+  stockMovements.value = loadFromStorage(STORAGE_KEY_STOCK_MOVEMENTS, mockStockMovements)
 
   watch(products, (newVal) => saveToStorage(STORAGE_KEY_PRODUCTS, newVal), { deep: true })
   watch(orders, (newVal) => saveToStorage(STORAGE_KEY_ORDERS, newVal), { deep: true })
   watch(inventory, (newVal) => saveToStorage(STORAGE_KEY_INVENTORY, newVal), { deep: true })
   watch(financialRecords, (newVal) => saveToStorage(STORAGE_KEY_FINANCE, newVal), { deep: true })
+  watch(productionBatches, (newVal) => saveToStorage(STORAGE_KEY_PRODUCTION_BATCHES, newVal), {
+    deep: true,
+  })
+  watch(rawMaterials, (newVal) => saveToStorage(STORAGE_KEY_RAW_MATERIALS, newVal), { deep: true })
+  watch(finishedGoods, (newVal) => saveToStorage(STORAGE_KEY_FINISHED_GOODS, newVal), {
+    deep: true,
+  })
+  watch(stockMovements, (newVal) => saveToStorage(STORAGE_KEY_STOCK_MOVEMENTS, newVal), {
+    deep: true,
+  })
 
   isInitialized = true
 }
@@ -62,5 +97,9 @@ export function useAppState() {
     orders,
     inventory,
     financialRecords,
+    productionBatches,
+    rawMaterials,
+    finishedGoods,
+    stockMovements,
   }
 }
