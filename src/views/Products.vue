@@ -308,6 +308,7 @@ const formData = ref<Partial<Product>>({
 })
 
 onMounted(() => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const emptyArray = ref<any[]>([])
   storage.initializeStorage(products, emptyArray, emptyArray, emptyArray)
   storage.watchForChanges(products, emptyArray, emptyArray, emptyArray)
