@@ -311,6 +311,7 @@ const orders = ref([...mockOrders])
 const products = ref([...mockProducts])
 
 onMounted(() => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const emptyArray = ref<any[]>([])
   storage.initializeStorage(products, orders, emptyArray, emptyArray)
 })
