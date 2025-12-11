@@ -39,16 +39,11 @@
           >
             <div class="flex items-center gap-4">
               <div :class="['w-12 h-12 rounded-lg flex items-center justify-center', record.type === 'income' ? 'bg-green-100' : 'bg-red-100']">
-                <svg :class="['w-6 h-6', record.type === 'income' ? 'text-green-600' : 'text-red-600']" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    :d="record.type === 'income'
-                      ? 'M12 6v6m0 0v6m0-6h6m-6 0H6'
-                      : 'M20 12H4'"
-                  "
-                  />
+                <svg v-if="record.type === 'income'" class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                </svg>
+                <svg v-else class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
                 </svg>
               </div>
               <div>
