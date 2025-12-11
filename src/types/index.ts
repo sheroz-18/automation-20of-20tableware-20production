@@ -64,6 +64,13 @@ export interface DashboardMetrics {
   productionChange: number
 }
 
+export interface ProductionStage {
+  stageNumber: number
+  stageName: string
+  completed: boolean
+  completedDate?: string
+}
+
 export interface ProductionBatch {
   id: string
   batchNumber: string
@@ -75,4 +82,6 @@ export interface ProductionBatch {
   endDate: string
   createdDate: string
   category: string
+  currentStage: number
+  stages: ProductionStage[]
 }
