@@ -149,25 +149,25 @@
     </div>
 
     <ModalBase
-      :is-open="modal.isOpen && modal.contentType === 'finance'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'finance'"
       :title="
-        modal.isEditModal
+        modal.isEditModal.value
           ? 'Редактировать операцию'
-          : modal.isCreateModal
+          : modal.isCreateModal.value
             ? 'Новая финансовая операция'
             : 'Информация об операции'
       "
       :show-actions="true"
-      :show-save-button="modal.isEditModal || modal.isCreateModal"
+      :show-save-button="modal.isEditModal.value || modal.isCreateModal.value"
       @close="modal.closeModal"
       @save="saveRecord"
     >
-      <div v-if="modal.isViewModal" class="space-y-6">
+      <div v-if="modal.isViewModal.value" class="space-y-6">
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-slate-600">Описание</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.description }}
+              {{ modal.selectedItem.value?.description }}
             </p>
           </div>
           <div>
@@ -175,31 +175,35 @@
             <p
               :class="[
                 'text-lg font-semibold',
-                modal.selectedItem?.type === 'income' ? 'text-green-600' : 'text-red-600',
+                modal.selectedItem.value?.type === 'income' ? 'text-green-600' : 'text-red-600',
               ]"
             >
-              {{ modal.selectedItem?.type === 'income' ? '+' : '-' }}₽{{
-                modal.selectedItem?.amount.toFixed(2)
+              {{ modal.selectedItem.value?.type === 'income' ? '+' : '-' }}₽{{
+                modal.selectedItem.value?.amount.toFixed(2)
               }}
             </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Категория</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.category }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.category }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Тип</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.type === 'income' ? 'Доход' : 'Расход' }}
+              {{ modal.selectedItem.value?.type === 'income' ? 'Доход' : 'Расход' }}
             </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Дата</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.date }}</p>
+            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem.value?.date }}</p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Ссылка</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.reference }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.reference }}
+            </p>
           </div>
         </div>
 
@@ -207,7 +211,7 @@
           <button
             @click="
               () => {
-                modal.openEditModal(modal.selectedItem, 'finance')
+                modal.openEditModal(modal.selectedItem.value, 'finance')
               }
             "
             class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition"
@@ -215,7 +219,7 @@
             Редактировать
           </button>
           <button
-            @click="modal.openDeleteModal(modal.selectedItem, 'finance')"
+            @click="modal.openDeleteModal(modal.selectedItem.value, 'finance')"
             class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition"
           >
             Удалить
@@ -296,8 +300,8 @@
     </ModalBase>
 
     <ModalBase
-      v-if="modal.modalType === 'delete'"
-      :is-open="modal.isOpen && modal.contentType === 'finance'"
+      v-if="modal.modalType.value === 'delete'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'finance'"
       title="Подтвердить удаление"
       :show-actions="true"
       @close="modal.closeModal"
@@ -305,7 +309,7 @@
       <div class="space-y-4">
         <p class="text-slate-700">
           Вы уверены, что хотите удалить операцию
-          <strong>{{ modal.selectedItem?.description }}</strong
+          <strong>{{ modal.selectedItem.value?.description }}</strong
           >?
         </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
@@ -389,11 +393,11 @@ const saveRecord = () => {
       reference: formData.value.reference || '',
     }
     financialRecords.value.push(newRecord)
-  } else if (modal.isEditModal && modal.selectedItem) {
-    const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.id)
+  } else if (modal.isEditModal.value && modal.selectedItem.value) {
+    const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
     if (index !== -1) {
       financialRecords.value[index] = {
-        ...modal.selectedItem,
+        ...modal.selectedItem.value,
         ...formData.value,
       }
     }
@@ -402,7 +406,7 @@ const saveRecord = () => {
 }
 
 const deleteRecord = () => {
-  const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.id)
+  const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
   if (index !== -1) {
     financialRecords.value.splice(index, 1)
   }

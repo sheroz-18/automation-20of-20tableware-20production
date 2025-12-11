@@ -156,35 +156,37 @@
     </div>
 
     <ModalBase
-      :is-open="modal.isOpen && modal.contentType === 'inventory'"
-      :title="modal.isEditModal ? 'Обновить инвентаризацию' : 'Информация об инвентаризации'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'inventory'"
+      :title="modal.isEditModal.value ? 'Обновить инвентаризацию' : 'Информация об инвентаризации'"
       :show-actions="true"
-      :show-save-button="modal.isEditModal || modal.isCreateModal"
+      :show-save-button="modal.isEditModal.value || modal.isCreateModal.value"
       @close="modal.closeModal"
       @save="saveInventory"
     >
-      <div v-if="modal.isViewModal" class="space-y-6">
+      <div v-if="modal.isViewModal.value" class="space-y-6">
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-slate-600">Товар</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.productName }}
+              {{ modal.selectedItem.value?.productName }}
             </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Количество</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.quantity }} шт
+              {{ modal.selectedItem.value?.quantity }} шт
             </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Место хранения</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.location }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.location }}
+            </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Последний учет</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.lastCounted }}
+              {{ modal.selectedItem.value?.lastCounted }}
             </p>
           </div>
           <div>
@@ -192,19 +194,19 @@
             <p
               :class="[
                 'text-lg font-semibold',
-                modal.selectedItem?.variance === 0
+                modal.selectedItem.value?.variance === 0
                   ? 'text-slate-900'
-                  : modal.selectedItem?.variance! > 0
+                  : modal.selectedItem.value?.variance! > 0
                     ? 'text-green-600'
                     : 'text-red-600',
               ]"
             >
               {{
-                modal.selectedItem?.variance === 0
+                modal.selectedItem.value?.variance === 0
                   ? '±0'
-                  : modal.selectedItem?.variance! > 0
-                    ? '+' + modal.selectedItem?.variance
-                    : modal.selectedItem?.variance
+                  : modal.selectedItem.value?.variance! > 0
+                    ? '+' + modal.selectedItem.value?.variance
+                    : modal.selectedItem.value?.variance
               }}
             </p>
           </div>
@@ -283,8 +285,8 @@
     </ModalBase>
 
     <ModalBase
-      v-if="modal.modalType === 'delete'"
-      :is-open="modal.isOpen && modal.contentType === 'inventory'"
+      v-if="modal.modalType.value === 'delete'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'inventory'"
       title="Подтвердить удаление"
       :show-actions="true"
       @close="modal.closeModal"
@@ -292,7 +294,7 @@
       <div class="space-y-4">
         <p class="text-slate-700">
           Вы уверены, что хотите удалить запись
-          <strong>{{ modal.selectedItem?.productName }}</strong
+          <strong>{{ modal.selectedItem.value?.productName }}</strong
           >?
         </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
@@ -396,11 +398,11 @@ const saveInventory = () => {
       variance: formData.value.variance || 0,
     }
     inventory.value.push(newItem)
-  } else if (modal.isEditModal && modal.selectedItem) {
-    const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.id)
+  } else if (modal.isEditModal.value && modal.selectedItem.value) {
+    const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
     if (index !== -1) {
       inventory.value[index] = {
-        ...modal.selectedItem,
+        ...modal.selectedItem.value,
         ...formData.value,
       }
     }
@@ -409,7 +411,7 @@ const saveInventory = () => {
 }
 
 const deleteInventory = () => {
-  const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.id)
+  const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
   if (index !== -1) {
     inventory.value.splice(index, 1)
   }

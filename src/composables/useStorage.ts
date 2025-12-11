@@ -26,30 +26,30 @@ export function useStorage() {
   }
 
   const initializeStorage = (products: any, orders: any, inventory: any, finance: any) => {
-    const storedProducts = loadFromStorage(STORAGE_KEY_PRODUCTS, null)
-    const storedOrders = loadFromStorage(STORAGE_KEY_ORDERS, null)
-    const storedInventory = loadFromStorage(STORAGE_KEY_INVENTORY, null)
-    const storedFinance = loadFromStorage(STORAGE_KEY_FINANCE, null)
+    const storedProducts = loadFromStorage(STORAGE_KEY_PRODUCTS, [])
+    const storedOrders = loadFromStorage(STORAGE_KEY_ORDERS, [])
+    const storedInventory = loadFromStorage(STORAGE_KEY_INVENTORY, [])
+    const storedFinance = loadFromStorage(STORAGE_KEY_FINANCE, [])
 
-    if (storedProducts) {
+    if (storedProducts.length > 0) {
       products.splice(0, products.length, ...storedProducts)
     } else {
       saveToStorage(STORAGE_KEY_PRODUCTS, products)
     }
 
-    if (storedOrders) {
+    if (storedOrders.length > 0) {
       orders.splice(0, orders.length, ...storedOrders)
     } else {
       saveToStorage(STORAGE_KEY_ORDERS, orders)
     }
 
-    if (storedInventory) {
+    if (storedInventory.length > 0) {
       inventory.splice(0, inventory.length, ...storedInventory)
     } else {
       saveToStorage(STORAGE_KEY_INVENTORY, inventory)
     }
 
-    if (storedFinance) {
+    if (storedFinance.length > 0) {
       finance.splice(0, finance.length, ...storedFinance)
     } else {
       saveToStorage(STORAGE_KEY_FINANCE, finance)

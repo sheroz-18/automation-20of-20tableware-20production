@@ -129,48 +129,50 @@
     </div>
 
     <ModalBase
-      :is-open="modal.isOpen && modal.contentType === 'order'"
-      :title="modal.isEditModal ? 'Редактировать заказ' : 'Информация о заказе'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'order'"
+      :title="modal.isEditModal.value ? 'Редактировать заказ' : 'Информация о заказе'"
       :show-actions="true"
-      :show-save-button="modal.isEditModal"
+      :show-save-button="modal.isEditModal.value"
       @close="modal.closeModal"
       @save="saveOrder"
     >
-      <div v-if="modal.isViewModal" class="space-y-6">
+      <div v-if="modal.isViewModal.value" class="space-y-6">
         <div class="grid grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-slate-600">Номер заказа</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.orderNumber }}
+              {{ modal.selectedItem.value?.orderNumber }}
             </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Клиент</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.customerName }}
+              {{ modal.selectedItem.value?.customerName }}
             </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Статус</p>
-            <span :class="getStatusBadge(modal.selectedItem?.status)">
-              {{ getStatusLabel(modal.selectedItem?.status) }}
+            <span :class="getStatusBadge(modal.selectedItem.value?.status)">
+              {{ getStatusLabel(modal.selectedItem.value?.status) }}
             </span>
           </div>
           <div>
             <p class="text-sm text-slate-600">Сумма</p>
             <p class="text-lg font-semibold text-slate-900">
-              ₽{{ modal.selectedItem?.totalAmount.toFixed(2) }}
+              ₽{{ modal.selectedItem.value?.totalAmount.toFixed(2) }}
             </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Создан</p>
             <p class="text-lg font-semibold text-slate-900">
-              {{ modal.selectedItem?.createdDate }}
+              {{ modal.selectedItem.value?.createdDate }}
             </p>
           </div>
           <div>
             <p class="text-sm text-slate-600">Срок</p>
-            <p class="text-lg font-semibold text-slate-900">{{ modal.selectedItem?.dueDate }}</p>
+            <p class="text-lg font-semibold text-slate-900">
+              {{ modal.selectedItem.value?.dueDate }}
+            </p>
           </div>
         </div>
 
@@ -178,7 +180,7 @@
           <p class="text-sm font-semibold text-slate-700 mb-3">Товары:</p>
           <div class="space-y-2">
             <div
-              v-for="item in modal.selectedItem?.items"
+              v-for="item in modal.selectedItem.value?.items"
               :key="item.productId"
               class="p-3 rounded-lg bg-slate-50"
             >
@@ -283,15 +285,16 @@
     </ModalBase>
 
     <ModalBase
-      v-if="modal.modalType === 'delete'"
-      :is-open="modal.isOpen && modal.contentType === 'order'"
+      v-if="modal.modalType.value === 'delete'"
+      :is-open="modal.isOpen.value && modal.contentType.value === 'order'"
       title="Подтвердить удаление"
       :show-actions="true"
       @close="modal.closeModal"
     >
       <div class="space-y-4">
         <p class="text-slate-700">
-          Вы уверены, что хотите удалить заказ <strong>{{ modal.selectedItem?.orderNumber }}</strong
+          Вы уверены, что хотите удалить заказ
+          <strong>{{ modal.selectedItem.value?.orderNumber }}</strong
           >?
         </p>
         <p class="text-sm text-slate-600">Это действие нельзя будет отменить.</p>
@@ -368,11 +371,11 @@ const saveOrder = () => {
     return
   }
 
-  if (modal.isEditModal && modal.selectedItem) {
-    const index = orders.value.findIndex((o) => o.id === modal.selectedItem.id)
+  if (modal.isEditModal.value && modal.selectedItem.value) {
+    const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
     if (index !== -1) {
       orders.value[index] = {
-        ...modal.selectedItem,
+        ...modal.selectedItem.value,
         ...formData.value,
       }
     }
@@ -381,7 +384,7 @@ const saveOrder = () => {
 }
 
 const deleteOrder = () => {
-  const index = orders.value.findIndex((o) => o.id === modal.selectedItem.id)
+  const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
   if (index !== -1) {
     orders.value.splice(index, 1)
   }
