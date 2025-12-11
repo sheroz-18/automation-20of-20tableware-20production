@@ -288,17 +288,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { products as mockProducts } from '../data/mockData'
+import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
-import { useStorage } from '../composables/useStorage'
+import { useAppState } from '../composables/useAppState'
 import ModalBase from '../components/ModalBase.vue'
 import type { Product } from '../types'
 
 const modal = useModal()
-const storage = useStorage()
+const { products } = useAppState()
 
-const products = ref<Product[]>([...mockProducts])
 const searchQuery = ref('')
 const categoryFilter = ref('')
 
@@ -309,11 +307,6 @@ const formData = ref<Partial<Product>>({
   quantity: 0,
   reorderLevel: 100,
   unitCost: 0,
-})
-
-onMounted(() => {
-  storage.initializeStorage(products, [], [], [])
-  storage.watchForChanges(products, [], [], [])
 })
 
 const filteredProducts = computed(() => {
