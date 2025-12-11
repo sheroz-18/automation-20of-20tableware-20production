@@ -491,4 +491,38 @@ const getStatusLabel = (status: string | undefined) => {
   }
   return labels[status || 'planning'] || 'Неизвестно'
 }
+
+const getCurrentStageName = (batch: ProductionBatch | undefined): string => {
+  if (!batch) return ''
+  const currentStage = batch.stages?.find((s) => s.stageNumber === batch.currentStage)
+  return currentStage ? currentStage.stageName : ''
+}
+
+const advanceStage = () => {
+  if (!modal.selectedItem.value) return
+
+  const batch = modal.selectedItem.value
+  if (batch.currentStage >= 5) return
+
+  const index = productionBatches.value.findIndex((b) => b.id === batch.id)
+  if (index === -1) return
+
+  const nextStageNumber = batch.currentStage + 1
+  const stageIndex = batch.stages.findIndex((s) => s.stageNumber === batch.currentStage)
+
+  if (stageIndex !== -1) {
+    productionBatches.value[index].stages[stageIndex].completed = true
+    productionBatches.value[index].stages[stageIndex].completedDate = new Date()
+      .toISOString()
+      .split('T')[0]
+  }
+
+  productionBatches.value[index].currentStage = nextStageNumber
+
+  if (nextStageNumber === 5) {
+    productionBatches.value[index].status = 'completed'
+  }
+
+  modal.selectedItem.value = productionBatches.value[index]
+}
 </script>
