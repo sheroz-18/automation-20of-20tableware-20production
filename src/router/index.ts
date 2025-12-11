@@ -5,6 +5,7 @@ import Products from '../views/Products.vue'
 import Orders from '../views/Orders.vue'
 import Finance from '../views/Finance.vue'
 import Analytics from '../views/Analytics.vue'
+import ProductionPlanning from '../views/ProductionPlanning.vue'
 
 const routes = [
   {
