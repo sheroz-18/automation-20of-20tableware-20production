@@ -20,14 +20,14 @@
           v-model="searchQuery"
           type="text"
           placeholder="Поиск по номеру или клиенту..."
-          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
         />
       </div>
       <div class="bg-white rounded-lg border border-slate-200 p-4">
         <label class="text-sm font-medium text-slate-700 block mb-2">Статус</label>
         <select
           v-model="statusFilter"
-          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
         >
           <option value="">Все статусы</option>
           <option value="принят">Принят</option>
@@ -40,7 +40,7 @@
         <label class="text-sm font-medium text-slate-700 block mb-2">Тип клиента</label>
         <select
           v-model="customerTypeFilter"
-          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
         >
           <option value="">Все типы</option>
           <option value="shop">Магазин</option>

@@ -20,14 +20,14 @@
           v-model="searchQuery"
           type="text"
           placeholder="Искать товар по названию или SKU..."
-          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
         />
       </div>
       <div class="bg-white rounded-lg border border-slate-200 p-4">
         <label class="text-sm font-medium text-slate-700 block mb-2">Фильтр по статусу</label>
         <select
           v-model="statusFilter"
-          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
         >
           <option value="">Все товары</option>
           <option value="in_stock">На складе</option>
@@ -238,7 +238,7 @@
           <input
             v-model="formData.productName"
             type="text"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             placeholder="Название товара"
           />
         </div>
@@ -248,7 +248,7 @@
           <input
             v-model.number="formData.quantity"
             type="number"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             placeholder="0"
           />
         </div>
@@ -258,7 +258,7 @@
           <input
             v-model="formData.location"
             type="text"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             placeholder="Склад А - Стеллаж 1"
           />
         </div>
@@ -268,7 +268,7 @@
           <input
             v-model="formData.lastCounted"
             type="date"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
           />
         </div>
 
@@ -277,7 +277,7 @@
           <input
             v-model.number="formData.variance"
             type="number"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             placeholder="0"
           />
         </div>
