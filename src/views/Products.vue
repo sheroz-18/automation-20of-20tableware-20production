@@ -88,7 +88,7 @@
             </div>
             <div class="p-2 rounded bg-slate-50">
               <p class="text-slate-600">Цена</p>
-              <p class="font-semibold text-slate-900">ЅМ{{ product.unitCost }}</p>
+              <p class="font-semibold text-slate-900">SM{{ product.unitCost }}</p>
             </div>
           </div>
 
@@ -209,7 +209,7 @@
           <div>
             <p class="text-sm text-gray-700">Цена за единицу</p>
             <p class="text-lg font-semibold text-slate-900">
-              ЅМ{{ modal.selectedItem.value?.unitCost }}
+              SM{{ modal.selectedItem.value?.unitCost }}
             </p>
           </div>
           <div>
@@ -350,7 +350,7 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Цена за единицу (ЅМ)</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Цена за единицу (SM)</label>
           <input
             v-model.number="formData.unitCost"
             type="number"
