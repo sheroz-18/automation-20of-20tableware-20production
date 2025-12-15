@@ -456,44 +456,52 @@ const openViewModal = (product: Product, type: any) => {
 }
 
 const saveProduct = () => {
-  if (!formData.value.name || !formData.value.sku) {
-    alert('Пожалуйста, заполните обязательные поля')
-    return
-  }
-
-  if (modal.isCreateModal.value) {
-    const newProduct: Product = {
-      id: Math.random().toString(36).substr(2, 9),
-      name: formData.value.name || '',
-      sku: formData.value.sku || '',
-      category: formData.value.category || 'Тарелки',
-      quantity: formData.value.quantity || 0,
-      reorderLevel: formData.value.reorderLevel || 100,
-      unitCost: formData.value.unitCost || 0,
-      image: formData.value.image || '',
-      material: formData.value.material || '',
-      size: formData.value.size || '',
-      weight: formData.value.weight || 0,
-      status: 'in_stock',
-      lastUpdated: new Date().toISOString().split('T')[0],
+  try {
+    if (!formData.value.name?.trim()) {
+      console.warn('Product name is required')
+      return
     }
-    products.value.push(newProduct)
-  } else if (modal.isEditModal.value && modal.selectedItem.value) {
-    const index = products.value.findIndex((p) => p.id === modal.selectedItem.value?.id)
-    if (index !== -1) {
-      products.value[index] = {
-        ...modal.selectedItem.value,
-        ...formData.value,
-        status:
-          formData.value.quantity === 0
-            ? 'out_of_stock'
-            : formData.value.quantity! < formData.value.reorderLevel!
-              ? 'low_stock'
-              : 'in_stock',
+    if (!formData.value.sku?.trim()) {
+      console.warn('Product SKU is required')
+      return
+    }
+
+    if (modal.isCreateModal.value) {
+      const newProduct: Product = {
+        id: Math.random().toString(36).substr(2, 9),
+        name: formData.value.name || '',
+        sku: formData.value.sku || '',
+        category: formData.value.category || 'Тарелки',
+        quantity: formData.value.quantity || 0,
+        reorderLevel: formData.value.reorderLevel || 100,
+        unitCost: formData.value.unitCost || 0,
+        image: formData.value.image || '',
+        material: formData.value.material || '',
+        size: formData.value.size || '',
+        weight: formData.value.weight || 0,
+        status: 'in_stock',
+        lastUpdated: new Date().toISOString().split('T')[0],
+      }
+      products.value.push(newProduct)
+    } else if (modal.isEditModal.value && modal.selectedItem.value) {
+      const index = products.value.findIndex((p) => p.id === modal.selectedItem.value?.id)
+      if (index !== -1) {
+        products.value[index] = {
+          ...modal.selectedItem.value,
+          ...formData.value,
+          status:
+            formData.value.quantity === 0
+              ? 'out_of_stock'
+              : formData.value.quantity! < formData.value.reorderLevel!
+                ? 'low_stock'
+                : 'in_stock',
+        }
       }
     }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error saving product:', error)
   }
-  modal.closeModal()
 }
 
 const deleteProduct = () => {
