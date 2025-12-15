@@ -525,11 +525,18 @@ const saveOrder = () => {
 }
 
 const deleteOrder = () => {
-  const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
-  if (index !== -1) {
-    orders.value.splice(index, 1)
+  try {
+    const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
+    if (index !== -1) {
+      const orderNumber = modal.selectedItem.value?.orderNumber
+      orders.value.splice(index, 1)
+      addNotification('success', 'Успешно', `Заказ ${orderNumber} удален`)
+    }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error deleting order:', error)
+    addNotification('error', 'Ошибка', 'Ошибка при удалении заказа')
   }
-  modal.closeModal()
 }
 
 const getStatusBadge = (status: string) => {
