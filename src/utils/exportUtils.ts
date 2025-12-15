@@ -262,13 +262,13 @@ export function exportOrderDetailToPrint(order: Order) {
       <tr>
         <td>${item.productName}</td>
         <td>${item.quantity}</td>
-        <td>ЅМ${item.unitPrice.toFixed(2)}</td>
-        <td><strong>ЅМ${item.subtotal.toFixed(2)}</strong></td>
+        <td>SM${item.unitPrice.toFixed(2)}</td>
+        <td><strong>SM${item.subtotal.toFixed(2)}</strong></td>
       </tr>
     `
   })
 
-  content += `<tr class="total-row"><td colspan="3">ИТОГО</td><td>ЅМ${order.totalAmount.toFixed(2)}</td></tr>`
+  content += `<tr class="total-row"><td colspan="3">ИТОГО</td><td>SM${order.totalAmount.toFixed(2)}</td></tr>`
   content += '</table></div>'
 
   exportToPrintHTML(`Заказ ${order.orderNumber}`, content)
