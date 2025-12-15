@@ -56,8 +56,8 @@ export function exportOrderDetailToCSV(order: Order) {
     Заказ: order.orderNumber,
     Товар: item.productName,
     Количество: item.quantity,
-    'Цена за единицу (ЅМ)': item.unitPrice.toFixed(2),
-    'Сумма (ЅМ)': item.subtotal.toFixed(2),
+    'Цена за единицу (SM)': item.unitPrice.toFixed(2),
+    'Сумма (SM)': item.subtotal.toFixed(2),
   }))
 
   exportToCSV(exportData, `Order_${order.orderNumber}_details`)
