@@ -6,7 +6,12 @@
           <div
             class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0"
           >
-            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              class="w-5 h-5 sm:w-6 sm:h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -59,7 +64,10 @@
               ></span>
             </button>
 
-            <button class="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors" title="Настройки">
+            <button
+              class="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+              title="Настройки"
+            >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   stroke-linecap="round"
@@ -132,8 +140,12 @@
             </ul>
           </div>
         </div>
-        <div class="border-t border-slate-200 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p class="text-xs sm:text-sm text-slate-600 text-center sm:text-left">&copy; 2024 ProduceFlow. Все права защищены.</p>
+        <div
+          class="border-t border-slate-200 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4"
+        >
+          <p class="text-xs sm:text-sm text-slate-600 text-center sm:text-left">
+            &copy; 2024 ProduceFlow. Все права защищены.
+          </p>
           <div class="flex gap-4 sm:gap-6">
             <a href="#" class="text-slate-600 hover:text-blue-600">
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
