@@ -97,7 +97,7 @@
         class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-sm"
       >
         <p class="text-green-100 text-sm mb-1">Общая сумма</p>
-        <p class="text-3xl font-bold">ЅМ{{ totalOrderValue.toFixed(0) }}</p>
+        <p class="text-3xl font-bold">SM{{ totalOrderValue.toFixed(0) }}</p>
       </div>
     </div>
 
