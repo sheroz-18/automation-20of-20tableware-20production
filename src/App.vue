@@ -132,9 +132,9 @@
             </ul>
           </div>
         </div>
-        <div class="border-t border-slate-200 pt-8 flex items-center justify-between">
-          <p class="text-sm text-slate-600">&copy; 2024 ProduceFlow. Все права защищены.</p>
-          <div class="flex gap-6">
+        <div class="border-t border-slate-200 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p class="text-xs sm:text-sm text-slate-600 text-center sm:text-left">&copy; 2024 ProduceFlow. Все права защищены.</p>
+          <div class="flex gap-4 sm:gap-6">
             <a href="#" class="text-slate-600 hover:text-blue-600">
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path
