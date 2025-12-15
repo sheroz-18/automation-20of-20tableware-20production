@@ -20,7 +20,7 @@
           v-model="searchQuery"
           type="text"
           placeholder="Поиск по номеру или клиенту..."
-          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 placeholder-gray-500"
         />
       </div>
       <div class="bg-white rounded-lg border border-slate-200 p-4">
