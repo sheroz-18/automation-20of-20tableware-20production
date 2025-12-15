@@ -40,7 +40,7 @@ export function exportOrdersToCSV(orders: Order[]) {
     'Тип клиента': order.customerType === 'wholesale' ? 'Оптовик' : 'Магазин',
     Статус: order.status,
     'Кол-во товаров': order.items.length,
-    'Сумма (ЅМ)': order.totalAmount.toFixed(2),
+    'Сумма (SM)': order.totalAmount.toFixed(2),
     Создан: order.createdDate,
     Срок: order.dueDate,
   }))
