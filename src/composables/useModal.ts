@@ -15,14 +15,14 @@ export function useModal() {
   const isDeleteModal = computed(() => modalType.value === 'delete')
 
   const openViewModal = (item: any, type: ModalContent) => {
-    selectedItem.value = JSON.parse(JSON.stringify(item))
+    selectedItem.value = item && item.value ? item.value : item
     modalType.value = 'view'
     contentType.value = type
     isOpen.value = true
   }
 
   const openEditModal = (item: any, type: ModalContent) => {
-    selectedItem.value = JSON.parse(JSON.stringify(item))
+    selectedItem.value = item && item.value ? item.value : item
     modalType.value = 'edit'
     contentType.value = type
     isOpen.value = true
