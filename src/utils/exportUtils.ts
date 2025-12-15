@@ -90,7 +90,7 @@ export function exportRawMaterialsToCSV(materials: RawMaterial[]) {
     Единица: material.unit,
     Количество: material.quantity,
     Минимум: material.minStockLevel,
-    'Стоимость за единицу (ЅМ)': material.unitCost.toFixed(2),
+    'Стоимость за единицу (SM)': material.unitCost.toFixed(2),
     Поставщик: material.supplier,
     'Последний приход': material.lastRestocked,
   }))
