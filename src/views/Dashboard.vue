@@ -157,7 +157,7 @@
           >
             <div>
               <p class="text-sm text-green-700">Доход от продаж</p>
-              <p class="font-semibold text-green-900">ЅМ3,681</p>
+              <p class="font-semibold text-green-900">SM3,681</p>
             </div>
             <svg
               class="w-8 h-8 text-green-600"
