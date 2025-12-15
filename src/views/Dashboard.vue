@@ -180,7 +180,7 @@
           >
             <div>
               <p class="text-sm text-red-700">Расходы</p>
-              <p class="font-semibold text-red-900">ЅМ6,650</p>
+              <p class="font-semibold text-red-900">SM6,650</p>
             </div>
             <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
