@@ -491,21 +491,37 @@ const ordersByStatus = (status: string) => {
 }
 
 const saveOrder = () => {
-  if (!formData.value.orderNumber || !formData.value.customerName) {
-    alert('Пожалуйста, заполните обязательные поля')
-    return
-  }
-
-  if (modal.isEditModal.value && modal.selectedItem.value) {
-    const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
-    if (index !== -1) {
-      orders.value[index] = {
-        ...modal.selectedItem.value,
-        ...formData.value,
-      } as Order
+  try {
+    if (!formData.value.orderNumber?.trim()) {
+      addNotification('error', 'Ошибка', 'Номер заказа обязателен')
+      return
     }
+    if (!formData.value.customerName?.trim()) {
+      addNotification('error', 'Ошибка', 'Имя клиента обязательно')
+      return
+    }
+    if (!formData.value.totalAmount || formData.value.totalAmount <= 0) {
+      addNotification('error', 'Ошибка', 'Сумма должна быть больше 0')
+      return
+    }
+
+    if (modal.isEditModal.value && modal.selectedItem.value) {
+      const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
+      if (index !== -1) {
+        orders.value[index] = {
+          ...modal.selectedItem.value,
+          ...formData.value,
+        } as Order
+        addNotification('success', 'Успешно', 'Заказ обновлен')
+      }
+    } else if (modal.isCreateModal.value) {
+      addNotification('success', 'Успешно', 'Заказ создан')
+    }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error saving order:', error)
+    addNotification('error', 'Ошибка', 'Ошибка при сохранении заказа')
   }
-  modal.closeModal()
 }
 
 const deleteOrder = () => {
