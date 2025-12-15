@@ -124,12 +124,12 @@
             </div>
             <div>
               <p class="text-xs text-slate-600">Стоимость за ед.</p>
-              <p class="text-xl font-bold text-slate-900">ЅМ{{ material.unitCost }}</p>
+              <p class="text-xl font-bold text-slate-900">SM{{ material.unitCost }}</p>
             </div>
             <div>
               <p class="text-xs text-slate-600">Общая стоимость</p>
               <p class="text-xl font-bold text-slate-900">
-                ЅМ{{ (material.quantity * material.unitCost).toFixed(2) }}
+                SM{{ (material.quantity * material.unitCost).toFixed(2) }}
               </p>
             </div>
           </div>
@@ -384,7 +384,7 @@
         </div>
 
         <div v-if="activeTab === 'raw'">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Цена за единицу (ЅМ)</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Цена за единицу (SM)</label>
           <input
             v-model.number="formData.unitCost"
             type="number"
