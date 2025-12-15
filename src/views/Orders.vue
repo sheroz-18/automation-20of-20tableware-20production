@@ -6,7 +6,7 @@
         <p class="text-slate-600 mt-2">Отслеживание и управление заказами клиентов</p>
       </div>
       <button
-        @click="modal.openCreateModal('order')"
+        @click="openCreateOrderModal"
         class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition"
       >
         + Новый заказ
@@ -186,9 +186,9 @@
 
     <ModalBase
       :is-open="modal.isOpen.value && modal.contentType.value === 'order'"
-      :title="modal.isEditModal.value ? 'Редактировать заказ' : 'Информация о заказе'"
+      :title="modal.isCreateModal.value ? 'Новый заказ' : modal.isEditModal.value ? 'Редактировать заказ' : 'Информация о заказе'"
       :show-actions="true"
-      :show-save-button="modal.isEditModal.value"
+      :show-save-button="modal.isEditModal.value || modal.isCreateModal.value"
       @close="modal.closeModal"
       @save="saveOrder"
     >
@@ -294,7 +294,7 @@
         </div>
       </div>
 
-      <div v-else class="space-y-4">
+      <div v-if="modal.isCreateModal.value || modal.isEditModal.value" class="space-y-4">
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Номер заказа</label>
@@ -490,6 +490,23 @@ const ordersByStatus = (status: string) => {
   return orders.value.filter((o) => o.status === status)
 }
 
+const openCreateOrderModal = () => {
+  const today = new Date().toISOString().split('T')[0]
+  const newOrderNumber = `ORD-${new Date().getFullYear()}-${String(orders.value.length + 1).padStart(4, '0')}`
+
+  formData.value = {
+    orderNumber: newOrderNumber,
+    customerName: '',
+    customerType: 'shop',
+    status: 'принят',
+    createdDate: today,
+    dueDate: today,
+    totalAmount: 0,
+    items: [],
+  }
+  modal.openCreateModal('order')
+}
+
 const saveOrder = () => {
   try {
     if (!formData.value.orderNumber?.trim()) {
@@ -515,6 +532,18 @@ const saveOrder = () => {
         addNotification('success', 'Успешно', 'Заказ обновлен')
       }
     } else if (modal.isCreateModal.value) {
+      const newOrder: Order = {
+        id: `order-${Date.now()}`,
+        orderNumber: formData.value.orderNumber!,
+        customerName: formData.value.customerName!,
+        customerType: (formData.value.customerType || 'shop') as 'shop' | 'wholesale',
+        status: (formData.value.status || 'принят') as any,
+        createdDate: formData.value.createdDate!,
+        dueDate: formData.value.dueDate!,
+        totalAmount: formData.value.totalAmount || 0,
+        items: formData.value.items || [],
+      }
+      orders.value.push(newOrder)
       addNotification('success', 'Успешно', 'Заказ создан')
     }
     modal.closeModal()
