@@ -59,11 +59,16 @@
             class="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-blue-300 transition cursor-pointer"
             @click="modal.openViewModal(order, 'order')"
           >
-            <div>
-              <p class="font-medium text-slate-900">{{ order.orderNumber }}</p>
-              <p class="text-sm text-slate-600">
-                {{ order.customerName }} - {{ getTotalItems(order) }} товаров
-              </p>
+            <div class="flex items-center gap-3">
+              <div :class="getOrderIconBg(order.status)">
+                <component :is="getOrderIcon(order.status)" :class="['w-5 h-5', getOrderIconColor(order.status)]" />
+              </div>
+              <div>
+                <p class="font-medium text-slate-900">{{ order.orderNumber }}</p>
+                <p class="text-sm text-slate-600">
+                  {{ order.customerName }} - {{ getTotalItems(order) }} товаров
+                </p>
+              </div>
             </div>
             <span :class="getOrderStatusBadge(order.status)">{{
               getOrderStatusLabel(order.status)
@@ -96,20 +101,25 @@
             @click="modal.openViewModal(product, 'product')"
           >
             <div class="flex items-center justify-between">
-              <div>
-                <p
-                  :class="[
-                    'font-medium',
-                    product.quantity === 0 ? 'text-red-900' : 'text-orange-900',
-                  ]"
-                >
-                  {{ product.name }}
-                </p>
-                <p
-                  :class="['text-sm', product.quantity === 0 ? 'text-red-700' : 'text-orange-700']"
-                >
-                  {{ product.quantity }} единиц
-                </p>
+              <div class="flex items-center gap-3">
+                <svg :class="['w-5 h-5', product.quantity === 0 ? 'text-red-600' : 'text-orange-600']" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 11-2 0 1 1 0 012 0z" />
+                </svg>
+                <div>
+                  <p
+                    :class="[
+                      'font-medium',
+                      product.quantity === 0 ? 'text-red-900' : 'text-orange-900',
+                    ]"
+                  >
+                    {{ product.name }}
+                  </p>
+                  <p
+                    :class="['text-sm', product.quantity === 0 ? 'text-red-700' : 'text-orange-700']"
+                  >
+                    {{ product.quantity }} единиц
+                  </p>
+                </div>
               </div>
               <span
                 :class="[
