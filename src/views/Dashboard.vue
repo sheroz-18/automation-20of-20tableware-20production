@@ -41,12 +41,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <div class="flex items-center justify-between mb-6">
-          <div class="flex items-center gap-3">
-            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            <h2 class="text-lg font-semibold text-slate-900">Статус заказов</h2>
-          </div>
+          <h2 class="text-lg font-semibold text-slate-900">Статус заказов</h2>
           <router-link to="/orders" class="text-blue-600 hover:text-blue-700 text-sm font-medium"
             >Все заказы →</router-link
           >
@@ -59,16 +54,11 @@
             class="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-blue-300 transition cursor-pointer"
             @click="modal.openViewModal(order, 'order')"
           >
-            <div class="flex items-center gap-3">
-              <div :class="getOrderIconBg(order.status)">
-                <component :is="getOrderIcon(order.status)" :class="['w-5 h-5', getOrderIconColor(order.status)]" />
-              </div>
-              <div>
-                <p class="font-medium text-slate-900">{{ order.orderNumber }}</p>
-                <p class="text-sm text-slate-600">
-                  {{ order.customerName }} - {{ getTotalItems(order) }} товаров
-                </p>
-              </div>
+            <div>
+              <p class="font-medium text-slate-900">{{ order.orderNumber }}</p>
+              <p class="text-sm text-slate-600">
+                {{ order.customerName }} - {{ getTotalItems(order) }} товаров
+              </p>
             </div>
             <span :class="getOrderStatusBadge(order.status)">{{
               getOrderStatusLabel(order.status)
@@ -79,12 +69,7 @@
 
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <div class="flex items-center justify-between mb-6">
-          <div class="flex items-center gap-3">
-            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4v2m0 4v2M9 3h6m0 0a3 3 0 013 3v2a3 3 0 01-3 3H9a3 3 0 01-3-3V6a3 3 0 013-3zm0 0V3a3 3 0 00-3 3v6a3 3 0 003 3h6a3 3 0 003-3V6a3 3 0 00-3-3h6a3 3 0 013 3v2" />
-            </svg>
-            <h2 class="text-lg font-semibold text-slate-900">Критические остатки</h2>
-          </div>
+          <h2 class="text-lg font-semibold text-slate-900">Критические остатки</h2>
           <router-link to="/inventory" class="text-blue-600 hover:text-blue-700 text-sm font-medium"
             >Все →</router-link
           >
@@ -101,25 +86,20 @@
             @click="modal.openViewModal(product, 'product')"
           >
             <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <svg :class="['w-5 h-5', product.quantity === 0 ? 'text-red-600' : 'text-orange-600']" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 11-2 0 1 1 0 012 0z" />
-                </svg>
-                <div>
-                  <p
-                    :class="[
-                      'font-medium',
-                      product.quantity === 0 ? 'text-red-900' : 'text-orange-900',
-                    ]"
-                  >
-                    {{ product.name }}
-                  </p>
-                  <p
-                    :class="['text-sm', product.quantity === 0 ? 'text-red-700' : 'text-orange-700']"
-                  >
-                    {{ product.quantity }} единиц
-                  </p>
-                </div>
+              <div>
+                <p
+                  :class="[
+                    'font-medium',
+                    product.quantity === 0 ? 'text-red-900' : 'text-orange-900',
+                  ]"
+                >
+                  {{ product.name }}
+                </p>
+                <p
+                  :class="['text-sm', product.quantity === 0 ? 'text-red-700' : 'text-orange-700']"
+                >
+                  {{ product.quantity }} единиц
+                </p>
               </div>
               <span
                 :class="[
@@ -144,12 +124,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-        <div class="flex items-center gap-3 mb-6">
-          <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-          </svg>
-          <h2 class="text-lg font-semibold text-slate-900">Производительность по категориям</h2>
-        </div>
+        <h2 class="text-lg font-semibold text-slate-900 mb-6">Производительность по категориям</h2>
 
         <div class="space-y-4">
           <div
@@ -173,12 +148,7 @@
       </div>
 
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-        <div class="flex items-center gap-3 mb-6">
-          <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <h2 class="text-lg font-semibold text-slate-900">Финансовый обзор (текущий месяц)</h2>
-        </div>
+        <h2 class="text-lg font-semibold text-slate-900 mb-6">Финансовый обзор (текущий месяц)</h2>
 
         <div class="space-y-4">
           <div
@@ -421,47 +391,5 @@ const getModalTitle = () => {
   if (modal.contentType.value === 'order') return 'Информация о заказе'
   if (modal.contentType.value === 'product') return 'Информация о товаре'
   return 'Информация'
-}
-
-const getOrderIcon = (status: string) => {
-  const icons: Record<string, any> = {
-    принят: defineComponent({
-      template:
-        '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>',
-    }),
-    'в производстве': defineComponent({
-      template:
-        '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>',
-    }),
-    'на складе': defineComponent({
-      template:
-        '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m0 10v4a2 2 0 002 2h12a2 2 0 002-2v-4m-8-4l4-2" /></svg>',
-    }),
-    отправлен: defineComponent({
-      template:
-        '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>',
-    }),
-  }
-  return icons[status] || icons['принят']
-}
-
-const getOrderIconColor = (status: string) => {
-  const colors: Record<string, string> = {
-    принят: 'text-blue-600',
-    'в производстве': 'text-orange-600',
-    'на складе': 'text-purple-600',
-    отправлен: 'text-green-600',
-  }
-  return colors[status] || 'text-blue-600'
-}
-
-const getOrderIconBg = (status: string) => {
-  const bgColors: Record<string, string> = {
-    принят: 'w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center',
-    'в производстве': 'w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center',
-    'на складе': 'w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center',
-    отправлен: 'w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center',
-  }
-  return bgColors[status] || 'w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center'
 }
 </script>
