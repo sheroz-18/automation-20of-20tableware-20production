@@ -369,39 +369,51 @@ const expenseCategories = computed(() => {
 })
 
 const saveRecord = () => {
-  if (!formData.value.description || !formData.value.amount) {
-    alert('Пожалуйста, заполните обязательные поля')
-    return
-  }
-
-  if (modal.isCreateModal.value) {
-    const newRecord: FinancialRecord = {
-      id: Math.random().toString(36).substr(2, 9),
-      date: formData.value.date || new Date().toISOString().split('T')[0],
-      description: formData.value.description || '',
-      type: (formData.value.type as 'income' | 'expense') || 'income',
-      amount: formData.value.amount || 0,
-      category: formData.value.category || 'Продажи',
-      reference: formData.value.reference || '',
+  try {
+    if (!formData.value.description?.trim()) {
+      console.warn('Description is required')
+      return
     }
-    financialRecords.value.push(newRecord)
-  } else if (modal.isEditModal.value && modal.selectedItem.value) {
-    const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
-    if (index !== -1) {
-      financialRecords.value[index] = {
-        ...modal.selectedItem.value,
-        ...formData.value,
+    if (!formData.value.amount || formData.value.amount <= 0) {
+      console.warn('Amount must be greater than 0')
+      return
+    }
+
+    if (modal.isCreateModal.value) {
+      const newRecord: FinancialRecord = {
+        id: Math.random().toString(36).substr(2, 9),
+        date: formData.value.date || new Date().toISOString().split('T')[0],
+        description: formData.value.description || '',
+        type: (formData.value.type as 'income' | 'expense') || 'income',
+        amount: formData.value.amount || 0,
+        category: formData.value.category || 'Продажи',
+        reference: formData.value.reference || '',
+      }
+      financialRecords.value.push(newRecord)
+    } else if (modal.isEditModal.value && modal.selectedItem.value) {
+      const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
+      if (index !== -1) {
+        financialRecords.value[index] = {
+          ...modal.selectedItem.value,
+          ...formData.value,
+        }
       }
     }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error saving record:', error)
   }
-  modal.closeModal()
 }
 
 const deleteRecord = () => {
-  const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
-  if (index !== -1) {
-    financialRecords.value.splice(index, 1)
+  try {
+    const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
+    if (index !== -1) {
+      financialRecords.value.splice(index, 1)
+    }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error deleting record:', error)
   }
-  modal.closeModal()
 }
 </script>
