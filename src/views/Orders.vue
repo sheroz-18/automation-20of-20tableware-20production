@@ -125,7 +125,7 @@
             </p>
           </div>
           <div class="text-right">
-            <p class="font-bold text-slate-900 text-lg">ЅМ{{ order.totalAmount.toFixed(2) }}</p>
+            <p class="font-bold text-slate-900 text-lg">SM{{ order.totalAmount.toFixed(2) }}</p>
             <span :class="getStatusBadge(order.status)">
               {{ order.status }}
             </span>
@@ -142,10 +142,10 @@
             >
               <p class="text-sm font-medium text-slate-900">{{ item.productName }}</p>
               <p class="text-xs text-gray-700 mt-1">
-                {{ item.quantity }} × ЅМ{{ item.unitPrice.toFixed(2) }}
+                {{ item.quantity }} × SM{{ item.unitPrice.toFixed(2) }}
               </p>
               <p class="text-sm font-semibold text-slate-900 mt-2">
-                ЅМ{{ item.subtotal.toFixed(2) }}
+                SM{{ item.subtotal.toFixed(2) }}
               </p>
             </div>
           </div>
@@ -228,7 +228,7 @@
           <div>
             <p class="text-sm text-gray-700">Сумма</p>
             <p class="text-lg font-semibold text-slate-900">
-              ЅМ{{ modal.selectedItem.value?.totalAmount.toFixed(2) }}
+              SM{{ modal.selectedItem.value?.totalAmount.toFixed(2) }}
             </p>
           </div>
           <div>
@@ -259,10 +259,10 @@
                 <div>
                   <p class="font-medium text-slate-900">{{ item.productName }}</p>
                   <p class="text-sm text-gray-700">
-                    {{ item.quantity }} × ЅМ{{ item.unitPrice.toFixed(2) }}
+                    {{ item.quantity }} × SM{{ item.unitPrice.toFixed(2) }}
                   </p>
                 </div>
-                <p class="font-semibold text-slate-900">ЅМ{{ item.subtotal.toFixed(2) }}</p>
+                <p class="font-semibold text-slate-900">SM{{ item.subtotal.toFixed(2) }}</p>
               </div>
             </div>
           </div>
@@ -360,7 +360,7 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Общая сумма (ЅМ)</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Общая сумма (SM)</label>
           <input
             v-model.number="formData.totalAmount"
             type="number"
@@ -558,8 +558,8 @@ ${order.customerName}
     invoiceContent += `
 ${index + 1}. ${item.productName}
    Кол-во: ${item.quantity} шт
-   Цена за единицу: ЅМ${item.unitPrice.toFixed(2)}
-   Сумма: ЅМ${item.subtotal.toFixed(2)}
+   Цена за единицу: SM${item.unitPrice.toFixed(2)}
+   Сумма: SM${item.subtotal.toFixed(2)}
 `
   })
 
@@ -569,7 +569,7 @@ ${index + 1}. ${item.productName}
 ИТОГО:
 Количество позиций: ${order.items.length}
 Общее количество товара: ${order.items.reduce((sum, item) => sum + item.quantity, 0)} шт
-Сумма к оплате: ЅМ${order.totalAmount.toFixed(2)}
+Сумма к оплате: SM${order.totalAmount.toFixed(2)}
 
 ─────────────────────────────────────────────────────────────────
 
