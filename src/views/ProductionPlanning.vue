@@ -416,56 +416,72 @@ const openViewModal = (batch: ProductionBatch, type: any) => {
 }
 
 const saveBatch = () => {
-  if (!formData.value.batchNumber || !formData.value.productId || !formData.value.quantity) {
-    alert('Пожалуйста, заполните обязательные поля')
-    return
-  }
-
-  if (formData.value.startDate && formData.value.endDate) {
-    if (new Date(formData.value.startDate) > new Date(formData.value.endDate)) {
-      alert('Дата начала не может быть позже даты завершения')
+  try {
+    if (!formData.value.batchNumber?.trim()) {
+      console.warn('Batch number is required')
       return
     }
-  }
+    if (!formData.value.productId) {
+      console.warn('Product is required')
+      return
+    }
+    if (!formData.value.quantity || formData.value.quantity <= 0) {
+      console.warn('Quantity must be greater than 0')
+      return
+    }
 
-  if (modal.isCreateModal.value) {
-    const selectedProduct = products.value.find((p) => p.id === formData.value.productId)
-    const newBatch: ProductionBatch = {
-      id: Math.random().toString(36).substr(2, 9),
-      batchNumber: formData.value.batchNumber || '',
-      productId: formData.value.productId || '',
-      productName: selectedProduct?.name || '',
-      quantity: formData.value.quantity || 0,
-      status: (formData.value.status as any) || 'planning',
-      startDate: formData.value.startDate || '',
-      endDate: formData.value.endDate || '',
-      createdDate: new Date().toISOString().split('T')[0],
-      category: selectedProduct?.category || '',
-      currentStage: 1,
-      stages: initializeStages(),
+    if (formData.value.startDate && formData.value.endDate) {
+      if (new Date(formData.value.startDate) > new Date(formData.value.endDate)) {
+        console.warn('Start date cannot be after end date')
+        return
+      }
     }
-    productionBatches.value.push(newBatch)
-  } else if (modal.isEditModal.value && modal.selectedItem.value) {
-    const index = productionBatches.value.findIndex((b) => b.id === modal.selectedItem.value?.id)
-    if (index !== -1) {
+
+    if (modal.isCreateModal.value) {
       const selectedProduct = products.value.find((p) => p.id === formData.value.productId)
-      productionBatches.value[index] = {
-        ...modal.selectedItem.value,
-        ...formData.value,
-        productName: selectedProduct?.name || modal.selectedItem.value.productName,
-        category: selectedProduct?.category || modal.selectedItem.value.category,
-      } as ProductionBatch
+      const newBatch: ProductionBatch = {
+        id: Math.random().toString(36).substr(2, 9),
+        batchNumber: formData.value.batchNumber || '',
+        productId: formData.value.productId || '',
+        productName: selectedProduct?.name || '',
+        quantity: formData.value.quantity || 0,
+        status: (formData.value.status as any) || 'planning',
+        startDate: formData.value.startDate || '',
+        endDate: formData.value.endDate || '',
+        createdDate: new Date().toISOString().split('T')[0],
+        category: selectedProduct?.category || '',
+        currentStage: 1,
+        stages: initializeStages(),
+      }
+      productionBatches.value.push(newBatch)
+    } else if (modal.isEditModal.value && modal.selectedItem.value) {
+      const index = productionBatches.value.findIndex((b) => b.id === modal.selectedItem.value?.id)
+      if (index !== -1) {
+        const selectedProduct = products.value.find((p) => p.id === formData.value.productId)
+        productionBatches.value[index] = {
+          ...modal.selectedItem.value,
+          ...formData.value,
+          productName: selectedProduct?.name || modal.selectedItem.value.productName,
+          category: selectedProduct?.category || modal.selectedItem.value.category,
+        } as ProductionBatch
+      }
     }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error saving batch:', error)
   }
-  modal.closeModal()
 }
 
 const deleteBatch = () => {
-  const index = productionBatches.value.findIndex((b) => b.id === modal.selectedItem.value?.id)
-  if (index !== -1) {
-    productionBatches.value.splice(index, 1)
+  try {
+    const index = productionBatches.value.findIndex((b) => b.id === modal.selectedItem.value?.id)
+    if (index !== -1) {
+      productionBatches.value.splice(index, 1)
+    }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error deleting batch:', error)
   }
-  modal.closeModal()
 }
 
 const formatDate = (date: string | undefined): string => {

@@ -1,8 +1,9 @@
-export const CURRENCY_SYMBOL = 'ЅМ'
+export const CURRENCY_SYMBOL = 'SM'
 export const CURRENCY_CODE = 'TJS'
 
 export function formatCurrency(amount: number, symbol: string = CURRENCY_SYMBOL): string {
-  return `${symbol}${amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
+  const formatted = amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  return `${symbol}${formatted}`
 }
 
 export function formatCurrencyAmount(amount: number, includeSymbol: boolean = true): string {
@@ -11,6 +12,11 @@ export function formatCurrencyAmount(amount: number, includeSymbol: boolean = tr
 }
 
 export function parseCurrency(value: string): number {
-  const cleaned = value.replace(/[^0-9.]/g, '')
-  return parseFloat(cleaned) || 0
+  try {
+    const cleaned = value.replace(/[^0-9.]/g, '')
+    const parsed = parseFloat(cleaned)
+    return isNaN(parsed) ? 0 : parsed
+  } catch {
+    return 0
+  }
 }

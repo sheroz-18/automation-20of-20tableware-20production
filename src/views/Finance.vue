@@ -18,13 +18,13 @@
         class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-sm"
       >
         <p class="text-green-100 text-sm mb-2">Общий доход</p>
-        <p class="text-4xl font-bold">ЅМ{{ totalIncome.toFixed(2) }}</p>
+        <p class="text-4xl font-bold">SM{{ totalIncome.toFixed(2) }}</p>
         <p class="text-green-100 text-sm mt-2">+{{ incomeRecords.length }} операций</p>
       </div>
 
       <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-6 text-white shadow-sm">
         <p class="text-red-100 text-sm mb-2">Общие расходы</p>
-        <p class="text-4xl font-bold">ЅМ{{ totalExpense.toFixed(2) }}</p>
+        <p class="text-4xl font-bold">SM{{ totalExpense.toFixed(2) }}</p>
         <p class="text-red-100 text-sm mt-2">+{{ expenseRecords.length }} операций</p>
       </div>
 
@@ -33,7 +33,7 @@
         :class="{ 'from-slate-500 to-slate-600': netBalance < 0 }"
       >
         <p class="text-blue-100 text-sm mb-2">Чистый баланс</p>
-        <p class="text-4xl font-bold">ЅМ{{ netBalance.toFixed(2) }}</p>
+        <p class="text-4xl font-bold">SM{{ netBalance.toFixed(2) }}</p>
         <p :class="['text-sm mt-2', netBalance >= 0 ? 'text-blue-100' : 'text-slate-100']">
           {{ netBalance >= 0 ? '✓ Прибыль' : '⚠ Убыток' }}
         </p>
@@ -99,7 +99,7 @@
                   record.type === 'income' ? 'text-green-600' : 'text-red-600',
                 ]"
               >
-                {{ record.type === 'income' ? '+' : '-' }}ЅМ{{ record.amount.toFixed(2) }}
+                {{ record.type === 'income' ? '+' : '-' }}SM{{ record.amount.toFixed(2) }}
               </p>
               <p class="text-xs text-gray-700 mt-1">{{ record.reference }}</p>
             </div>
@@ -119,7 +119,7 @@
             >
               <div class="flex items-center justify-between mb-2">
                 <span class="text-sm font-medium text-gray-700">{{ category.name }}</span>
-                <span class="font-semibold text-slate-900">ЅМ{{ category.amount.toFixed(2) }}</span>
+                <span class="font-semibold text-slate-900">SM{{ category.amount.toFixed(2) }}</span>
               </div>
               <div class="w-full bg-slate-200 rounded-full h-2">
                 <div
@@ -137,11 +137,11 @@
           <div class="space-y-3">
             <div class="flex items-center justify-between p-3 rounded-lg bg-green-50">
               <span class="text-sm font-medium text-green-700">Продажи</span>
-              <span class="font-semibold text-green-900">ЅМ{{ totalIncome.toFixed(2) }}</span>
+              <span class="font-semibold text-green-900">SM{{ totalIncome.toFixed(2) }}</span>
             </div>
             <div class="flex items-center justify-between p-3 rounded-lg bg-slate-100">
               <span class="text-sm font-medium text-gray-700">Прочее</span>
-              <span class="font-semibold text-slate-900">ЅМ0</span>
+              <span class="font-semibold text-slate-900">SM0</span>
             </div>
           </div>
         </div>
@@ -178,7 +178,7 @@
                 modal.selectedItem.value?.type === 'income' ? 'text-green-600' : 'text-red-600',
               ]"
             >
-              {{ modal.selectedItem.value?.type === 'income' ? '+' : '-' }}ЅМ{{
+              {{ modal.selectedItem.value?.type === 'income' ? '+' : '-' }}SM{{
                 modal.selectedItem.value?.amount.toFixed(2)
               }}
             </p>
@@ -250,7 +250,7 @@
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Сумма (ЅМ)</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Сумма (SM)</label>
             <input
               v-model.number="formData.amount"
               type="number"
@@ -369,39 +369,51 @@ const expenseCategories = computed(() => {
 })
 
 const saveRecord = () => {
-  if (!formData.value.description || !formData.value.amount) {
-    alert('Пожалуйста, заполните обязательные поля')
-    return
-  }
-
-  if (modal.isCreateModal.value) {
-    const newRecord: FinancialRecord = {
-      id: Math.random().toString(36).substr(2, 9),
-      date: formData.value.date || new Date().toISOString().split('T')[0],
-      description: formData.value.description || '',
-      type: (formData.value.type as 'income' | 'expense') || 'income',
-      amount: formData.value.amount || 0,
-      category: formData.value.category || 'Продажи',
-      reference: formData.value.reference || '',
+  try {
+    if (!formData.value.description?.trim()) {
+      console.warn('Description is required')
+      return
     }
-    financialRecords.value.push(newRecord)
-  } else if (modal.isEditModal.value && modal.selectedItem.value) {
-    const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
-    if (index !== -1) {
-      financialRecords.value[index] = {
-        ...modal.selectedItem.value,
-        ...formData.value,
+    if (!formData.value.amount || formData.value.amount <= 0) {
+      console.warn('Amount must be greater than 0')
+      return
+    }
+
+    if (modal.isCreateModal.value) {
+      const newRecord: FinancialRecord = {
+        id: Math.random().toString(36).substr(2, 9),
+        date: formData.value.date || new Date().toISOString().split('T')[0],
+        description: formData.value.description || '',
+        type: (formData.value.type as 'income' | 'expense') || 'income',
+        amount: formData.value.amount || 0,
+        category: formData.value.category || 'Продажи',
+        reference: formData.value.reference || '',
+      }
+      financialRecords.value.push(newRecord)
+    } else if (modal.isEditModal.value && modal.selectedItem.value) {
+      const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
+      if (index !== -1) {
+        financialRecords.value[index] = {
+          ...modal.selectedItem.value,
+          ...formData.value,
+        }
       }
     }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error saving record:', error)
   }
-  modal.closeModal()
 }
 
 const deleteRecord = () => {
-  const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
-  if (index !== -1) {
-    financialRecords.value.splice(index, 1)
+  try {
+    const index = financialRecords.value.findIndex((r) => r.id === modal.selectedItem.value?.id)
+    if (index !== -1) {
+      financialRecords.value.splice(index, 1)
+    }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error deleting record:', error)
   }
-  modal.closeModal()
 }
 </script>

@@ -40,7 +40,7 @@ export function exportOrdersToCSV(orders: Order[]) {
     'Тип клиента': order.customerType === 'wholesale' ? 'Оптовик' : 'Магазин',
     Статус: order.status,
     'Кол-во товаров': order.items.length,
-    'Сумма (ЅМ)': order.totalAmount.toFixed(2),
+    'Сумма (SM)': order.totalAmount.toFixed(2),
     Создан: order.createdDate,
     Срок: order.dueDate,
   }))
@@ -56,8 +56,8 @@ export function exportOrderDetailToCSV(order: Order) {
     Заказ: order.orderNumber,
     Товар: item.productName,
     Количество: item.quantity,
-    'Цена за единицу (ЅМ)': item.unitPrice.toFixed(2),
-    'Сумма (ЅМ)': item.subtotal.toFixed(2),
+    'Цена за единицу (SM)': item.unitPrice.toFixed(2),
+    'Сумма (SM)': item.subtotal.toFixed(2),
   }))
 
   exportToCSV(exportData, `Order_${order.orderNumber}_details`)
@@ -90,7 +90,7 @@ export function exportRawMaterialsToCSV(materials: RawMaterial[]) {
     Единица: material.unit,
     Количество: material.quantity,
     Минимум: material.minStockLevel,
-    'Стоимость за единицу (ЅМ)': material.unitCost.toFixed(2),
+    'Стоимость за единицу (SM)': material.unitCost.toFixed(2),
     Поставщик: material.supplier,
     'Последний приход': material.lastRestocked,
   }))
@@ -108,7 +108,7 @@ export function exportProductsToCSV(products: Product[]) {
     Категория: product.category,
     Количество: product.quantity,
     'Уровень переказа': product.reorderLevel,
-    'Стоимость (ЅМ)': product.unitCost.toFixed(2),
+    'Стоимость (SM)': product.unitCost.toFixed(2),
     Статус: product.status,
     Материал: product.material,
     Размер: product.size,
@@ -225,7 +225,7 @@ export function exportOrdersToPrint(orders: Order[]) {
         <td>${order.customerName}</td>
         <td>${order.customerType === 'wholesale' ? 'Оптовик' : 'Магазин'}</td>
         <td>${order.status}</td>
-        <td><strong>ЅМ${order.totalAmount.toFixed(2)}</strong></td>
+        <td><strong>SM${order.totalAmount.toFixed(2)}</strong></td>
         <td>${order.createdDate}</td>
         <td>${order.dueDate}</td>
       </tr>
@@ -233,7 +233,7 @@ export function exportOrdersToPrint(orders: Order[]) {
   })
 
   const totalAmount = orders.reduce((sum, order) => sum + order.totalAmount, 0)
-  content += `<tr class="total-row"><td colspan="4">ИТОГО</td><td>ЅМ${totalAmount.toFixed(2)}</td><td colspan="2"></td></tr>`
+  content += `<tr class="total-row"><td colspan="4">ИТОГО</td><td>SM${totalAmount.toFixed(2)}</td><td colspan="2"></td></tr>`
   content += '</table></div>'
 
   exportToPrintHTML('Список заказов', content)
@@ -262,13 +262,13 @@ export function exportOrderDetailToPrint(order: Order) {
       <tr>
         <td>${item.productName}</td>
         <td>${item.quantity}</td>
-        <td>ЅМ${item.unitPrice.toFixed(2)}</td>
-        <td><strong>ЅМ${item.subtotal.toFixed(2)}</strong></td>
+        <td>SM${item.unitPrice.toFixed(2)}</td>
+        <td><strong>SM${item.subtotal.toFixed(2)}</strong></td>
       </tr>
     `
   })
 
-  content += `<tr class="total-row"><td colspan="3">ИТОГО</td><td>ЅМ${order.totalAmount.toFixed(2)}</td></tr>`
+  content += `<tr class="total-row"><td colspan="3">ИТОГО</td><td>SM${order.totalAmount.toFixed(2)}</td></tr>`
   content += '</table></div>'
 
   exportToPrintHTML(`Заказ ${order.orderNumber}`, content)

@@ -20,14 +20,14 @@
           v-model="searchQuery"
           type="text"
           placeholder="Поиск по номеру или клиенту..."
-          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 placeholder-gray-500"
         />
       </div>
       <div class="bg-white rounded-lg border border-slate-200 p-4">
         <label class="text-sm font-medium text-slate-700 block mb-2">Статус</label>
         <select
           v-model="statusFilter"
-          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 cursor-pointer"
         >
           <option value="">Все статусы</option>
           <option value="принят">Принят</option>
@@ -97,7 +97,7 @@
         class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-sm"
       >
         <p class="text-green-100 text-sm mb-1">Общая сумма</p>
-        <p class="text-3xl font-bold">ЅМ{{ totalOrderValue.toFixed(0) }}</p>
+        <p class="text-3xl font-bold">SM{{ totalOrderValue.toFixed(0) }}</p>
       </div>
     </div>
 
@@ -125,7 +125,7 @@
             </p>
           </div>
           <div class="text-right">
-            <p class="font-bold text-slate-900 text-lg">ЅМ{{ order.totalAmount.toFixed(2) }}</p>
+            <p class="font-bold text-slate-900 text-lg">SM{{ order.totalAmount.toFixed(2) }}</p>
             <span :class="getStatusBadge(order.status)">
               {{ order.status }}
             </span>
@@ -142,10 +142,10 @@
             >
               <p class="text-sm font-medium text-slate-900">{{ item.productName }}</p>
               <p class="text-xs text-gray-700 mt-1">
-                {{ item.quantity }} × ЅМ{{ item.unitPrice.toFixed(2) }}
+                {{ item.quantity }} × SM{{ item.unitPrice.toFixed(2) }}
               </p>
               <p class="text-sm font-semibold text-slate-900 mt-2">
-                ЅМ{{ item.subtotal.toFixed(2) }}
+                SM{{ item.subtotal.toFixed(2) }}
               </p>
             </div>
           </div>
@@ -228,7 +228,7 @@
           <div>
             <p class="text-sm text-gray-700">Сумма</p>
             <p class="text-lg font-semibold text-slate-900">
-              ЅМ{{ modal.selectedItem.value?.totalAmount.toFixed(2) }}
+              SM{{ modal.selectedItem.value?.totalAmount.toFixed(2) }}
             </p>
           </div>
           <div>
@@ -259,10 +259,10 @@
                 <div>
                   <p class="font-medium text-slate-900">{{ item.productName }}</p>
                   <p class="text-sm text-gray-700">
-                    {{ item.quantity }} × ЅМ{{ item.unitPrice.toFixed(2) }}
+                    {{ item.quantity }} × SM{{ item.unitPrice.toFixed(2) }}
                   </p>
                 </div>
-                <p class="font-semibold text-slate-900">ЅМ{{ item.subtotal.toFixed(2) }}</p>
+                <p class="font-semibold text-slate-900">SM{{ item.subtotal.toFixed(2) }}</p>
               </div>
             </div>
           </div>
@@ -360,7 +360,7 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Общая сумма (ЅМ)</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Общая сумма (SM)</label>
           <input
             v-model.number="formData.totalAmount"
             type="number"
@@ -491,29 +491,52 @@ const ordersByStatus = (status: string) => {
 }
 
 const saveOrder = () => {
-  if (!formData.value.orderNumber || !formData.value.customerName) {
-    alert('Пожалуйста, заполните обязательные поля')
-    return
-  }
-
-  if (modal.isEditModal.value && modal.selectedItem.value) {
-    const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
-    if (index !== -1) {
-      orders.value[index] = {
-        ...modal.selectedItem.value,
-        ...formData.value,
-      } as Order
+  try {
+    if (!formData.value.orderNumber?.trim()) {
+      addNotification('error', 'Ошибка', 'Номер заказа обязателен')
+      return
     }
+    if (!formData.value.customerName?.trim()) {
+      addNotification('error', 'Ошибка', 'Имя клиента обязательно')
+      return
+    }
+    if (!formData.value.totalAmount || formData.value.totalAmount <= 0) {
+      addNotification('error', 'Ошибка', 'Сумма должна быть больше 0')
+      return
+    }
+
+    if (modal.isEditModal.value && modal.selectedItem.value) {
+      const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
+      if (index !== -1) {
+        orders.value[index] = {
+          ...modal.selectedItem.value,
+          ...formData.value,
+        } as Order
+        addNotification('success', 'Успешно', 'Заказ обновлен')
+      }
+    } else if (modal.isCreateModal.value) {
+      addNotification('success', 'Успешно', 'Заказ создан')
+    }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error saving order:', error)
+    addNotification('error', 'Ошибка', 'Ошибка при сохранении заказа')
   }
-  modal.closeModal()
 }
 
 const deleteOrder = () => {
-  const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
-  if (index !== -1) {
-    orders.value.splice(index, 1)
+  try {
+    const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
+    if (index !== -1) {
+      const orderNumber = modal.selectedItem.value?.orderNumber
+      orders.value.splice(index, 1)
+      addNotification('success', 'Успешно', `Заказ ${orderNumber} удален`)
+    }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error deleting order:', error)
+    addNotification('error', 'Ошибка', 'Ошибка при удалении заказа')
   }
-  modal.closeModal()
 }
 
 const getStatusBadge = (status: string) => {
@@ -558,8 +581,8 @@ ${order.customerName}
     invoiceContent += `
 ${index + 1}. ${item.productName}
    Кол-во: ${item.quantity} шт
-   Цена за единицу: ЅМ${item.unitPrice.toFixed(2)}
-   Сумма: ЅМ${item.subtotal.toFixed(2)}
+   Цена за единицу: SM${item.unitPrice.toFixed(2)}
+   Сумма: SM${item.subtotal.toFixed(2)}
 `
   })
 
@@ -569,7 +592,7 @@ ${index + 1}. ${item.productName}
 ИТОГО:
 Количество позиций: ${order.items.length}
 Общее количество товара: ${order.items.reduce((sum, item) => sum + item.quantity, 0)} шт
-Сумма к оплате: ЅМ${order.totalAmount.toFixed(2)}
+Сумма к оплате: SM${order.totalAmount.toFixed(2)}
 
 ─────────────────────────────────────────────────────────────────
 

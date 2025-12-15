@@ -124,12 +124,12 @@
             </div>
             <div>
               <p class="text-xs text-slate-600">Стоимость за ед.</p>
-              <p class="text-xl font-bold text-slate-900">ЅМ{{ material.unitCost }}</p>
+              <p class="text-xl font-bold text-slate-900">SM{{ material.unitCost }}</p>
             </div>
             <div>
               <p class="text-xs text-slate-600">Общая стоимость</p>
               <p class="text-xl font-bold text-slate-900">
-                ЅМ{{ (material.quantity * material.unitCost).toFixed(2) }}
+                SM{{ (material.quantity * material.unitCost).toFixed(2) }}
               </p>
             </div>
           </div>
@@ -384,7 +384,7 @@
         </div>
 
         <div v-if="activeTab === 'raw'">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Цена за единицу (ЅМ)</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Цена за единицу (SM)</label>
           <input
             v-model.number="formData.unitCost"
             type="number"
@@ -583,109 +583,121 @@ const openStockMovementModal = (item: RawMaterial | FinishedGood, type: string) 
 }
 
 const saveMaterial = () => {
-  if (!formData.value.name) {
-    alert('Пожалуйста, введите название')
-    return
-  }
+  try {
+    if (!formData.value.name?.trim()) {
+      console.warn('Material name is required')
+      return
+    }
 
-  if (activeTab.value === 'raw') {
-    if (modal.isCreateModal.value) {
-      const newMaterial: RawMaterial = {
-        id: Math.random().toString(36).substr(2, 9),
-        name: formData.value.name || '',
-        materialType: (formData.value.materialType as any) || 'clay',
-        unit: formData.value.unit || 'кг',
-        quantity: formData.value.quantity || 0,
-        minStockLevel: formData.value.minStockLevel || 0,
-        unitCost: formData.value.unitCost || 0,
-        supplier: formData.value.supplier || '',
-        lastRestocked: new Date().toISOString().split('T')[0],
-        expiryDate: formData.value.expiryDate,
+    if (activeTab.value === 'raw') {
+      if (modal.isCreateModal.value) {
+        const newMaterial: RawMaterial = {
+          id: Math.random().toString(36).substr(2, 9),
+          name: formData.value.name || '',
+          materialType: (formData.value.materialType as any) || 'clay',
+          unit: formData.value.unit || 'кг',
+          quantity: formData.value.quantity || 0,
+          minStockLevel: formData.value.minStockLevel || 0,
+          unitCost: formData.value.unitCost || 0,
+          supplier: formData.value.supplier || '',
+          lastRestocked: new Date().toISOString().split('T')[0],
+          expiryDate: formData.value.expiryDate,
+        }
+        rawMaterials.value.push(newMaterial)
+      } else if (modal.isEditModal.value && modal.selectedItem.value) {
+        const index = rawMaterials.value.findIndex((m) => m.id === modal.selectedItem.value?.id)
+        if (index !== -1) {
+          rawMaterials.value[index] = {
+            ...modal.selectedItem.value,
+            ...formData.value,
+          } as RawMaterial
+        }
       }
-      rawMaterials.value.push(newMaterial)
-    } else if (modal.isEditModal.value && modal.selectedItem.value) {
-      const index = rawMaterials.value.findIndex((m) => m.id === modal.selectedItem.value?.id)
-      if (index !== -1) {
-        rawMaterials.value[index] = {
-          ...modal.selectedItem.value,
-          ...formData.value,
-        } as RawMaterial
+    } else {
+      if (modal.isCreateModal.value) {
+        const newGood: FinishedGood = {
+          id: Math.random().toString(36).substr(2, 9),
+          name: formData.value.name || '',
+          sku: formData.value.sku || '',
+          quantity: formData.value.quantity || 0,
+          minStockLevel: formData.value.minStockLevel || 0,
+          category: formData.value.category || 'Тарелки',
+          readyDate: new Date().toISOString().split('T')[0],
+        }
+        finishedGoods.value.push(newGood)
+      } else if (modal.isEditModal.value && modal.selectedItem.value) {
+        const index = finishedGoods.value.findIndex((g) => g.id === modal.selectedItem.value?.id)
+        if (index !== -1) {
+          finishedGoods.value[index] = {
+            ...modal.selectedItem.value,
+            ...formData.value,
+          } as FinishedGood
+        }
       }
     }
-  } else {
-    if (modal.isCreateModal.value) {
-      const newGood: FinishedGood = {
-        id: Math.random().toString(36).substr(2, 9),
-        name: formData.value.name || '',
-        sku: formData.value.sku || '',
-        quantity: formData.value.quantity || 0,
-        minStockLevel: formData.value.minStockLevel || 0,
-        category: formData.value.category || 'Тарелки',
-        readyDate: new Date().toISOString().split('T')[0],
-      }
-      finishedGoods.value.push(newGood)
-    } else if (modal.isEditModal.value && modal.selectedItem.value) {
-      const index = finishedGoods.value.findIndex((g) => g.id === modal.selectedItem.value?.id)
-      if (index !== -1) {
-        finishedGoods.value[index] = {
-          ...modal.selectedItem.value,
-          ...formData.value,
-        } as FinishedGood
-      }
-    }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error saving material:', error)
   }
-  modal.closeModal()
 }
 
 const saveMovement = () => {
-  if (!movementFormData.value.quantity || !movementFormData.value.reference) {
-    alert('Пожалуйста, заполните обязательные поля')
-    return
-  }
+  try {
+    if (!movementFormData.value.quantity || movementFormData.value.quantity <= 0) {
+      console.warn('Quantity must be greater than 0')
+      return
+    }
+    if (!movementFormData.value.reference?.trim()) {
+      console.warn('Reference is required')
+      return
+    }
 
-  const newMovement: StockMovement = {
-    id: Math.random().toString(36).substr(2, 9),
-    itemId: movementFormData.value.itemId || '',
-    itemName: movementFormData.value.itemName || '',
-    itemType: (movementFormData.value.itemType as any) || 'raw_material',
-    movementType: (movementFormData.value.movementType as any) || 'in',
-    quantity: movementFormData.value.quantity || 0,
-    date: new Date().toISOString().split('T')[0],
-    reference: movementFormData.value.reference || '',
-    notes: movementFormData.value.notes,
-  }
+    const newMovement: StockMovement = {
+      id: Math.random().toString(36).substr(2, 9),
+      itemId: movementFormData.value.itemId || '',
+      itemName: movementFormData.value.itemName || '',
+      itemType: (movementFormData.value.itemType as any) || 'raw_material',
+      movementType: (movementFormData.value.movementType as any) || 'in',
+      quantity: movementFormData.value.quantity || 0,
+      date: new Date().toISOString().split('T')[0],
+      reference: movementFormData.value.reference || '',
+      notes: movementFormData.value.notes,
+    }
 
-  stockMovements.value.unshift(newMovement)
+    stockMovements.value.unshift(newMovement)
 
-  if (movementFormData.value.itemType === 'raw_material') {
-    const materialIndex = rawMaterials.value.findIndex(
-      (m) => m.id === movementFormData.value.itemId,
-    )
-    if (materialIndex !== -1) {
-      if (movementFormData.value.movementType === 'in') {
-        rawMaterials.value[materialIndex].quantity += movementFormData.value.quantity || 0
-      } else {
-        rawMaterials.value[materialIndex].quantity = Math.max(
-          0,
-          rawMaterials.value[materialIndex].quantity - (movementFormData.value.quantity || 0),
-        )
+    if (movementFormData.value.itemType === 'raw_material') {
+      const materialIndex = rawMaterials.value.findIndex(
+        (m) => m.id === movementFormData.value.itemId,
+      )
+      if (materialIndex !== -1) {
+        if (movementFormData.value.movementType === 'in') {
+          rawMaterials.value[materialIndex].quantity += movementFormData.value.quantity || 0
+        } else {
+          rawMaterials.value[materialIndex].quantity = Math.max(
+            0,
+            rawMaterials.value[materialIndex].quantity - (movementFormData.value.quantity || 0),
+          )
+        }
+      }
+    } else {
+      const goodIndex = finishedGoods.value.findIndex((g) => g.id === movementFormData.value.itemId)
+      if (goodIndex !== -1) {
+        if (movementFormData.value.movementType === 'in') {
+          finishedGoods.value[goodIndex].quantity += movementFormData.value.quantity || 0
+        } else {
+          finishedGoods.value[goodIndex].quantity = Math.max(
+            0,
+            finishedGoods.value[goodIndex].quantity - (movementFormData.value.quantity || 0),
+          )
+        }
       }
     }
-  } else {
-    const goodIndex = finishedGoods.value.findIndex((g) => g.id === movementFormData.value.itemId)
-    if (goodIndex !== -1) {
-      if (movementFormData.value.movementType === 'in') {
-        finishedGoods.value[goodIndex].quantity += movementFormData.value.quantity || 0
-      } else {
-        finishedGoods.value[goodIndex].quantity = Math.max(
-          0,
-          finishedGoods.value[goodIndex].quantity - (movementFormData.value.quantity || 0),
-        )
-      }
-    }
-  }
 
-  modal.closeModal()
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error saving movement:', error)
+  }
 }
 
 const formatDate = (date: string | undefined): string => {
