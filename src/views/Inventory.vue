@@ -374,40 +374,48 @@ const needsRestock = computed(() => {
 })
 
 const saveInventory = () => {
-  if (!formData.value.productName) {
-    alert('Пожалуйста, заполните обязательные поля')
-    return
-  }
-
-  if (modal.isCreateModal.value) {
-    const newItem: InventoryItem = {
-      id: Math.random().toString(36).substr(2, 9),
-      productId: formData.value.productId || '',
-      productName: formData.value.productName || '',
-      quantity: formData.value.quantity || 0,
-      location: formData.value.location || '',
-      lastCounted: formData.value.lastCounted || new Date().toISOString().split('T')[0],
-      variance: formData.value.variance || 0,
+  try {
+    if (!formData.value.productName?.trim()) {
+      console.warn('Product name is required')
+      return
     }
-    inventory.value.push(newItem)
-  } else if (modal.isEditModal.value && modal.selectedItem.value) {
-    const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
-    if (index !== -1) {
-      inventory.value[index] = {
-        ...modal.selectedItem.value,
-        ...formData.value,
+
+    if (modal.isCreateModal.value) {
+      const newItem: InventoryItem = {
+        id: Math.random().toString(36).substr(2, 9),
+        productId: formData.value.productId || '',
+        productName: formData.value.productName || '',
+        quantity: formData.value.quantity || 0,
+        location: formData.value.location || '',
+        lastCounted: formData.value.lastCounted || new Date().toISOString().split('T')[0],
+        variance: formData.value.variance || 0,
+      }
+      inventory.value.push(newItem)
+    } else if (modal.isEditModal.value && modal.selectedItem.value) {
+      const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
+      if (index !== -1) {
+        inventory.value[index] = {
+          ...modal.selectedItem.value,
+          ...formData.value,
+        }
       }
     }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error saving inventory:', error)
   }
-  modal.closeModal()
 }
 
 const deleteInventory = () => {
-  const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
-  if (index !== -1) {
-    inventory.value.splice(index, 1)
+  try {
+    const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
+    if (index !== -1) {
+      inventory.value.splice(index, 1)
+    }
+    modal.closeModal()
+  } catch (error) {
+    console.error('Error deleting inventory:', error)
   }
-  modal.closeModal()
 }
 
 const getStatusBadge = (quantity: number) => {
