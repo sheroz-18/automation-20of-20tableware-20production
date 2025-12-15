@@ -225,7 +225,7 @@ export function exportOrdersToPrint(orders: Order[]) {
         <td>${order.customerName}</td>
         <td>${order.customerType === 'wholesale' ? 'Оптовик' : 'Магазин'}</td>
         <td>${order.status}</td>
-        <td><strong>ЅМ${order.totalAmount.toFixed(2)}</strong></td>
+        <td><strong>SM${order.totalAmount.toFixed(2)}</strong></td>
         <td>${order.createdDate}</td>
         <td>${order.dueDate}</td>
       </tr>
@@ -233,7 +233,7 @@ export function exportOrdersToPrint(orders: Order[]) {
   })
 
   const totalAmount = orders.reduce((sum, order) => sum + order.totalAmount, 0)
-  content += `<tr class="total-row"><td colspan="4">ИТОГО</td><td>ЅМ${totalAmount.toFixed(2)}</td><td colspan="2"></td></tr>`
+  content += `<tr class="total-row"><td colspan="4">ИТОГО</td><td>SM${totalAmount.toFixed(2)}</td><td colspan="2"></td></tr>`
   content += '</table></div>'
 
   exportToPrintHTML('Список заказов', content)
