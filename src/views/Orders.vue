@@ -27,7 +27,7 @@
         <label class="text-sm font-medium text-slate-700 block mb-2">Статус</label>
         <select
           v-model="statusFilter"
-          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+          class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 cursor-pointer"
         >
           <option value="">Все статусы</option>
           <option value="принят">Принят</option>
