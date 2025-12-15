@@ -422,4 +422,46 @@ const getModalTitle = () => {
   if (modal.contentType.value === 'product') return 'Информация о товаре'
   return 'Информация'
 }
+
+const getOrderIcon = (status: string) => {
+  const icons: Record<string, any> = {
+    принят: defineComponent({
+      template:
+        '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>',
+    }),
+    'в производстве': defineComponent({
+      template:
+        '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>',
+    }),
+    'на складе': defineComponent({
+      template:
+        '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m0 10v4a2 2 0 002 2h12a2 2 0 002-2v-4m-8-4l4-2" /></svg>',
+    }),
+    отправлен: defineComponent({
+      template:
+        '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>',
+    }),
+  }
+  return icons[status] || icons['принят']
+}
+
+const getOrderIconColor = (status: string) => {
+  const colors: Record<string, string> = {
+    принят: 'text-blue-600',
+    'в производстве': 'text-orange-600',
+    'на складе': 'text-purple-600',
+    отправлен: 'text-green-600',
+  }
+  return colors[status] || 'text-blue-600'
+}
+
+const getOrderIconBg = (status: string) => {
+  const bgColors: Record<string, string> = {
+    принят: 'w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center',
+    'в производстве': 'w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center',
+    'на складе': 'w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center',
+    отправлен: 'w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center',
+  }
+  return bgColors[status] || 'w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center'
+}
 </script>
