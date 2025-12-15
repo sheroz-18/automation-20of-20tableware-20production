@@ -108,7 +108,7 @@ export function exportProductsToCSV(products: Product[]) {
     Категория: product.category,
     Количество: product.quantity,
     'Уровень переказа': product.reorderLevel,
-    'Стоимость (ЅМ)': product.unitCost.toFixed(2),
+    'Стоимость (SM)': product.unitCost.toFixed(2),
     Статус: product.status,
     Материал: product.material,
     Размер: product.size,
