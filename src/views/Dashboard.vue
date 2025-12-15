@@ -198,7 +198,7 @@
           >
             <div>
               <p class="text-sm text-slate-700">Баланс</p>
-              <p class="font-semibold text-slate-900">-ЅМ2,969</p>
+              <p class="font-semibold text-slate-900">-SM2,969</p>
             </div>
             <svg
               class="w-8 h-8 text-slate-600"
