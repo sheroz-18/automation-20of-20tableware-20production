@@ -136,6 +136,7 @@ export function useWarningNotifications() {
               `Осталось ${material.quantity} ${material.unit}, рекомендуется заказ`,
             )
             notifiedMaterials.add(`warning-${material.id}`)
+            saveNotifiedSet(STORAGE_KEY_NOTIFIED_MATERIALS, notifiedMaterials)
           }
         }
       }
