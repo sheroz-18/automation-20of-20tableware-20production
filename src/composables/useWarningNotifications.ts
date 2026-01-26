@@ -100,6 +100,7 @@ export function useWarningNotifications() {
             `${order.customerName} - просрочка ${daysOverdue} дня(й)`,
           )
           notifiedOrders.add(`overdue-${order.id}`)
+          saveNotifiedSet(STORAGE_KEY_NOTIFIED_ORDERS, notifiedOrders)
         }
       }
 
@@ -112,6 +113,7 @@ export function useWarningNotifications() {
             `${order.customerName} - все товары готовы`,
           )
           notifiedOrders.add(`ready-${order.id}`)
+          saveNotifiedSet(STORAGE_KEY_NOTIFIED_ORDERS, notifiedOrders)
         }
       }
     })
