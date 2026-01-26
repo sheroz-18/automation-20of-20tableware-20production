@@ -11,7 +11,7 @@
       <MetricCard
         icon="trending-up"
         label="Общая выручка"
-        value="SM4,651"
+        :value="formatCurrencyAmount(4651)"
         change="+12.5%"
         changeType="positive"
       />
@@ -157,7 +157,7 @@
           >
             <div>
               <p class="text-sm text-green-700">Доход от продаж</p>
-              <p class="font-semibold text-green-900">SM3,681</p>
+              <p class="font-semibold text-green-900">{{ formatCurrencyAmount(3681) }}</p>
             </div>
             <svg
               class="w-8 h-8 text-green-600"
@@ -180,7 +180,7 @@
           >
             <div>
               <p class="text-sm text-red-700">Расходы</p>
-              <p class="font-semibold text-red-900">SM6,650</p>
+              <p class="font-semibold text-red-900">{{ formatCurrencyAmount(6650) }}</p>
             </div>
             <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -198,7 +198,7 @@
           >
             <div>
               <p class="text-sm text-slate-700">Баланс</p>
-              <p class="font-semibold text-slate-900">-SM2,969</p>
+              <p class="font-semibold text-slate-900">{{ formatCurrencyAmount(-2969) }}</p>
             </div>
             <svg
               class="w-8 h-8 text-slate-600"
@@ -260,7 +260,7 @@
           <div>
             <p class="text-sm text-gray-700">Сумма</p>
             <p class="font-semibold text-slate-900">
-              ЅМ{{ modal.selectedItem.value?.totalAmount.toFixed(2) }}
+              {{ formatCurrencyAmount(modal.selectedItem.value?.totalAmount || 0) }}
             </p>
           </div>
         </div>
@@ -303,6 +303,7 @@ import { useRouter } from 'vue-router'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
 import { useWarningNotifications } from '../composables/useWarningNotifications'
+import { formatCurrencyAmount } from '../utils/currency'
 import MetricCard from '../components/MetricCard.vue'
 import ModalBase from '../components/ModalBase.vue'
 

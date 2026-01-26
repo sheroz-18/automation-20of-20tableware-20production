@@ -2,10 +2,30 @@ import { onMounted, watch } from 'vue'
 import { useNotification } from './useNotification'
 import type { RawMaterial, Order } from '../types'
 
+const STORAGE_KEY_NOTIFIED_MATERIALS = 'produceflow_notified_materials'
+const STORAGE_KEY_NOTIFIED_ORDERS = 'produceflow_notified_orders'
+
+const loadNotifiedSet = (key: string): Set<string> => {
+  try {
+    const stored = localStorage.getItem(key)
+    return stored ? new Set(JSON.parse(stored)) : new Set()
+  } catch {
+    return new Set()
+  }
+}
+
+const saveNotifiedSet = (key: string, set: Set<string>) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(Array.from(set)))
+  } catch (error) {
+    console.error(`Failed to save ${key} to storage:`, error)
+  }
+}
+
 export function useWarningNotifications() {
   const { addNotification } = useNotification()
-  const notifiedMaterials = new Set<string>()
-  const notifiedOrders = new Set<string>()
+  const notifiedMaterials = loadNotifiedSet(STORAGE_KEY_NOTIFIED_MATERIALS)
+  const notifiedOrders = loadNotifiedSet(STORAGE_KEY_NOTIFIED_ORDERS)
 
   /**
    * Check raw materials for critical levels and expiry
@@ -21,6 +41,7 @@ export function useWarningNotifications() {
             `Осталось ${material.quantity} ${material.unit} (минимум: ${material.minStockLevel})`,
           )
           notifiedMaterials.add(`critical-${material.id}`)
+          saveNotifiedSet(STORAGE_KEY_NOTIFIED_MATERIALS, notifiedMaterials)
         }
       }
       // Check for expiry date
@@ -39,6 +60,7 @@ export function useWarningNotifications() {
               `Товар истекает через ${daysUntilExpiry} дней`,
             )
             notifiedMaterials.add(`expiry-${material.id}`)
+            saveNotifiedSet(STORAGE_KEY_NOTIFIED_MATERIALS, notifiedMaterials)
           }
         } else if (daysUntilExpiry <= 0) {
           if (!notifiedMaterials.has(`expired-${material.id}`)) {
@@ -48,6 +70,7 @@ export function useWarningNotifications() {
               'Материал истек, требуется немедленная утилизация',
             )
             notifiedMaterials.add(`expired-${material.id}`)
+            saveNotifiedSet(STORAGE_KEY_NOTIFIED_MATERIALS, notifiedMaterials)
           }
         }
       }
@@ -77,6 +100,7 @@ export function useWarningNotifications() {
             `${order.customerName} - просрочка ${daysOverdue} дня(й)`,
           )
           notifiedOrders.add(`overdue-${order.id}`)
+          saveNotifiedSet(STORAGE_KEY_NOTIFIED_ORDERS, notifiedOrders)
         }
       }
 
@@ -89,6 +113,7 @@ export function useWarningNotifications() {
             `${order.customerName} - все товары готовы`,
           )
           notifiedOrders.add(`ready-${order.id}`)
+          saveNotifiedSet(STORAGE_KEY_NOTIFIED_ORDERS, notifiedOrders)
         }
       }
     })
@@ -111,6 +136,7 @@ export function useWarningNotifications() {
               `Осталось ${material.quantity} ${material.unit}, рекомендуется заказ`,
             )
             notifiedMaterials.add(`warning-${material.id}`)
+            saveNotifiedSet(STORAGE_KEY_NOTIFIED_MATERIALS, notifiedMaterials)
           }
         }
       }
