@@ -124,12 +124,12 @@
             </div>
             <div>
               <p class="text-xs text-slate-600">Стоимость за ед.</p>
-              <p class="text-xl font-bold text-slate-900">SM{{ material.unitCost }}</p>
+              <p class="text-xl font-bold text-slate-900">{{ formatCurrencyAmount(material.unitCost) }}</p>
             </div>
             <div>
               <p class="text-xs text-slate-600">Общая стоимость</p>
               <p class="text-xl font-bold text-slate-900">
-                SM{{ (material.quantity * material.unitCost).toFixed(2) }}
+                {{ formatCurrencyAmount(material.quantity * material.unitCost) }}
               </p>
             </div>
           </div>
@@ -497,6 +497,7 @@
 import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
+import { formatCurrencyAmount } from '../utils/currency'
 import ModalBase from '../components/ModalBase.vue'
 import type { RawMaterial, FinishedGood, StockMovement } from '../types'
 
