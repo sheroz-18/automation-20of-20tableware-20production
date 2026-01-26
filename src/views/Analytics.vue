@@ -21,7 +21,7 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <p class="text-gray-700 text-sm mb-2">Средний размер заказа</p>
-        <p class="text-3xl font-bold text-slate-900">SM{{ avgOrderValue.toFixed(2) }}</p>
+        <p class="text-3xl font-bold text-slate-900">{{ formatCurrencyAmount(avgOrderValue) }}</p>
         <p class="text-xs text-green-600 mt-2">+5.2% от прошлого месяца</p>
       </div>
 
@@ -52,7 +52,7 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-gray-700">Тарелки (52%)</span>
-              <span class="text-sm font-semibold text-slate-900">SM1,918</span>
+              <span class="text-sm font-semibold text-slate-900">{{ formatCurrencyAmount(1918) }}</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-blue-600 h-3 rounded-full" style="width: 52%"></div>
@@ -62,7 +62,7 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-gray-700">Приборы (18%)</span>
-              <span class="text-sm font-semibold text-slate-900">SM665</span>
+              <span class="text-sm font-semibold text-slate-900">{{ formatCurrencyAmount(665) }}</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-green-600 h-3 rounded-full" style="width: 18%"></div>
@@ -72,7 +72,7 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-gray-700">Чашки (16%)</span>
-              <span class="text-sm font-semibold text-slate-900">SM591</span>
+              <span class="text-sm font-semibold text-slate-900">{{ formatCurrencyAmount(591) }}</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-orange-600 h-3 rounded-full" style="width: 16%"></div>
@@ -82,7 +82,7 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-gray-700">Кухонная утварь (9%)</span>
-              <span class="text-sm font-semibold text-slate-900">SM332</span>
+              <span class="text-sm font-semibold text-slate-900">{{ formatCurrencyAmount(332) }}</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-purple-600 h-3 rounded-full" style="width: 9%"></div>
@@ -92,7 +92,7 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-gray-700">Миски (5%)</span>
-              <span class="text-sm font-semibold text-slate-900">SM185</span>
+              <span class="text-sm font-semibold text-slate-900">{{ formatCurrencyAmount(185) }}</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-cyan-600 h-3 rounded-full" style="width: 5%"></div>
@@ -157,7 +157,7 @@
                 <p class="text-xs text-gray-700">1200 продано</p>
               </div>
             </div>
-            <span class="font-bold text-slate-900">SM1,800</span>
+            <span class="font-bold text-slate-900">{{ formatCurrencyAmount(1800) }}</span>
           </div>
 
           <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50">
@@ -172,7 +172,7 @@
                 <p class="text-xs text-gray-700">620 продано</p>
               </div>
             </div>
-            <span class="font-bold text-slate-900">SM2,604</span>
+            <span class="font-bold text-slate-900">{{ formatCurrencyAmount(2604) }}</span>
           </div>
 
           <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50">
@@ -187,7 +187,7 @@
                 <p class="text-xs text-gray-700">200 продано</p>
               </div>
             </div>
-            <span class="font-bold text-slate-900">SM640</span>
+            <span class="font-bold text-slate-900">{{ formatCurrencyAmount(640) }}</span>
           </div>
         </div>
       </div>
@@ -246,6 +246,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useAppState } from '../composables/useAppState'
+import { formatCurrencyAmount } from '../utils/currency'
 import OrdersChart from '../components/charts/OrdersChart.vue'
 import ProductionChart from '../components/charts/ProductionChart.vue'
 import StockChart from '../components/charts/StockChart.vue'
