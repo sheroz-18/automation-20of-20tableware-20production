@@ -52,7 +52,9 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-gray-700">Тарелки (52%)</span>
-              <span class="text-sm font-semibold text-slate-900">{{ formatCurrencyAmount(1918) }}</span>
+              <span class="text-sm font-semibold text-slate-900">{{
+                formatCurrencyAmount(1918)
+              }}</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-blue-600 h-3 rounded-full" style="width: 52%"></div>
@@ -62,7 +64,9 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-gray-700">Приборы (18%)</span>
-              <span class="text-sm font-semibold text-slate-900">{{ formatCurrencyAmount(665) }}</span>
+              <span class="text-sm font-semibold text-slate-900">{{
+                formatCurrencyAmount(665)
+              }}</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-green-600 h-3 rounded-full" style="width: 18%"></div>
@@ -72,7 +76,9 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-gray-700">Чашки (16%)</span>
-              <span class="text-sm font-semibold text-slate-900">{{ formatCurrencyAmount(591) }}</span>
+              <span class="text-sm font-semibold text-slate-900">{{
+                formatCurrencyAmount(591)
+              }}</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-orange-600 h-3 rounded-full" style="width: 16%"></div>
@@ -82,7 +88,9 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-gray-700">Кухонная утварь (9%)</span>
-              <span class="text-sm font-semibold text-slate-900">{{ formatCurrencyAmount(332) }}</span>
+              <span class="text-sm font-semibold text-slate-900">{{
+                formatCurrencyAmount(332)
+              }}</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-purple-600 h-3 rounded-full" style="width: 9%"></div>
@@ -92,7 +100,9 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-gray-700">Миски (5%)</span>
-              <span class="text-sm font-semibold text-slate-900">{{ formatCurrencyAmount(185) }}</span>
+              <span class="text-sm font-semibold text-slate-900">{{
+                formatCurrencyAmount(185)
+              }}</span>
             </div>
             <div class="w-full bg-slate-200 rounded-full h-3">
               <div class="bg-cyan-600 h-3 rounded-full" style="width: 5%"></div>

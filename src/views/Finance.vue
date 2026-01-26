@@ -99,7 +99,8 @@
                   record.type === 'income' ? 'text-green-600' : 'text-red-600',
                 ]"
               >
-                {{ record.type === 'income' ? '+' : '-' }}{{ formatCurrencyAmount(record.amount).slice(2) }}
+                {{ record.type === 'income' ? '+' : '-'
+                }}{{ formatCurrencyAmount(record.amount).slice(2) }}
               </p>
               <p class="text-xs text-gray-700 mt-1">{{ record.reference }}</p>
             </div>
@@ -119,7 +120,9 @@
             >
               <div class="flex items-center justify-between mb-2">
                 <span class="text-sm font-medium text-gray-700">{{ category.name }}</span>
-                <span class="font-semibold text-slate-900">{{ formatCurrencyAmount(category.amount) }}</span>
+                <span class="font-semibold text-slate-900">{{
+                  formatCurrencyAmount(category.amount)
+                }}</span>
               </div>
               <div class="w-full bg-slate-200 rounded-full h-2">
                 <div
@@ -137,7 +140,9 @@
           <div class="space-y-3">
             <div class="flex items-center justify-between p-3 rounded-lg bg-green-50">
               <span class="text-sm font-medium text-green-700">Продажи</span>
-              <span class="font-semibold text-green-900">{{ formatCurrencyAmount(totalIncome) }}</span>
+              <span class="font-semibold text-green-900">{{
+                formatCurrencyAmount(totalIncome)
+              }}</span>
             </div>
             <div class="flex items-center justify-between p-3 rounded-lg bg-slate-100">
               <span class="text-sm font-medium text-gray-700">Прочее</span>
@@ -178,7 +183,8 @@
                 modal.selectedItem.value?.type === 'income' ? 'text-green-600' : 'text-red-600',
               ]"
             >
-              {{ modal.selectedItem.value?.type === 'income' ? '+' : '-' }}{{ formatCurrencyAmount(modal.selectedItem.value?.amount || 0).slice(2) }}
+              {{ modal.selectedItem.value?.type === 'income' ? '+' : '-'
+              }}{{ formatCurrencyAmount(modal.selectedItem.value?.amount || 0).slice(2) }}
             </p>
           </div>
           <div>

@@ -124,7 +124,9 @@
             </div>
             <div>
               <p class="text-xs text-slate-600">Стоимость за ед.</p>
-              <p class="text-xl font-bold text-slate-900">{{ formatCurrencyAmount(material.unitCost) }}</p>
+              <p class="text-xl font-bold text-slate-900">
+                {{ formatCurrencyAmount(material.unitCost) }}
+              </p>
             </div>
             <div>
               <p class="text-xs text-slate-600">Общая стоимость</p>
