@@ -303,6 +303,7 @@ import { useRouter } from 'vue-router'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
 import { useWarningNotifications } from '../composables/useWarningNotifications'
+import { formatCurrencyAmount } from '../utils/currency'
 import MetricCard from '../components/MetricCard.vue'
 import ModalBase from '../components/ModalBase.vue'
 
