@@ -11,7 +11,7 @@
       <MetricCard
         icon="trending-up"
         label="Общая выручка"
-        value="SM4,651"
+        :value="formatCurrencyAmount(4651)"
         change="+12.5%"
         changeType="positive"
       />
