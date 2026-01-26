@@ -1,10 +1,42 @@
-import { ref } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import type { Notification } from '../types'
+
+const STORAGE_KEY_NOTIFICATIONS = 'produceflow_notifications'
 
 const notifications = ref<Notification[]>([])
 const toastQueue = ref<Notification[]>([])
+let isInitialized = false
+
+const loadNotificationsFromStorage = (): Notification[] => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY_NOTIFICATIONS)
+    return stored ? JSON.parse(stored) : []
+  } catch {
+    return []
+  }
+}
+
+const saveNotificationsToStorage = (notifs: Notification[]) => {
+  try {
+    localStorage.setItem(STORAGE_KEY_NOTIFICATIONS, JSON.stringify(notifs))
+  } catch (error) {
+    console.error('Failed to save notifications to storage:', error)
+  }
+}
+
+const initializeNotifications = () => {
+  if (isInitialized) return
+  notifications.value = loadNotificationsFromStorage()
+  isInitialized = true
+
+  watch(notifications, (newVal) => saveNotificationsToStorage(newVal), { deep: true })
+}
 
 export function useNotification() {
+  onMounted(() => {
+    initializeNotifications()
+  })
+
   const addNotification = (
     type: 'success' | 'error' | 'warning' | 'info',
     title: string,
