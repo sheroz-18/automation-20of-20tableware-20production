@@ -260,7 +260,7 @@
           <div>
             <p class="text-sm text-gray-700">Сумма</p>
             <p class="font-semibold text-slate-900">
-              ЅМ{{ modal.selectedItem.value?.totalAmount.toFixed(2) }}
+              {{ formatCurrencyAmount(modal.selectedItem.value?.totalAmount || 0) }}
             </p>
           </div>
         </div>
