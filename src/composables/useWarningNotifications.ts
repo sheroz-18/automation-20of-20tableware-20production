@@ -41,6 +41,7 @@ export function useWarningNotifications() {
             `Осталось ${material.quantity} ${material.unit} (минимум: ${material.minStockLevel})`,
           )
           notifiedMaterials.add(`critical-${material.id}`)
+          saveNotifiedSet(STORAGE_KEY_NOTIFIED_MATERIALS, notifiedMaterials)
         }
       }
       // Check for expiry date
@@ -59,6 +60,7 @@ export function useWarningNotifications() {
               `Товар истекает через ${daysUntilExpiry} дней`,
             )
             notifiedMaterials.add(`expiry-${material.id}`)
+            saveNotifiedSet(STORAGE_KEY_NOTIFIED_MATERIALS, notifiedMaterials)
           }
         } else if (daysUntilExpiry <= 0) {
           if (!notifiedMaterials.has(`expired-${material.id}`)) {
@@ -68,6 +70,7 @@ export function useWarningNotifications() {
               'Материал истек, требуется немедленная утилизация',
             )
             notifiedMaterials.add(`expired-${material.id}`)
+            saveNotifiedSet(STORAGE_KEY_NOTIFIED_MATERIALS, notifiedMaterials)
           }
         }
       }
