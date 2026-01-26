@@ -157,7 +157,7 @@
           >
             <div>
               <p class="text-sm text-green-700">Доход от продаж</p>
-              <p class="font-semibold text-green-900">SM3,681</p>
+              <p class="font-semibold text-green-900">{{ formatCurrencyAmount(3681) }}</p>
             </div>
             <svg
               class="w-8 h-8 text-green-600"
@@ -180,7 +180,7 @@
           >
             <div>
               <p class="text-sm text-red-700">Расходы</p>
-              <p class="font-semibold text-red-900">SM6,650</p>
+              <p class="font-semibold text-red-900">{{ formatCurrencyAmount(6650) }}</p>
             </div>
             <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -198,7 +198,7 @@
           >
             <div>
               <p class="text-sm text-slate-700">Баланс</p>
-              <p class="font-semibold text-slate-900">-SM2,969</p>
+              <p class="font-semibold text-slate-900">{{ formatCurrencyAmount(-2969) }}</p>
             </div>
             <svg
               class="w-8 h-8 text-slate-600"
