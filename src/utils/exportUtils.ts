@@ -342,6 +342,179 @@ export function exportOrderDetailToPrint(order: Order) {
 }
 
 /**
+ * Export invoice to formatted XLSX
+ */
+export function exportInvoiceToXLSX(order: Order) {
+  const invoiceNumber = `НАК-${order.orderNumber.split('-')[1]}-${new Date().getTime()}`
+  const currentDate = new Date().toLocaleDateString('ru-RU')
+
+  const workbook = XLSX.utils.book_new()
+  const worksheetData: Record<string, unknown>[] = []
+
+  // Add title and header info
+  const worksheet = XLSX.utils.aoa_to_sheet([
+    ['НАКЛАДНАЯ (Delivery Note)'],
+    [],
+    [`Номер накладной: ${invoiceNumber}`],
+    [`Дата выдачи: ${currentDate}`],
+    [`Номер заказа: ${order.orderNumber}`],
+    [],
+    ['ПОЛУЧАТЕЛЬ:'],
+    [order.customerName],
+    [order.customerType === 'wholesale' ? 'Оптовик' : 'Магазин'],
+    [],
+  ])
+
+  // Add items table header
+  const itemsStartRow = 10
+  const itemsHeaderRow = ['Товар', 'Количество', 'Цена за единицу (SM)', 'Сумма (SM)']
+  const itemsData = order.items.map((item) => [
+    item.productName,
+    item.quantity,
+    item.unitPrice.toFixed(2),
+    item.subtotal.toFixed(2),
+  ])
+
+  // Merge header with items data
+  const allData = [
+    ['НАКЛАДНАЯ (Delivery Note)'],
+    [],
+    [`Номер накладной: ${invoiceNumber}`],
+    [`Дата выдачи: ${currentDate}`],
+    [`Номер заказа: ${order.orderNumber}`],
+    [],
+    ['ПОЛУЧАТЕЛЬ:'],
+    [order.customerName],
+    [order.customerType === 'wholesale' ? 'Оптовик' : 'Магазин'],
+    [],
+    itemsHeaderRow,
+    ...itemsData,
+    [],
+    ['ИТОГО:'],
+    [`Количество позиций: ${order.items.length}`],
+    [`Общее количество товара: ${order.items.reduce((sum, item) => sum + item.quantity, 0)} шт`],
+    [`Сумма к оплате: SM${order.totalAmount.toFixed(2)}`],
+    [],
+    ['СТАТУС ЗАКАЗА:', order.status],
+    ['Дата создания заказа:', order.createdDate],
+    ['Срок выполнения:', order.dueDate],
+    [],
+    ['Подпись ответственного лица:', '_________________'],
+    ['Дата подписи:', '_________________'],
+  ]
+
+  const dataWorksheet = XLSX.utils.aoa_to_sheet(allData)
+
+  // Style title row
+  const titleStyle = {
+    fill: { fgColor: { rgb: 'FF2563EB' } },
+    font: { bold: true, color: { rgb: 'FFFFFFFF' }, size: 14 },
+    alignment: { horizontal: 'center', vertical: 'center' },
+    border: {
+      top: { style: 'thin', color: { rgb: 'FF000000' } },
+      bottom: { style: 'thin', color: { rgb: 'FF000000' } },
+      left: { style: 'thin', color: { rgb: 'FF000000' } },
+      right: { style: 'thin', color: { rgb: 'FF000000' } },
+    },
+  }
+
+  // Style header info rows
+  const infoStyle = {
+    font: { size: 11 },
+    alignment: { horizontal: 'left', vertical: 'center' },
+  }
+
+  // Style items header row
+  const itemsHeaderStyle = {
+    fill: { fgColor: { rgb: 'FF2563EB' } },
+    font: { bold: true, color: { rgb: 'FFFFFFFF' }, size: 11 },
+    alignment: { horizontal: 'center', vertical: 'center' },
+    border: {
+      top: { style: 'thin', color: { rgb: 'FF000000' } },
+      bottom: { style: 'thin', color: { rgb: 'FF000000' } },
+      left: { style: 'thin', color: { rgb: 'FF000000' } },
+      right: { style: 'thin', color: { rgb: 'FF000000' } },
+    },
+  }
+
+  // Style data rows
+  const dataRowStyle = (isEven: boolean) => ({
+    fill: isEven ? { fgColor: { rgb: 'FFF3F4F6' } } : { fgColor: { rgb: 'FFFFFFFF' } },
+    font: { size: 11 },
+    alignment: { horizontal: 'left', vertical: 'center' },
+    border: {
+      top: { style: 'thin', color: { rgb: 'FFE5E7EB' } },
+      bottom: { style: 'thin', color: { rgb: 'FFE5E7EB' } },
+      left: { style: 'thin', color: { rgb: 'FFE5E7EB' } },
+      right: { style: 'thin', color: { rgb: 'FFE5E7EB' } },
+    },
+  })
+
+  // Style total row
+  const totalStyle = {
+    fill: { fgColor: { rgb: 'FFE0E7FF' } },
+    font: { bold: true, size: 11 },
+    alignment: { horizontal: 'left', vertical: 'center' },
+    border: {
+      top: { style: 'thin', color: { rgb: 'FF000000' } },
+      bottom: { style: 'thin', color: { rgb: 'FF000000' } },
+      left: { style: 'thin', color: { rgb: 'FF000000' } },
+      right: { style: 'thin', color: { rgb: 'FF000000' } },
+    },
+  }
+
+  // Apply styles
+  dataWorksheet['A1'].s = titleStyle
+
+  // Apply info styles
+  for (let i = 2; i <= 8; i++) {
+    if (dataWorksheet[`A${i}`]) dataWorksheet[`A${i}`].s = infoStyle
+    if (dataWorksheet[`B${i}`]) dataWorksheet[`B${i}`].s = infoStyle
+  }
+
+  // Apply items header style
+  const itemsHeaderRowNum = 11
+  for (let col = 0; col < 4; col++) {
+    const cellAddress = XLSX.utils.encode_col(col) + itemsHeaderRowNum
+    if (dataWorksheet[cellAddress]) {
+      dataWorksheet[cellAddress].s = itemsHeaderStyle
+    }
+  }
+
+  // Apply data row styles to items
+  for (let row = 0; row < order.items.length; row++) {
+    for (let col = 0; col < 4; col++) {
+      const cellAddress = XLSX.utils.encode_col(col) + (itemsHeaderRowNum + 1 + row)
+      if (dataWorksheet[cellAddress]) {
+        dataWorksheet[cellAddress].s = dataRowStyle(row % 2 === 0)
+      }
+    }
+  }
+
+  // Apply total styles
+  const totalRowStart = itemsHeaderRowNum + 1 + order.items.length + 2
+  for (let i = totalRowStart; i <= totalRowStart + 2; i++) {
+    for (let col = 0; col < 4; col++) {
+      const cellAddress = XLSX.utils.encode_col(col) + i
+      if (dataWorksheet[cellAddress]) {
+        dataWorksheet[cellAddress].s = totalStyle
+      }
+    }
+  }
+
+  // Set column widths
+  dataWorksheet['!cols'] = [
+    { wch: 30 }, // Товар
+    { wch: 15 }, // Количество
+    { wch: 20 }, // Цена
+    { wch: 20 }, // Сумма
+  ]
+
+  XLSX.utils.book_append_sheet(workbook, dataWorksheet, 'Накладная')
+  XLSX.writeFile(workbook, `Nakladnaya_${invoiceNumber}.xlsx`)
+}
+
+/**
  * Helper function to download file
  */
 function downloadFile(content: string, fileName: string, mimeType: string) {
