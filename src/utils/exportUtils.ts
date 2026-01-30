@@ -380,30 +380,31 @@ export function exportInvoiceToXLSX(order: Order) {
 
   const dataWorksheet = XLSX.utils.aoa_to_sheet(allData)
 
-  // Style title row
+  // Style title row (НАКЛАДНАЯ)
   const titleStyle = {
-    fill: { fgColor: { rgb: 'FF2563EB' } },
-    font: { bold: true, color: { rgb: 'FFFFFFFF' }, size: 14 },
-    alignment: { horizontal: 'center', vertical: 'center' },
-    border: {
-      top: { style: 'thin', color: { rgb: 'FF000000' } },
-      bottom: { style: 'thin', color: { rgb: 'FF000000' } },
-      left: { style: 'thin', color: { rgb: 'FF000000' } },
-      right: { style: 'thin', color: { rgb: 'FF000000' } },
-    },
-  }
-
-  // Style header info rows
-  const infoStyle = {
-    font: { size: 11 },
+    font: { bold: true, size: 14 },
     alignment: { horizontal: 'left', vertical: 'center' },
   }
 
-  // Style items header row
-  const itemsHeaderStyle = {
-    fill: { fgColor: { rgb: 'FF2563EB' } },
-    font: { bold: true, color: { rgb: 'FFFFFFFF' }, size: 11 },
-    alignment: { horizontal: 'center', vertical: 'center' },
+  // Style header info rows (Грузоотправитель, Грузополучатель, etc.)
+  const headerLabelStyle = {
+    font: { bold: true, size: 11 },
+    alignment: { horizontal: 'left', vertical: 'center' },
+  }
+
+  const headerValueStyle = {
+    font: { size: 11 },
+    alignment: { horizontal: 'left', vertical: 'center' },
+    border: {
+      bottom: { style: 'thin', color: { rgb: 'FF000000' } },
+    },
+  }
+
+  // Style table header row
+  const tableHeaderStyle = {
+    fill: { fgColor: { rgb: 'FFF0F0F0' } },
+    font: { bold: true, size: 10 },
+    alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
     border: {
       top: { style: 'thin', color: { rgb: 'FF000000' } },
       bottom: { style: 'thin', color: { rgb: 'FF000000' } },
@@ -413,23 +414,21 @@ export function exportInvoiceToXLSX(order: Order) {
   }
 
   // Style data rows
-  const dataRowStyle = (isEven: boolean) => ({
-    fill: isEven ? { fgColor: { rgb: 'FFF3F4F6' } } : { fgColor: { rgb: 'FFFFFFFF' } },
-    font: { size: 11 },
-    alignment: { horizontal: 'left', vertical: 'center' },
+  const dataRowStyle = {
+    font: { size: 10 },
+    alignment: { horizontal: 'center', vertical: 'center' },
     border: {
-      top: { style: 'thin', color: { rgb: 'FFE5E7EB' } },
-      bottom: { style: 'thin', color: { rgb: 'FFE5E7EB' } },
-      left: { style: 'thin', color: { rgb: 'FFE5E7EB' } },
-      right: { style: 'thin', color: { rgb: 'FFE5E7EB' } },
+      top: { style: 'thin', color: { rgb: 'FF000000' } },
+      bottom: { style: 'thin', color: { rgb: 'FF000000' } },
+      left: { style: 'thin', color: { rgb: 'FF000000' } },
+      right: { style: 'thin', color: { rgb: 'FF000000' } },
     },
-  })
+  }
 
   // Style total row
-  const totalStyle = {
-    fill: { fgColor: { rgb: 'FFE0E7FF' } },
-    font: { bold: true, size: 11 },
-    alignment: { horizontal: 'left', vertical: 'center' },
+  const totalRowStyle = {
+    font: { bold: true, size: 10 },
+    alignment: { horizontal: 'center', vertical: 'center' },
     border: {
       top: { style: 'thin', color: { rgb: 'FF000000' } },
       bottom: { style: 'thin', color: { rgb: 'FF000000' } },
@@ -439,51 +438,55 @@ export function exportInvoiceToXLSX(order: Order) {
   }
 
   // Apply styles
-  dataWorksheet['A1'].s = titleStyle
+  if (dataWorksheet['A1']) dataWorksheet['A1'].s = titleStyle
 
-  // Apply info styles
-  for (let i = 2; i <= 8; i++) {
-    if (dataWorksheet[`A${i}`]) dataWorksheet[`A${i}`].s = infoStyle
-    if (dataWorksheet[`B${i}`]) dataWorksheet[`B${i}`].s = infoStyle
+  // Apply header info styles (rows 3-5)
+  for (let i = 3; i <= 5; i++) {
+    if (dataWorksheet[`A${i}`]) dataWorksheet[`A${i}`].s = headerLabelStyle
+    if (dataWorksheet[`B${i}`]) dataWorksheet[`B${i}`].s = headerValueStyle
   }
 
-  // Apply items header style
-  const itemsHeaderRowNum = 11
-  for (let col = 0; col < 4; col++) {
-    const cellAddress = XLSX.utils.encode_col(col) + itemsHeaderRowNum
+  // Apply table header style (row 7 - the header row for items table)
+  const tableHeaderRowNum = 7
+  for (let col = 0; col < 6; col++) {
+    const cellAddress = XLSX.utils.encode_col(col) + tableHeaderRowNum
     if (dataWorksheet[cellAddress]) {
-      dataWorksheet[cellAddress].s = itemsHeaderStyle
+      dataWorksheet[cellAddress].s = tableHeaderStyle
     }
   }
 
   // Apply data row styles to items
+  const itemsStartRow = 8
   for (let row = 0; row < order.items.length; row++) {
-    for (let col = 0; col < 4; col++) {
-      const cellAddress = XLSX.utils.encode_col(col) + (itemsHeaderRowNum + 1 + row)
+    for (let col = 0; col < 6; col++) {
+      const cellAddress = XLSX.utils.encode_col(col) + (itemsStartRow + row)
       if (dataWorksheet[cellAddress]) {
-        dataWorksheet[cellAddress].s = dataRowStyle(row % 2 === 0)
+        dataWorksheet[cellAddress].s = dataRowStyle
       }
     }
   }
 
-  // Apply total styles
-  const totalRowStart = itemsHeaderRowNum + 1 + order.items.length + 2
-  for (let i = totalRowStart; i <= totalRowStart + 2; i++) {
-    for (let col = 0; col < 4; col++) {
-      const cellAddress = XLSX.utils.encode_col(col) + i
-      if (dataWorksheet[cellAddress]) {
-        dataWorksheet[cellAddress].s = totalStyle
-      }
+  // Apply total row style
+  const totalRowNum = itemsStartRow + order.items.length + 1
+  for (let col = 0; col < 6; col++) {
+    const cellAddress = XLSX.utils.encode_col(col) + totalRowNum
+    if (dataWorksheet[cellAddress]) {
+      dataWorksheet[cellAddress].s = totalRowStyle
     }
   }
 
   // Set column widths
   dataWorksheet['!cols'] = [
-    { wch: 30 }, // Товар
-    { wch: 15 }, // Количество
-    { wch: 20 }, // Цена
-    { wch: 20 }, // Сумма
+    { wch: 5 },  // № п/п
+    { wch: 40 }, // Наименование товара
+    { wch: 8 },  // Ед. изм.
+    { wch: 12 }, // Количество
+    { wch: 12 }, // Цена
+    { wch: 12 }, // Сумма
   ]
+
+  // Merge cells for title
+  dataWorksheet['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 5 } }]
 
   XLSX.utils.book_append_sheet(workbook, dataWorksheet, 'Накладная')
   XLSX.writeFile(workbook, `Nakladnaya_${invoiceNumber}.xlsx`)
