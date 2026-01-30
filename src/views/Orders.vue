@@ -186,7 +186,13 @@
 
     <ModalBase
       :is-open="modal.isOpen.value && modal.contentType.value === 'order'"
-      :title="modal.isCreateModal.value ? 'Новый заказ' : modal.isEditModal.value ? 'Редактировать заказ' : 'Информация о заказе'"
+      :title="
+        modal.isCreateModal.value
+          ? 'Новый заказ'
+          : modal.isEditModal.value
+            ? 'Редактировать заказ'
+            : 'Информация о заказе'
+      "
       :show-actions="true"
       :show-save-button="modal.isEditModal.value || modal.isCreateModal.value"
       @close="modal.closeModal"
@@ -410,7 +416,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
 import { useNotification } from '../composables/useNotification'
-import { exportOrdersToCSV, exportOrdersToPrint } from '../utils/exportUtils'
+import { exportOrdersToCSV, exportOrdersToPrint, exportInvoiceToXLSX } from '../utils/exportUtils'
 import ModalBase from '../components/ModalBase.vue'
 import type { Order } from '../types'
 
@@ -580,70 +586,8 @@ const getStatusBadge = (status: string) => {
 
 const generateInvoice = (order: Order | undefined) => {
   if (!order) return
-
-  const invoiceNumber = `НАК-${order.orderNumber.split('-')[1]}-${new Date().getTime()}`
-  const currentDate = new Date().toLocaleDateString('ru-RU')
-
-  let invoiceContent = `
-╔════════════════════════════════════════════════════════════════╗
-║                        НАКЛАДНАЯ                               ║
-║                   (Delivery Note)                              ║
-╚════════════════════════════════════════════════════════════════╝
-
-Номер накладной: ${invoiceNumber}
-Дата выдачи: ${currentDate}
-Номер заказа: ${order.orderNumber}
-
-─────────────────────────────────────────────────────────────────
-
-ПОЛУЧАТЕЛЬ:
-${order.customerName}
-Тип: ${order.customerType === 'wholesale' ? 'Оптовик' : 'Магазин'}
-
-─────────────────────────────────────────────────────────────────
-
-ТОВАРЫ И УСЛУГИ:
-
-`
-
-  order.items.forEach((item, index) => {
-    invoiceContent += `
-${index + 1}. ${item.productName}
-   Кол-во: ${item.quantity} шт
-   Цена за единицу: SM${item.unitPrice.toFixed(2)}
-   Сумма: SM${item.subtotal.toFixed(2)}
-`
-  })
-
-  invoiceContent += `
-─────────────────────────────────────────────────────────────────
-
-ИТОГО:
-Количество позиций: ${order.items.length}
-Общее количество товара: ${order.items.reduce((sum, item) => sum + item.quantity, 0)} шт
-Сумма к оплате: SM${order.totalAmount.toFixed(2)}
-
-─────────────────────────────────────────────────────────────────
-
-СТАТУС ЗАКАЗА: ${order.status}
-Дата создания заказа: ${order.createdDate}
-Срок выполнения: ${order.dueDate}
-
-─────────────────────────────────────────────────────────────────
-
-Подпись ответственного лица: _________________
-Дата подписи: _________________
-
-═════════════════════════════════════════════════════════════════
-`
-
-  const element = document.createElement('a')
-  const file = new Blob([invoiceContent], { type: 'text/plain;charset=utf-8' })
-  element.href = URL.createObjectURL(file)
-  element.download = `Nakladnaya_${invoiceNumber}.txt`
-  document.body.appendChild(element)
-  element.click()
-  document.body.removeChild(element)
+  exportInvoiceToXLSX(order)
+  addNotification('success', 'Накладная', 'Накладная успешно экспортирована в Excel')
 }
 
 const exportToExcel = () => {
