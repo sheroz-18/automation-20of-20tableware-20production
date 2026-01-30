@@ -186,7 +186,13 @@
 
     <ModalBase
       :is-open="modal.isOpen.value && modal.contentType.value === 'order'"
-      :title="modal.isCreateModal.value ? 'Новый заказ' : modal.isEditModal.value ? 'Редактировать заказ' : 'Информация о заказе'"
+      :title="
+        modal.isCreateModal.value
+          ? 'Новый заказ'
+          : modal.isEditModal.value
+            ? 'Редактировать заказ'
+            : 'Информация о заказе'
+      "
       :show-actions="true"
       :show-save-button="modal.isEditModal.value || modal.isCreateModal.value"
       @close="modal.closeModal"

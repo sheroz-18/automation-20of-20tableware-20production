@@ -144,7 +144,11 @@ export function exportBatchesToCSV(batches: ProductionBatch[]) {
     Окончание: batch.endDate,
   }))
 
-  exportToXLSX(exportData, `ProductionBatches_${new Date().toISOString().split('T')[0]}`, 'Производство')
+  exportToXLSX(
+    exportData,
+    `ProductionBatches_${new Date().toISOString().split('T')[0]}`,
+    'Производство',
+  )
 }
 
 /**
@@ -359,7 +363,14 @@ export function exportInvoiceToXLSX(order: Order) {
     [`Грузополучатель:`, order.customerName],
     [`Основание для отпуска:`, `Заказ № ${order.orderNumber}`],
     [],
-    ['№ п/п', 'Наименование товарно-материальных ценностей', 'Ед. изм.', 'Количество', 'Цена, руб.', 'Сумма, руб.'],
+    [
+      '№ п/п',
+      'Наименование товарно-материальных ценностей',
+      'Ед. изм.',
+      'Количество',
+      'Цена, руб.',
+      'Сумма, руб.',
+    ],
     ...order.items.map((item, index) => [
       index + 1,
       item.productName,
@@ -477,9 +488,9 @@ export function exportInvoiceToXLSX(order: Order) {
 
   // Set column widths
   dataWorksheet['!cols'] = [
-    { wch: 5 },  // № п/п
+    { wch: 5 }, // № п/п
     { wch: 40 }, // Наименование товара
-    { wch: 8 },  // Ед. изм.
+    { wch: 8 }, // Ед. изм.
     { wch: 12 }, // Количество
     { wch: 12 }, // Цена
     { wch: 12 }, // Сумма
