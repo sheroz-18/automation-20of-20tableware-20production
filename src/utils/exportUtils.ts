@@ -116,7 +116,7 @@ export function exportOrdersToCSV(orders: Order[]) {
 }
 
 /**
- * Export order details to CSV
+ * Export order details to Excel (XLSX)
  */
 export function exportOrderDetailToCSV(order: Order) {
   const exportData = order.items.map((item) => ({
@@ -127,11 +127,11 @@ export function exportOrderDetailToCSV(order: Order) {
     'Сумма (SM)': item.subtotal.toFixed(2),
   }))
 
-  exportToCSV(exportData, `Order_${order.orderNumber}_details`)
+  exportToXLSX(exportData, `Order_${order.orderNumber}_details`, `Заказ ${order.orderNumber}`)
 }
 
 /**
- * Export production batches to CSV
+ * Export production batches to Excel (XLSX)
  */
 export function exportBatchesToCSV(batches: ProductionBatch[]) {
   const exportData = batches.map((batch) => ({
@@ -144,11 +144,11 @@ export function exportBatchesToCSV(batches: ProductionBatch[]) {
     Окончание: batch.endDate,
   }))
 
-  exportToCSV(exportData, `ProductionBatches_${new Date().toISOString().split('T')[0]}`)
+  exportToXLSX(exportData, `ProductionBatches_${new Date().toISOString().split('T')[0]}`, 'Производство')
 }
 
 /**
- * Export raw materials to CSV
+ * Export raw materials to Excel (XLSX)
  */
 export function exportRawMaterialsToCSV(materials: RawMaterial[]) {
   const exportData = materials.map((material) => ({
@@ -162,11 +162,11 @@ export function exportRawMaterialsToCSV(materials: RawMaterial[]) {
     'Последний приход': material.lastRestocked,
   }))
 
-  exportToCSV(exportData, `RawMaterials_${new Date().toISOString().split('T')[0]}`)
+  exportToXLSX(exportData, `RawMaterials_${new Date().toISOString().split('T')[0]}`, 'Материалы')
 }
 
 /**
- * Export products to CSV
+ * Export products to Excel (XLSX)
  */
 export function exportProductsToCSV(products: Product[]) {
   const exportData = products.map((product) => ({
@@ -182,7 +182,7 @@ export function exportProductsToCSV(products: Product[]) {
     'Вес (кг)': product.weight.toFixed(3),
   }))
 
-  exportToCSV(exportData, `Products_${new Date().toISOString().split('T')[0]}`)
+  exportToXLSX(exportData, `Products_${new Date().toISOString().split('T')[0]}`, 'Товары')
 }
 
 /**
