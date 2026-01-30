@@ -98,7 +98,7 @@ export function exportToCSV(data: unknown[], fileName: string) {
 }
 
 /**
- * Export orders to CSV
+ * Export orders to Excel (XLSX)
  */
 export function exportOrdersToCSV(orders: Order[]) {
   const exportData = orders.map((order) => ({
@@ -112,7 +112,7 @@ export function exportOrdersToCSV(orders: Order[]) {
     Срок: order.dueDate,
   }))
 
-  exportToCSV(exportData, `Orders_${new Date().toISOString().split('T')[0]}`)
+  exportToXLSX(exportData, `Orders_${new Date().toISOString().split('T')[0]}`, 'Заказы')
 }
 
 /**
