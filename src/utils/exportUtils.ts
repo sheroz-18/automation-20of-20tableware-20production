@@ -1,4 +1,69 @@
 import type { Order, Product, RawMaterial, ProductionBatch } from '../types'
+import * as XLSX from 'xlsx'
+
+/**
+ * Export data to formatted XLSX (Excel)
+ */
+export function exportToXLSX(data: unknown[], fileName: string, sheetName: string = 'Данные') {
+  if (data.length === 0) {
+    alert('Нет данных для экспорта')
+    return
+  }
+
+  // Create workbook and worksheet
+  const workbook = XLSX.utils.book_new()
+  const worksheet = XLSX.utils.json_to_sheet(data as Record<string, unknown>[])
+
+  // Style header row
+  const headers = Object.keys(data[0] as Record<string, unknown>)
+  const headerStyle = {
+    fill: { fgColor: { rgb: 'FF2563EB' } }, // Blue background
+    font: { bold: true, color: { rgb: 'FFFFFFFF' }, size: 12 }, // White text, bold
+    alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
+    border: {
+      top: { style: 'thin', color: { rgb: 'FF000000' } },
+      bottom: { style: 'thin', color: { rgb: 'FF000000' } },
+      left: { style: 'thin', color: { rgb: 'FF000000' } },
+      right: { style: 'thin', color: { rgb: 'FF000000' } },
+    },
+  }
+
+  // Apply header style and set column widths
+  const colWidths: XLSX.ColInfo[] = []
+  headers.forEach((header, index) => {
+    const cellAddress = XLSX.utils.encode_col(index) + '1'
+    worksheet[cellAddress].s = headerStyle
+    colWidths.push({ wch: Math.max(header.length + 2, 15) })
+  })
+
+  // Style data rows with alternating colors and borders
+  const dataRowStyle = (isEven: boolean) => ({
+    fill: isEven ? { fgColor: { rgb: 'FFF3F4F6' } } : { fgColor: { rgb: 'FFFFFFFF' } },
+    font: { size: 11 },
+    alignment: { horizontal: 'left', vertical: 'center' },
+    border: {
+      top: { style: 'thin', color: { rgb: 'FFE5E7EB' } },
+      bottom: { style: 'thin', color: { rgb: 'FFE5E7EB' } },
+      left: { style: 'thin', color: { rgb: 'FFE5E7EB' } },
+      right: { style: 'thin', color: { rgb: 'FFE5E7EB' } },
+    },
+  })
+
+  // Apply styles to data rows
+  data.forEach((_, rowIndex) => {
+    headers.forEach((header, colIndex) => {
+      const cellAddress = XLSX.utils.encode_col(colIndex) + (rowIndex + 2)
+      if (worksheet[cellAddress]) {
+        worksheet[cellAddress].s = dataRowStyle(rowIndex % 2 === 0)
+      }
+    })
+  })
+
+  worksheet['!cols'] = colWidths
+
+  XLSX.utils.book_append_sheet(workbook, worksheet, sheetName)
+  XLSX.writeFile(workbook, `${fileName}.xlsx`)
+}
 
 /**
  * Export data to CSV format (Excel compatible)
