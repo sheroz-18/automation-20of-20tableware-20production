@@ -342,65 +342,40 @@ export function exportOrderDetailToPrint(order: Order) {
 }
 
 /**
- * Export invoice to formatted XLSX
+ * Export invoice to formatted XLSX (Russian standard format)
  */
 export function exportInvoiceToXLSX(order: Order) {
-  const invoiceNumber = `НАК-${order.orderNumber.split('-')[1]}-${new Date().getTime()}`
+  const invoiceNumber = order.orderNumber.split('-')[1]
   const currentDate = new Date().toLocaleDateString('ru-RU')
+  const companyName = 'ProduceFlow' // Грузоотправитель (Shipper)
 
   const workbook = XLSX.utils.book_new()
-  const worksheetData: Record<string, unknown>[] = []
 
-  // Add title and header info
-  const worksheet = XLSX.utils.aoa_to_sheet([
-    ['НАКЛАДНАЯ (Delivery Note)'],
-    [],
-    [`Номер накладной: ${invoiceNumber}`],
-    [`Дата выдачи: ${currentDate}`],
-    [`Номер заказа: ${order.orderNumber}`],
-    [],
-    ['ПОЛУЧАТЕЛЬ:'],
-    [order.customerName],
-    [order.customerType === 'wholesale' ? 'Оптовик' : 'Магазин'],
-    [],
-  ])
-
-  // Add items table header
-  const itemsStartRow = 10
-  const itemsHeaderRow = ['Товар', 'Количество', 'Цена за единицу (SM)', 'Сумма (SM)']
-  const itemsData = order.items.map((item) => [
-    item.productName,
-    item.quantity,
-    item.unitPrice.toFixed(2),
-    item.subtotal.toFixed(2),
-  ])
-
-  // Merge header with items data
+  // Create the invoice data structure
   const allData = [
-    ['НАКЛАДНАЯ (Delivery Note)'],
+    [`НАКЛАДНАЯ  № ${invoiceNumber}`],
     [],
-    [`Номер накладной: ${invoiceNumber}`],
-    [`Дата выдачи: ${currentDate}`],
-    [`Номер заказа: ${order.orderNumber}`],
+    [`Грузоотправитель:`, companyName],
+    [`Грузополучатель:`, order.customerName],
+    [`Основание для отпуска:`, `Заказ № ${order.orderNumber}`],
     [],
-    ['ПОЛУЧАТЕЛЬ:'],
-    [order.customerName],
-    [order.customerType === 'wholesale' ? 'Оптовик' : 'Магазин'],
+    ['№ п/п', 'Наименование товарно-материальных ценностей', 'Ед. изм.', 'Количество', 'Цена, руб.', 'Сумма, руб.'],
+    ...order.items.map((item, index) => [
+      index + 1,
+      item.productName,
+      'шт',
+      item.quantity,
+      item.unitPrice.toFixed(2),
+      item.subtotal.toFixed(2),
+    ]),
     [],
-    itemsHeaderRow,
-    ...itemsData,
+    ['', '', '', 'ИТОГО:', '', order.totalAmount.toFixed(2)],
     [],
-    ['ИТОГО:'],
-    [`Количество позиций: ${order.items.length}`],
-    [`Общее количество товара: ${order.items.reduce((sum, item) => sum + item.quantity, 0)} шт`],
-    [`Сумма к оплате: SM${order.totalAmount.toFixed(2)}`],
-    [],
-    ['СТАТУС ЗАКАЗА:', order.status],
-    ['Дата создания заказа:', order.createdDate],
+    ['Статус:', order.status],
+    ['Дата создания:', order.createdDate],
     ['Срок выполнения:', order.dueDate],
     [],
-    ['Подпись ответственного лица:', '_________________'],
-    ['Дата подписи:', '_________________'],
+    ['Подпись ответственного лица:', '_________________', 'Дата:', '_________________'],
   ]
 
   const dataWorksheet = XLSX.utils.aoa_to_sheet(allData)
