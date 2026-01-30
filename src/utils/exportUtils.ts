@@ -27,7 +27,9 @@ export function exportToCSV(data: unknown[], fileName: string) {
     csv += values.join(',') + '\n'
   })
 
-  downloadFile(csv, `${fileName}.csv`, 'text/csv;charset=utf-8;')
+  // Add UTF-8 BOM to ensure Excel recognizes Cyrillic characters correctly
+  const csvWithBOM = '\uFEFF' + csv
+  downloadFile(csvWithBOM, `${fileName}.csv`, 'text/csv;charset=utf-8')
 }
 
 /**
