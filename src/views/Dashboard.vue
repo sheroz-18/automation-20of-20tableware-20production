@@ -309,7 +309,7 @@ import ModalBase from '../components/ModalBase.vue'
 
 const router = useRouter()
 const modal = useModal()
-const { orders, products, rawMaterials } = useAppState()
+const { orders, products, rawMaterials, financialRecords, productionBatches, inventory } = useAppState()
 const { checkMaterialWarnings, checkOrderWarnings, checkStockPrewarnings } =
   useWarningNotifications()
 
@@ -319,6 +319,25 @@ onMounted(() => {
     checkOrderWarnings(orders.value)
     checkStockPrewarnings(rawMaterials.value)
   }, 1000)
+})
+
+// Calculate dashboard metrics from real data
+const totalRevenue = computed(() => {
+  return orders.value.reduce((sum, order) => sum + order.totalAmount, 0)
+})
+
+const activeOrders = computed(() => {
+  return orders.value.filter(o =>
+    o.status === 'принят' || o.status === 'в производстве'
+  ).length
+})
+
+const totalInventory = computed(() => {
+  return inventory.value.reduce((sum, item) => sum + item.quantity, 0)
+})
+
+const productionCount = computed(() => {
+  return productionBatches.value.filter(b => b.status === 'completed').reduce((sum, b) => sum + b.quantity, 0)
 })
 
 const recentOrders = computed(() => orders.value.slice(0, 3))
