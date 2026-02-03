@@ -340,6 +340,18 @@ const productionCount = computed(() => {
   return productionBatches.value.filter(b => b.status === 'completed').reduce((sum, b) => sum + b.quantity, 0)
 })
 
+const totalIncome = computed(() => {
+  return financialRecords.value.filter(r => r.type === 'income').reduce((sum, r) => sum + r.amount, 0)
+})
+
+const totalExpense = computed(() => {
+  return financialRecords.value.filter(r => r.type === 'expense').reduce((sum, r) => sum + r.amount, 0)
+})
+
+const balance = computed(() => {
+  return totalIncome.value - totalExpense.value
+})
+
 const recentOrders = computed(() => orders.value.slice(0, 3))
 
 const criticalStock = computed(() => {
