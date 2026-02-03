@@ -34,6 +34,7 @@
           <option value="в производстве">В производстве</option>
           <option value="на складе">На складе</option>
           <option value="отправлен">Отправлен</option>
+          <option value="получен">Получен</option>
         </select>
       </div>
       <div class="bg-white rounded-lg border border-slate-200 p-4">
