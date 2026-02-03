@@ -180,6 +180,13 @@
             >
               Накладная
             </button>
+            <button
+              v-if="order.status === 'отправлен'"
+              @click="completeOrder(order)"
+              class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-medium transition"
+            >
+              ✓ Получить
+            </button>
           </div>
         </div>
       </div>
