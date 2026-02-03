@@ -642,6 +642,8 @@ const deleteOrder = () => {
     const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
     if (index !== -1) {
       const orderNumber = modal.selectedItem.value?.orderNumber
+      // Remove corresponding financial records
+      deleteTransactionsByReference(orderNumber!)
       orders.value.splice(index, 1)
       addNotification('success', 'Успешно', `Заказ ${orderNumber} удален`)
     }
