@@ -311,9 +311,12 @@ import { useRouter } from 'vue-router'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
 import { useWarningNotifications } from '../composables/useWarningNotifications'
+import { useOrderManagement } from '../composables/useOrderManagement'
+import { useNotification } from '../composables/useNotification'
 import { formatCurrencyAmount } from '../utils/currency'
 import MetricCard from '../components/MetricCard.vue'
 import ModalBase from '../components/ModalBase.vue'
+import type { Order } from '../types'
 
 const router = useRouter()
 const modal = useModal()
