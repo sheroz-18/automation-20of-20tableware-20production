@@ -599,10 +599,7 @@ const saveOrder = () => {
         } as Order
 
         // If order is now complete/shipped, create a financial record
-        if (
-          formData.value.status === 'отправлен' &&
-          oldStatus !== 'отправлен'
-        ) {
+        if (formData.value.status === 'отправлен' && oldStatus !== 'отправлен') {
           createFinancialRecord(orders.value[index], 'income')
         }
 

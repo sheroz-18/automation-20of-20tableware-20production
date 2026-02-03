@@ -14,21 +14,23 @@
               stroke-width="2"
             >
               <!-- Plate circle -->
-              <circle cx="12" cy="12" r="8" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="12" r="8" stroke-linecap="round" stroke-linejoin="round" />
               <!-- Fork tines -->
-              <line x1="9" y1="8" x2="9" y2="16" stroke-linecap="round"/>
-              <line x1="11" y1="8" x2="11" y2="16" stroke-linecap="round"/>
-              <line x1="13" y1="8" x2="13" y2="16" stroke-linecap="round"/>
+              <line x1="9" y1="8" x2="9" y2="16" stroke-linecap="round" />
+              <line x1="11" y1="8" x2="11" y2="16" stroke-linecap="round" />
+              <line x1="13" y1="8" x2="13" y2="16" stroke-linecap="round" />
               <!-- Fork handle -->
-              <line x1="11" y1="16" x2="11" y2="18" stroke-linecap="round"/>
+              <line x1="11" y1="16" x2="11" y2="18" stroke-linecap="round" />
               <!-- Spoon -->
-              <circle cx="16" cy="9" r="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="16" y1="11" x2="16" y2="18" stroke-linecap="round"/>
+              <circle cx="16" cy="9" r="2" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="16" y1="11" x2="16" y2="18" stroke-linecap="round" />
             </svg>
           </div>
           <div class="min-w-0">
             <h1 class="text-lg sm:text-xl font-bold text-slate-900 truncate">ПосудаПро</h1>
-            <p class="text-xs text-slate-500 hidden sm:block">Управление производством кухонной утвари</p>
+            <p class="text-xs text-slate-500 hidden sm:block">
+              Управление производством кухонной утвари
+            </p>
           </div>
         </div>
 

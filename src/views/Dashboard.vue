@@ -309,7 +309,8 @@ import ModalBase from '../components/ModalBase.vue'
 
 const router = useRouter()
 const modal = useModal()
-const { orders, products, rawMaterials, financialRecords, productionBatches, inventory } = useAppState()
+const { orders, products, rawMaterials, financialRecords, productionBatches, inventory } =
+  useAppState()
 const { checkMaterialWarnings, checkOrderWarnings, checkStockPrewarnings } =
   useWarningNotifications()
 
@@ -327,9 +328,7 @@ const totalRevenue = computed(() => {
 })
 
 const activeOrders = computed(() => {
-  return orders.value.filter(o =>
-    o.status === 'принят' || o.status === 'в производстве'
-  ).length
+  return orders.value.filter((o) => o.status === 'принят' || o.status === 'в производстве').length
 })
 
 const totalInventory = computed(() => {
@@ -337,15 +336,21 @@ const totalInventory = computed(() => {
 })
 
 const productionCount = computed(() => {
-  return productionBatches.value.filter(b => b.status === 'completed').reduce((sum, b) => sum + b.quantity, 0)
+  return productionBatches.value
+    .filter((b) => b.status === 'completed')
+    .reduce((sum, b) => sum + b.quantity, 0)
 })
 
 const totalIncome = computed(() => {
-  return financialRecords.value.filter(r => r.type === 'income').reduce((sum, r) => sum + r.amount, 0)
+  return financialRecords.value
+    .filter((r) => r.type === 'income')
+    .reduce((sum, r) => sum + r.amount, 0)
 })
 
 const totalExpense = computed(() => {
-  return financialRecords.value.filter(r => r.type === 'expense').reduce((sum, r) => sum + r.amount, 0)
+  return financialRecords.value
+    .filter((r) => r.type === 'expense')
+    .reduce((sum, r) => sum + r.amount, 0)
 })
 
 const balance = computed(() => {
