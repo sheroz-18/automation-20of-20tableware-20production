@@ -34,6 +34,7 @@
           <option value="в производстве">В производстве</option>
           <option value="на складе">На складе</option>
           <option value="отправлен">Отправлен</option>
+          <option value="получен">Получен</option>
         </select>
       </div>
       <div class="bg-white rounded-lg border border-slate-200 p-4">
@@ -178,6 +179,13 @@
               class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-medium transition"
             >
               Накладная
+            </button>
+            <button
+              v-if="order.status === 'отправлен'"
+              @click="completeOrder(order)"
+              class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-medium transition"
+            >
+              ✓ Получить
             </button>
           </div>
         </div>
@@ -416,13 +424,16 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
 import { useNotification } from '../composables/useNotification'
+import { useOrderManagement } from '../composables/useOrderManagement'
 import { exportOrdersToCSV, exportOrdersToPrint, exportInvoiceToXLSX } from '../utils/exportUtils'
+import { formatCurrencyAmount } from '../utils/currency'
 import ModalBase from '../components/ModalBase.vue'
 import type { Order } from '../types'
 
 const modal = useModal()
 const { orders, financialRecords, products, productionBatches } = useAppState()
 const { addNotification } = useNotification()
+const { markOrderAsReceived } = useOrderManagement()
 
 const searchQuery = ref('')
 const statusFilter = ref('')
@@ -659,6 +670,7 @@ const getStatusBadge = (status: string) => {
     'в производстве': 'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium',
     'на складе': 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium',
     отправлен: 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium',
+    получен: 'px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium',
   }
   return badges[status] || 'px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-medium'
 }
@@ -685,5 +697,18 @@ const exportToPdf = () => {
   }
   exportOrdersToPrint(filteredOrders.value)
   addNotification('success', 'Экспорт', 'Заказы готовы к печати в PDF')
+}
+
+const completeOrder = (order: Order) => {
+  const success = markOrderAsReceived(order.id)
+  if (success) {
+    addNotification(
+      'success',
+      `Заказ ${order.orderNumber} завершён`,
+      `Сумма ${formatCurrencyAmount(order.totalAmount)} добавлена в доходы`,
+    )
+  } else {
+    addNotification('error', 'Ошибка', 'Не удалось завершить заказ')
+  }
 }
 </script>

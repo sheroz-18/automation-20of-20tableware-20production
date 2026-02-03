@@ -51,18 +51,26 @@
           <div
             v-for="order in recentOrders"
             :key="order.id"
-            class="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-blue-300 transition cursor-pointer"
-            @click="modal.openViewModal(order, 'order')"
+            class="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-blue-300 transition"
           >
-            <div>
+            <div class="flex-1 cursor-pointer" @click="modal.openViewModal(order, 'order')">
               <p class="font-medium text-slate-900">{{ order.orderNumber }}</p>
               <p class="text-sm text-slate-600">
                 {{ order.customerName }} - {{ getTotalItems(order) }} товаров
               </p>
             </div>
-            <span :class="getOrderStatusBadge(order.status)">{{
-              getOrderStatusLabel(order.status)
-            }}</span>
+            <div class="flex items-center gap-2">
+              <span :class="getOrderStatusBadge(order.status)">{{
+                getOrderStatusLabel(order.status)
+              }}</span>
+              <button
+                v-if="order.status !== 'получен' && order.status === 'отправлен'"
+                @click="completeOrder(order)"
+                class="px-3 py-1 bg-green-600 text-white rounded-full text-xs font-medium hover:bg-green-700 transition whitespace-nowrap"
+              >
+                Получить
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -303,9 +311,12 @@ import { useRouter } from 'vue-router'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
 import { useWarningNotifications } from '../composables/useWarningNotifications'
+import { useOrderManagement } from '../composables/useOrderManagement'
+import { useNotification } from '../composables/useNotification'
 import { formatCurrencyAmount } from '../utils/currency'
 import MetricCard from '../components/MetricCard.vue'
 import ModalBase from '../components/ModalBase.vue'
+import type { Order } from '../types'
 
 const router = useRouter()
 const modal = useModal()
@@ -313,6 +324,8 @@ const { orders, products, rawMaterials, financialRecords, productionBatches, inv
   useAppState()
 const { checkMaterialWarnings, checkOrderWarnings, checkStockPrewarnings } =
   useWarningNotifications()
+const { markOrderAsReceived } = useOrderManagement()
+const notification = useNotification()
 
 onMounted(() => {
   setTimeout(() => {
@@ -384,6 +397,7 @@ const getOrderStatusBadge = (status: string) => {
     'в производстве': 'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium',
     'на складе': 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium',
     отправлен: 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium',
+    получен: 'px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium',
   }
   return badges[status] || 'px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium'
 }
@@ -394,6 +408,7 @@ const getOrderStatusLabel = (status: string) => {
     'в производстве': 'В производстве',
     'на складе': 'На складе',
     отправлен: 'Отправлен',
+    получен: 'Получен',
   }
   return labels[status] || 'Неизвестно'
 }
@@ -422,6 +437,18 @@ const navigateToCategory = (category: string) => {
 
 const navigateToFinance = (type: string) => {
   router.push(`/finance?type=${type}`)
+}
+
+const completeOrder = (order: Order) => {
+  const success = markOrderAsReceived(order.id)
+  if (success) {
+    notification.success(
+      `Заказ ${order.orderNumber} завершён`,
+      `Сумма ${formatCurrencyAmount(order.totalAmount)} добавлена в доходы`,
+    )
+  } else {
+    notification.error('Ошибка', 'Не удалось завершить заказ')
+  }
 }
 
 const getModalTitle = () => {
