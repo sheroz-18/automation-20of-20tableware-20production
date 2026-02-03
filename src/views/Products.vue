@@ -402,7 +402,7 @@ import ModalBase from '../components/ModalBase.vue'
 import type { Product } from '../types'
 
 const modal = useModal()
-const { products } = useAppState()
+const { products, inventory } = useAppState()
 
 const searchQuery = ref('')
 const categoryFilter = ref('')
