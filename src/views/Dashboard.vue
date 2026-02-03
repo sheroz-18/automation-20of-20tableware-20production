@@ -51,18 +51,26 @@
           <div
             v-for="order in recentOrders"
             :key="order.id"
-            class="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-blue-300 transition cursor-pointer"
-            @click="modal.openViewModal(order, 'order')"
+            class="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-blue-300 transition"
           >
-            <div>
+            <div class="flex-1 cursor-pointer" @click="modal.openViewModal(order, 'order')">
               <p class="font-medium text-slate-900">{{ order.orderNumber }}</p>
               <p class="text-sm text-slate-600">
                 {{ order.customerName }} - {{ getTotalItems(order) }} товаров
               </p>
             </div>
-            <span :class="getOrderStatusBadge(order.status)">{{
-              getOrderStatusLabel(order.status)
-            }}</span>
+            <div class="flex items-center gap-2">
+              <span :class="getOrderStatusBadge(order.status)">{{
+                getOrderStatusLabel(order.status)
+              }}</span>
+              <button
+                v-if="order.status !== 'получен' && order.status === 'отправлен'"
+                @click="completeOrder(order)"
+                class="px-3 py-1 bg-green-600 text-white rounded-full text-xs font-medium hover:bg-green-700 transition whitespace-nowrap"
+              >
+                Получить
+              </button>
+            </div>
           </div>
         </div>
       </div>
