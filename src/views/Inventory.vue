@@ -327,6 +327,7 @@ import type { InventoryItem } from '../types'
 
 const modal = useModal()
 const { inventory, products } = useAppState()
+const { createInventoryExpense, createTransaction } = useFinancialTransaction()
 
 const searchQuery = ref('')
 const statusFilter = ref('')
