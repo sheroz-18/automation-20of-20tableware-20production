@@ -324,6 +324,8 @@ const { orders, products, rawMaterials, financialRecords, productionBatches, inv
   useAppState()
 const { checkMaterialWarnings, checkOrderWarnings, checkStockPrewarnings } =
   useWarningNotifications()
+const { markOrderAsReceived } = useOrderManagement()
+const notification = useNotification()
 
 onMounted(() => {
   setTimeout(() => {
