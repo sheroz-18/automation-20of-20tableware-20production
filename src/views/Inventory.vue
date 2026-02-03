@@ -391,12 +391,56 @@ const saveInventory = () => {
         variance: formData.value.variance || 0,
       }
       inventory.value.push(newItem)
+
+      // Create corresponding product if it doesn't exist
+      const productExists = products.value.find((p) => p.name === formData.value.productName)
+      if (!productExists) {
+        const newProduct = {
+          id: formData.value.productId || `prod-${Date.now()}`,
+          name: formData.value.productName!,
+          sku: `SKU-${Date.now()}`,
+          category: 'Другое',
+          quantity: formData.value.quantity || 0,
+          reorderLevel: 100,
+          unitCost: 0,
+          image: '',
+          material: '',
+          size: '',
+          weight: 0,
+          status:
+            (formData.value.quantity || 0) === 0
+              ? 'out_of_stock'
+              : (formData.value.quantity || 0) < 100
+                ? 'low_stock'
+                : 'in_stock',
+          lastUpdated: new Date().toISOString().split('T')[0],
+        }
+        products.value.push(newProduct)
+        newItem.productId = newProduct.id
+      }
     } else if (modal.isEditModal.value && modal.selectedItem.value) {
       const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
       if (index !== -1) {
+        const newQuantity = formData.value.quantity || 0
         inventory.value[index] = {
           ...modal.selectedItem.value,
           ...formData.value,
+        }
+
+        // Update corresponding product quantity
+        if (inventory.value[index].productId) {
+          const prodIndex = products.value.findIndex(
+            (p) => p.id === inventory.value[index].productId,
+          )
+          if (prodIndex !== -1) {
+            products.value[prodIndex].quantity = newQuantity
+            products.value[prodIndex].status =
+              newQuantity === 0
+                ? 'out_of_stock'
+                : newQuantity < products.value[prodIndex].reorderLevel
+                  ? 'low_stock'
+                  : 'in_stock'
+          }
         }
       }
     }
