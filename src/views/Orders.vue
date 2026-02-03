@@ -623,9 +623,9 @@ const saveOrder = () => {
         createProductionBatches(newOrder)
       }
 
-      // If order is created with 'отправлен' status, create financial record
-      if (newOrder.status === 'отправлен') {
-        createFinancialRecord(newOrder, 'income')
+      // If order is created with 'получен' status, create income record
+      if (newOrder.status === 'получен') {
+        createFinancialRecord(newOrder)
       }
 
       addNotification('success', 'Успешно', 'Заказ создан')
