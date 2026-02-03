@@ -433,6 +433,7 @@ import type { Order } from '../types'
 const modal = useModal()
 const { orders, financialRecords, products, productionBatches } = useAppState()
 const { addNotification } = useNotification()
+const { markOrderAsReceived } = useOrderManagement()
 
 const searchQuery = ref('')
 const statusFilter = ref('')
