@@ -444,7 +444,7 @@ const completeOrder = (order: Order) => {
   if (success) {
     notification.success(
       `Заказ ${order.orderNumber} завершён`,
-      `Сумма ${formatCurrencyAmount(order.totalAmount)} добавлена в доходы`
+      `Сумма ${formatCurrencyAmount(order.totalAmount)} добавлена в доходы`,
     )
   } else {
     notification.error('Ошибка', 'Не удалось завершить заказ')

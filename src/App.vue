@@ -7,25 +7,49 @@
             class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0 relative overflow-hidden shadow-md"
           >
             <!-- Modern elegant dishware logo -->
-            <svg
-              class="w-5 h-5 sm:w-6 sm:h-6 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" viewBox="0 0 24 24">
               <!-- Abstract elegant plate silhouette -->
               <ellipse cx="12" cy="12" rx="8" ry="7.5" fill="currentColor" opacity="0.15" />
               <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.3" />
 
               <!-- Elegant fork (left) -->
               <g transform="translate(5, 9)">
-                <path d="M 2 0 L 2 4 M 3.5 0 L 3.5 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M 1.5 4 L 4 4 Q 2.75 5.2 2.75 6.5" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M 2 0 L 2 4 M 3.5 0 L 3.5 4"
+                  stroke="currentColor"
+                  stroke-width="1.1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M 1.5 4 L 4 4 Q 2.75 5.2 2.75 6.5"
+                  stroke="currentColor"
+                  stroke-width="1.1"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </g>
 
               <!-- Modern knife (right) -->
               <g transform="translate(13, 8.5)">
-                <path d="M 0.5 0 L 2 3 L 2.2 5 Q 1.2 5.5 0.5 5.5 Q 0.3 3.5 0.5 0" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-                <line x1="0.5" y1="0" x2="2" y2="3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" />
+                <path
+                  d="M 0.5 0 L 2 3 L 2.2 5 Q 1.2 5.5 0.5 5.5 Q 0.3 3.5 0.5 0"
+                  stroke="currentColor"
+                  stroke-width="1.1"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <line
+                  x1="0.5"
+                  y1="0"
+                  x2="2"
+                  y2="3"
+                  stroke="currentColor"
+                  stroke-width="1.1"
+                  stroke-linecap="round"
+                />
               </g>
 
               <!-- Center dot accent -->

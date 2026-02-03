@@ -25,10 +25,7 @@
               </div>
             </div>
             <!-- Progress ring background -->
-            <svg
-              class="absolute inset-0 w-16 h-16 -rotate-90"
-              viewBox="0 0 64 64"
-            >
+            <svg class="absolute inset-0 w-16 h-16 -rotate-90" viewBox="0 0 64 64">
               <circle
                 cx="32"
                 cy="32"
@@ -82,7 +79,13 @@
       >
         <!-- Icon -->
         <div :class="getIconClass(status.label)" class="inline-block mb-3 p-2 rounded-lg">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
             <template v-if="status.label === 'Принят'">
               <path d="M9 11l3 3L22 4"></path>
               <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -92,10 +95,14 @@
               <circle cx="12" cy="12" r="10"></circle>
             </template>
             <template v-else-if="status.label === 'На складе'">
-              <path d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+              <path
+                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+              ></path>
             </template>
             <template v-else-if="status.label === 'Отправлен'">
-              <path d="M18 8h-1V6c0-.55-.45-1-1-1H8c-.55 0-1 .45-1 1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-3-2v2H9V6h6zM6 12h12v8H6v-8z"></path>
+              <path
+                d="M18 8h-1V6c0-.55-.45-1-1-1H8c-.55 0-1 .45-1 1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-3-2v2H9V6h6zM6 12h12v8H6v-8z"
+              ></path>
             </template>
           </svg>
         </div>
