@@ -421,7 +421,7 @@ import ModalBase from '../components/ModalBase.vue'
 import type { Order } from '../types'
 
 const modal = useModal()
-const { orders } = useAppState()
+const { orders, financialRecords } = useAppState()
 const { addNotification } = useNotification()
 
 const searchQuery = ref('')
