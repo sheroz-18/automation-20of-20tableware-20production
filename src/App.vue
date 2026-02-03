@@ -110,7 +110,7 @@
       <div class="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 mb-8">
           <div>
-            <h3 class="font-semibold text-slate-900 mb-4">ProduceFlow</h3>
+            <h3 class="font-semibold text-slate-900 mb-4">ПосудаПро</h3>
             <p class="text-sm text-slate-600">
               Полная автоматизация производства посуды и кухонной утвари
             </p>
