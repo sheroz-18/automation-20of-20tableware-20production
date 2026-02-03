@@ -397,6 +397,7 @@ const getOrderStatusBadge = (status: string) => {
     'в производстве': 'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium',
     'на складе': 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium',
     отправлен: 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium',
+    получен: 'px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium',
   }
   return badges[status] || 'px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium'
 }
@@ -407,6 +408,7 @@ const getOrderStatusLabel = (status: string) => {
     'в производстве': 'В производстве',
     'на складе': 'На складе',
     отправлен: 'Отправлен',
+    получен: 'Получен',
   }
   return labels[status] || 'Неизвестно'
 }
