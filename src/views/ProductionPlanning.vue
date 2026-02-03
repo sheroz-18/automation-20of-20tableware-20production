@@ -469,7 +469,10 @@ const saveBatch = () => {
       productionBatches.value.push(newBatch)
 
       // Create production expense record when batch is created
-      const productionCost = calculateProductionCost(formData.value.productId, formData.value.quantity || 0)
+      const productionCost = calculateProductionCost(
+        formData.value.productId,
+        formData.value.quantity || 0,
+      )
       if (productionCost > 0) {
         createProductionExpense(newBatch.batchNumber, productionCost, newBatch.productName)
       }
@@ -487,7 +490,10 @@ const saveBatch = () => {
 
         // If batch status changed to 'completed', create additional completion record
         if (formData.value.status === 'completed' && oldStatus !== 'completed') {
-          const completionCost = calculateProductionCost(formData.value.productId || modal.selectedItem.value.productId, 0.1)
+          const completionCost = calculateProductionCost(
+            formData.value.productId || modal.selectedItem.value.productId,
+            0.1,
+          )
           if (completionCost > 0) {
             createProductionExpense(
               productionBatches.value[index].batchNumber,
