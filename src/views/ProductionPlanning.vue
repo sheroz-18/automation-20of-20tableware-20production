@@ -354,7 +354,9 @@ import ModalBase from '../components/ModalBase.vue'
 import type { ProductionBatch, ProductionStage } from '../types'
 
 const modal = useModal()
-const { products, productionBatches } = useAppState()
+const { products, productionBatches, rawMaterials } = useAppState()
+const { createProductionExpense, transactionExists, deleteTransactionsByReference } =
+  useFinancialTransaction()
 
 const searchQuery = ref('')
 const statusFilter = ref('')
