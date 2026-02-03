@@ -370,6 +370,7 @@
             <option value="в производстве">В производстве</option>
             <option value="на складе">На складе</option>
             <option value="отправлен">Отправлен</option>
+            <option value="получен">Получен (Оплачено)</option>
           </select>
         </div>
 
