@@ -535,6 +535,45 @@ const createFinancialRecord = (order: Order, type: 'income' | 'expense') => {
   }
 }
 
+const createProductionBatches = (order: Order) => {
+  // Create a production batch for each unique product in the order
+  order.items.forEach((item) => {
+    const existingBatch = productionBatches.value.find(
+      (b) => b.productId === item.productId && b.status !== 'completed',
+    )
+
+    if (!existingBatch) {
+      const product = products.value.find((p) => p.id === item.productId)
+      const newBatchNumber = `BATCH-${new Date().getFullYear()}-${String(productionBatches.value.length + 1).padStart(3, '0')}`
+
+      const stages = [
+        { stageNumber: 1, stageName: 'подготовка сырья', completed: false },
+        { stageNumber: 2, stageName: 'формовка', completed: false },
+        { stageNumber: 3, stageName: 'обжиг/обработка', completed: false },
+        { stageNumber: 4, stageName: 'упаковка', completed: false },
+        { stageNumber: 5, stageName: 'готовность', completed: false },
+      ]
+
+      const newBatch = {
+        id: `batch-${Date.now()}-${item.productId}`,
+        batchNumber: newBatchNumber,
+        productId: item.productId,
+        productName: item.productName,
+        quantity: item.quantity,
+        status: 'in_progress',
+        startDate: new Date().toISOString().split('T')[0],
+        endDate: '',
+        createdDate: new Date().toISOString().split('T')[0],
+        category: product?.category || '',
+        currentStage: 1,
+        stages: stages,
+      }
+
+      productionBatches.value.push(newBatch)
+    }
+  })
+}
+
 const saveOrder = () => {
   try {
     if (!formData.value.orderNumber?.trim()) {
