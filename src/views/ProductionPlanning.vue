@@ -508,6 +508,9 @@ const deleteBatch = () => {
   try {
     const index = productionBatches.value.findIndex((b) => b.id === modal.selectedItem.value?.id)
     if (index !== -1) {
+      const batchNumber = productionBatches.value[index].batchNumber
+      // Remove corresponding financial records
+      deleteTransactionsByReference(batchNumber)
       productionBatches.value.splice(index, 1)
     }
     modal.closeModal()
