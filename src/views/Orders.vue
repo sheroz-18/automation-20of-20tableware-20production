@@ -435,6 +435,8 @@ const modal = useModal()
 const { orders, financialRecords, products, productionBatches } = useAppState()
 const { addNotification } = useNotification()
 const { markOrderAsReceived } = useOrderManagement()
+const { createIncomeTransaction, transactionExists, deleteTransactionsByReference } =
+  useFinancialTransaction()
 
 const searchQuery = ref('')
 const statusFilter = ref('')
