@@ -622,6 +622,11 @@ const saveOrder = () => {
       }
       orders.value.push(newOrder)
 
+      // Create production batches if order has items
+      if (newOrder.items && newOrder.items.length > 0) {
+        createProductionBatches(newOrder)
+      }
+
       // If order is created with 'отправлен' status, create financial record
       if (newOrder.status === 'отправлен') {
         createFinancialRecord(newOrder, 'income')
