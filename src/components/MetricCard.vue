@@ -59,21 +59,25 @@ const changeTextColor = computed(() => {
 
 const IconComponent = computed(() => {
   const icons: Record<string, any> = {
+    // Revenue - Trending Up Chart
     'trending-up': defineComponent({
       template:
-        '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/><path d="M20 3h-7v2h5.59L8 14.59v2.82h2.82l9.59-9.59V10h2V3z"/></svg>',
+        '<svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 17"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>',
     }),
+    // Orders - Shopping Bag
     package: defineComponent({
       template:
-        '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>',
+        '<svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>',
     }),
+    // Inventory - Warehouse/Box Stack
     box: defineComponent({
       template:
-        '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M21 16v-5h-1V4c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v7H3v5c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-2-7h-1V4h4v5zM6 4h4v5H6V4zm13 12H5v-5h14v5z"/><path d="M8 15h2v2H8zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>',
+        '<svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>',
     }),
+    // Production - Zap/Lightning
     zap: defineComponent({
       template:
-        '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/><path d="M6 13l7-9-1 6h8l-9 11 1-8H6z"/></svg>',
+        '<svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>',
     }),
   }
   return icons[props.icon] || icons['trending-up']
