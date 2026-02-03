@@ -4,30 +4,32 @@
       <div class="max-w-7xl mx-auto px-3 sm:px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <div
-            class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg flex items-center justify-center flex-shrink-0 relative overflow-hidden"
+            class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0 relative overflow-hidden shadow-md"
           >
-            <!-- Modern minimal dishware logo -->
+            <!-- Modern elegant dishware logo -->
             <svg
               class="w-5 h-5 sm:w-6 sm:h-6 text-white"
-              fill="currentColor"
+              fill="none"
               viewBox="0 0 24 24"
             >
-              <!-- Elegant plate with minimalist design -->
-              <circle cx="12" cy="12" r="9" opacity="0.3" />
-              <!-- Main plate circle -->
-              <circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.2" />
-              <!-- Fork on left -->
-              <g transform="translate(6, 10)">
-                <line x1="1" y1="0" x2="1" y2="4" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
-                <line x1="2.5" y1="0" x2="2.5" y2="4" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
-                <path d="M 0.5 4 L 3 4 Q 1.75 5 1.75 6" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+              <!-- Abstract elegant plate silhouette -->
+              <ellipse cx="12" cy="12" rx="8" ry="7.5" fill="currentColor" opacity="0.15" />
+              <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.3" />
+
+              <!-- Elegant fork (left) -->
+              <g transform="translate(5, 9)">
+                <path d="M 2 0 L 2 4 M 3.5 0 L 3.5 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M 1.5 4 L 4 4 Q 2.75 5.2 2.75 6.5" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round" />
               </g>
-              <!-- Knife on right (minimalist) -->
-              <g transform="translate(12.5, 9)">
-                <path d="M 0 0 L 3 3 M 3 3 L 3.2 4.5 Q 2 5 1 5 Q 0.5 3.5 0 0" stroke="currentColor" fill="none" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" />
+
+              <!-- Modern knife (right) -->
+              <g transform="translate(13, 8.5)">
+                <path d="M 0.5 0 L 2 3 L 2.2 5 Q 1.2 5.5 0.5 5.5 Q 0.3 3.5 0.5 0" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                <line x1="0.5" y1="0" x2="2" y2="3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" />
               </g>
-              <!-- Decorative dot -->
-              <circle cx="12" cy="17" r="0.8" fill="currentColor" opacity="0.6" />
+
+              <!-- Center dot accent -->
+              <circle cx="12" cy="12" r="0.9" fill="currentColor" opacity="0.7" />
             </svg>
           </div>
           <div class="min-w-0">
