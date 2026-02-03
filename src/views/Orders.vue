@@ -513,6 +513,28 @@ const openCreateOrderModal = () => {
   modal.openCreateModal('order')
 }
 
+const createFinancialRecord = (order: Order, type: 'income' | 'expense') => {
+  const existingRecord = financialRecords.value.find(
+    (r) => r.reference === order.orderNumber && r.type === type,
+  )
+
+  if (!existingRecord) {
+    const newRecord = {
+      id: `fin-${Date.now()}`,
+      date: new Date().toISOString().split('T')[0],
+      description:
+        type === 'income'
+          ? `Заказ ${order.orderNumber} доставлен`
+          : `Расходы на заказ ${order.orderNumber}`,
+      type: type,
+      amount: order.totalAmount,
+      category: 'Продажи',
+      reference: order.orderNumber,
+    }
+    financialRecords.value.push(newRecord)
+  }
+}
+
 const saveOrder = () => {
   try {
     if (!formData.value.orderNumber?.trim()) {
@@ -531,10 +553,20 @@ const saveOrder = () => {
     if (modal.isEditModal.value && modal.selectedItem.value) {
       const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
       if (index !== -1) {
+        const oldStatus = orders.value[index].status
         orders.value[index] = {
           ...modal.selectedItem.value,
           ...formData.value,
         } as Order
+
+        // If order is now complete/shipped, create a financial record
+        if (
+          formData.value.status === 'отправлен' &&
+          oldStatus !== 'отправлен'
+        ) {
+          createFinancialRecord(orders.value[index], 'income')
+        }
+
         addNotification('success', 'Успешно', 'Заказ обновлен')
       }
     } else if (modal.isCreateModal.value) {
@@ -550,6 +582,12 @@ const saveOrder = () => {
         items: formData.value.items || [],
       }
       orders.value.push(newOrder)
+
+      // If order is created with 'отправлен' status, create financial record
+      if (newOrder.status === 'отправлен') {
+        createFinancialRecord(newOrder, 'income')
+      }
+
       addNotification('success', 'Успешно', 'Заказ создан')
     }
     modal.closeModal()
