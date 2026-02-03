@@ -697,4 +697,17 @@ const exportToPdf = () => {
   exportOrdersToPrint(filteredOrders.value)
   addNotification('success', 'Экспорт', 'Заказы готовы к печати в PDF')
 }
+
+const completeOrder = (order: Order) => {
+  const success = markOrderAsReceived(order.id)
+  if (success) {
+    addNotification(
+      'success',
+      `Заказ ${order.orderNumber} завершён`,
+      `Сумма ${formatCurrencyAmount(order.totalAmount)} добавлена в доходы`
+    )
+  } else {
+    addNotification('error', 'Ошибка', 'Не удалось завершить заказ')
+  }
+}
 </script>
