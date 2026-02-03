@@ -11,28 +11,28 @@
       <MetricCard
         icon="trending-up"
         label="Общая выручка"
-        :value="formatCurrencyAmount(4651)"
+        :value="formatCurrencyAmount(totalRevenue)"
         change="+12.5%"
         changeType="positive"
       />
       <MetricCard
         icon="package"
         label="Активные заказы"
-        value="5"
+        :value="String(activeOrders)"
         change="+8.3%"
         changeType="positive"
       />
       <MetricCard
         icon="box"
         label="На складе единиц"
-        value="3,815"
+        :value="String(totalInventory)"
         change="-5.2%"
         changeType="negative"
       />
       <MetricCard
         icon="zap"
         label="Произведено сегодня"
-        value="2,420"
+        :value="String(productionCount)"
         change="+15.7%"
         changeType="positive"
       />
