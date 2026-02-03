@@ -670,6 +670,7 @@ const getStatusBadge = (status: string) => {
     'в производстве': 'px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium',
     'на складе': 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium',
     отправлен: 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium',
+    получен: 'px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium',
   }
   return badges[status] || 'px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-medium'
 }
