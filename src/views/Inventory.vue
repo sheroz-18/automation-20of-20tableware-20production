@@ -454,7 +454,19 @@ const deleteInventory = () => {
   try {
     const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
     if (index !== -1) {
+      const productId = inventory.value[index].productId
       inventory.value.splice(index, 1)
+
+      // Optionally delete corresponding product if no other inventory items reference it
+      if (productId) {
+        const otherInventoryItems = inventory.value.filter((inv) => inv.productId === productId)
+        if (otherInventoryItems.length === 0) {
+          const prodIndex = products.value.findIndex((p) => p.id === productId)
+          if (prodIndex !== -1) {
+            products.value.splice(prodIndex, 1)
+          }
+        }
+      }
     }
     modal.closeModal()
   } catch (error) {
