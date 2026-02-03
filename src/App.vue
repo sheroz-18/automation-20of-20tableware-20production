@@ -167,8 +167,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useNotification } from './composables/useNotification'
+import { useAppState } from './composables/useAppState'
 import NotificationToast from './components/NotificationToast.vue'
 import NotificationPanel from './components/NotificationPanel.vue'
+
+// Initialize app state (loads data from localStorage on startup)
+useAppState()
 
 const { getUnreadCount } = useNotification()
 const showNotificationPanel = ref(false)
