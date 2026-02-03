@@ -4,25 +4,25 @@
       <div class="max-w-7xl mx-auto px-3 sm:px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <div
-            class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0"
+            class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center flex-shrink-0"
           >
             <svg
               class="w-5 h-5 sm:w-6 sm:h-6 text-white"
-              fill="none"
-              stroke="currentColor"
+              fill="currentColor"
               viewBox="0 0 24 24"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19.428 15.428a2 2 0 00-1.414-.586h-.028a2 2 0 00-1.414.586m0 0L21 21m-2.428-2.428l6.868-6.868a2 2 0 00-2.828-2.828l-6.868 6.868m0 0L9 12m0 0l2.428 2.428m0 0l6.868-6.868"
-              />
+              <!-- Plate with fork and spoon -->
+              <circle cx="12" cy="12" r="9" stroke="white" stroke-width="1.5" fill="none"/>
+              <!-- Fork -->
+              <path d="M8 8V16M7.5 8H8.5M7 10H9M7 12H9M7 14H9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Spoon -->
+              <ellipse cx="15" cy="8.5" rx="1.5" ry="2" fill="white"/>
+              <path d="M15 10.5V16" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
           </div>
           <div class="min-w-0">
-            <h1 class="text-lg sm:text-xl font-bold text-slate-900 truncate">ProduceFlow</h1>
-            <p class="text-xs text-slate-500 hidden sm:block">Автоматизация производства посуды</p>
+            <h1 class="text-lg sm:text-xl font-bold text-slate-900 truncate">ПосудаПро</h1>
+            <p class="text-xs text-slate-500 hidden sm:block">Управление производством кухонной утвари</p>
           </div>
         </div>
 
