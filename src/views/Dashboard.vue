@@ -439,6 +439,18 @@ const navigateToFinance = (type: string) => {
   router.push(`/finance?type=${type}`)
 }
 
+const completeOrder = (order: Order) => {
+  const success = markOrderAsReceived(order.id)
+  if (success) {
+    notification.success(
+      `Заказ ${order.orderNumber} завершён`,
+      `Сумма ${formatCurrencyAmount(order.totalAmount)} добавлена в доходы`
+    )
+  } else {
+    notification.error('Ошибка', 'Не удалось завершить заказ')
+  }
+}
+
 const getModalTitle = () => {
   if (modal.contentType.value === 'order') return 'Информация о заказе'
   if (modal.contentType.value === 'product') return 'Информация о товаре'
