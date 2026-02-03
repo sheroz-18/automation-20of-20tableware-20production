@@ -4,26 +4,30 @@
       <div class="max-w-7xl mx-auto px-3 sm:px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <div
-            class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center flex-shrink-0"
+            class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg flex items-center justify-center flex-shrink-0 relative overflow-hidden"
           >
+            <!-- Modern minimal dishware logo -->
             <svg
               class="w-5 h-5 sm:w-6 sm:h-6 text-white"
-              fill="none"
-              stroke="currentColor"
+              fill="currentColor"
               viewBox="0 0 24 24"
-              stroke-width="2"
             >
-              <!-- Plate circle -->
-              <circle cx="12" cy="12" r="8" stroke-linecap="round" stroke-linejoin="round" />
-              <!-- Fork tines -->
-              <line x1="9" y1="8" x2="9" y2="16" stroke-linecap="round" />
-              <line x1="11" y1="8" x2="11" y2="16" stroke-linecap="round" />
-              <line x1="13" y1="8" x2="13" y2="16" stroke-linecap="round" />
-              <!-- Fork handle -->
-              <line x1="11" y1="16" x2="11" y2="18" stroke-linecap="round" />
-              <!-- Spoon -->
-              <circle cx="16" cy="9" r="2" stroke-linecap="round" stroke-linejoin="round" />
-              <line x1="16" y1="11" x2="16" y2="18" stroke-linecap="round" />
+              <!-- Elegant plate with minimalist design -->
+              <circle cx="12" cy="12" r="9" opacity="0.3" />
+              <!-- Main plate circle -->
+              <circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.2" />
+              <!-- Fork on left -->
+              <g transform="translate(6, 10)">
+                <line x1="1" y1="0" x2="1" y2="4" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+                <line x1="2.5" y1="0" x2="2.5" y2="4" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+                <path d="M 0.5 4 L 3 4 Q 1.75 5 1.75 6" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+              <!-- Knife on right (minimalist) -->
+              <g transform="translate(12.5, 9)">
+                <path d="M 0 0 L 3 3 M 3 3 L 3.2 4.5 Q 2 5 1 5 Q 0.5 3.5 0 0" stroke="currentColor" fill="none" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+              <!-- Decorative dot -->
+              <circle cx="12" cy="17" r="0.8" fill="currentColor" opacity="0.6" />
             </svg>
           </div>
           <div class="min-w-0">
