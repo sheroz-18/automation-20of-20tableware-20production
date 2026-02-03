@@ -349,6 +349,7 @@
 import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
+import { useFinancialTransaction } from '../composables/useFinancialTransaction'
 import ModalBase from '../components/ModalBase.vue'
 import type { ProductionBatch, ProductionStage } from '../types'
 
