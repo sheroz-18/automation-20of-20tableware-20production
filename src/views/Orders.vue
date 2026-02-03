@@ -690,15 +690,24 @@ const exportToPdf = () => {
 }
 
 const completeOrder = (order: Order) => {
-  const success = markOrderAsReceived(order.id)
-  if (success) {
-    addNotification(
-      'success',
-      `Заказ ${order.orderNumber} завершён`,
-      `Сумма ${formatCurrencyAmount(order.totalAmount)} добавлена в доходы`,
-    )
-  } else {
-    addNotification('error', 'Ошибка', 'Не удалось завершить заказ')
+  const index = orders.value.findIndex((o) => o.id === order.id)
+  if (index === -1) {
+    addNotification('error', 'Ошибка', 'Заказ не найден')
+    return
   }
+
+  // Update order status
+  orders.value[index].status = 'получен'
+
+  // Create income transaction if not exists
+  if (!transactionExists(order.orderNumber, 'income')) {
+    createIncomeTransaction(order.orderNumber, order.totalAmount, order.customerName)
+  }
+
+  addNotification(
+    'success',
+    `Заказ ${order.orderNumber} завершён`,
+    `Сумма ${formatCurrencyAmount(order.totalAmount)} добавлена в доходы`,
+  )
 }
 </script>
