@@ -156,14 +156,68 @@ const statusCounts = computed(() => {
 
 const totalOrders = computed(() => props.orders.length)
 
-const maxCount = computed(() => Math.max(...statusCounts.value.map((s) => s.count), 5))
-
-const getBarHeight = (count: number) => {
-  const percentage = (count / maxCount.value) * 100
-  return `${Math.max(percentage, 10)}%`
+const getPercentage = (count: number) => {
+  if (totalOrders.value === 0) return 0
+  return Math.round((count / totalOrders.value) * 100)
 }
 
-const getBarColor = (label: string) => {
+const getCircumference = (count: number) => {
+  const percentage = getPercentage(count)
+  const circumference = 175.93
+  return (percentage / 100) * circumference
+}
+
+const getCircleClass = (label: string) => {
+  const colors: Record<string, string> = {
+    Принят: 'border-blue-500 bg-blue-50',
+    'В производстве': 'border-orange-500 bg-orange-50',
+    'На складе': 'border-purple-500 bg-purple-50',
+    Отправлен: 'border-green-500 bg-green-50',
+  }
+  return colors[label] || 'border-slate-500 bg-slate-50'
+}
+
+const getCircleColor = (label: string) => {
+  const colors: Record<string, string> = {
+    Принят: '#3b82f6',
+    'В производстве': '#f97316',
+    'На складе': '#a855f7',
+    Отправлен: '#22c55e',
+  }
+  return colors[label] || '#64748b'
+}
+
+const getCircleBackgroundColor = (label: string) => {
+  const colors: Record<string, string> = {
+    Принят: '#3b82f6',
+    'В производстве': '#f97316',
+    'На складе': '#a855f7',
+    Отправлен: '#22c55e',
+  }
+  return colors[label] || '#64748b'
+}
+
+const getCardClass = (label: string) => {
+  const colors: Record<string, string> = {
+    Принят: 'bg-blue-50 border border-blue-200',
+    'В производстве': 'bg-orange-50 border border-orange-200',
+    'На складе': 'bg-purple-50 border border-purple-200',
+    Отправлен: 'bg-green-50 border border-green-200',
+  }
+  return colors[label] || 'bg-slate-50 border border-slate-200'
+}
+
+const getIconClass = (label: string) => {
+  const colors: Record<string, string> = {
+    Принят: 'bg-blue-200 text-blue-600',
+    'В производстве': 'bg-orange-200 text-orange-600',
+    'На складе': 'bg-purple-200 text-purple-600',
+    Отправлен: 'bg-green-200 text-green-600',
+  }
+  return colors[label] || 'bg-slate-200 text-slate-600'
+}
+
+const getProgressBarColor = (label: string) => {
   const colors: Record<string, string> = {
     Принят: 'bg-blue-500',
     'В производстве': 'bg-orange-500',
