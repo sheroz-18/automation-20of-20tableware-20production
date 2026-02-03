@@ -402,7 +402,7 @@ import ModalBase from '../components/ModalBase.vue'
 import type { Product } from '../types'
 
 const modal = useModal()
-const { products } = useAppState()
+const { products, inventory } = useAppState()
 
 const searchQuery = ref('')
 const categoryFilter = ref('')
@@ -483,18 +483,42 @@ const saveProduct = () => {
         lastUpdated: new Date().toISOString().split('T')[0],
       }
       products.value.push(newProduct)
+
+      // Auto-create inventory item for new product
+      const inventoryItem = {
+        id: `inv-${newProduct.id}`,
+        productId: newProduct.id,
+        productName: newProduct.name,
+        quantity: newProduct.quantity || 0,
+        location: 'Склад А - Стеллаж 1',
+        lastCounted: new Date().toISOString().split('T')[0],
+        variance: 0,
+      }
+      inventory.value.push(inventoryItem)
     } else if (modal.isEditModal.value && modal.selectedItem.value) {
       const index = products.value.findIndex((p) => p.id === modal.selectedItem.value?.id)
       if (index !== -1) {
+        const oldQuantity = products.value[index].quantity
+        const newQuantity = formData.value.quantity || 0
+
         products.value[index] = {
           ...modal.selectedItem.value,
           ...formData.value,
           status:
-            formData.value.quantity === 0
+            newQuantity === 0
               ? 'out_of_stock'
-              : formData.value.quantity! < formData.value.reorderLevel!
+              : newQuantity < formData.value.reorderLevel!
                 ? 'low_stock'
                 : 'in_stock',
+        }
+
+        // Update corresponding inventory item
+        const invIndex = inventory.value.findIndex(
+          (inv) => inv.productId === modal.selectedItem.value?.id,
+        )
+        if (invIndex !== -1) {
+          inventory.value[invIndex].quantity = newQuantity
+          inventory.value[invIndex].lastCounted = new Date().toISOString().split('T')[0]
         }
       }
     }
@@ -507,7 +531,14 @@ const saveProduct = () => {
 const deleteProduct = () => {
   const index = products.value.findIndex((p) => p.id === modal.selectedItem.value?.id)
   if (index !== -1) {
+    const productId = products.value[index].id
     products.value.splice(index, 1)
+
+    // Also remove corresponding inventory item
+    const invIndex = inventory.value.findIndex((inv) => inv.productId === productId)
+    if (invIndex !== -1) {
+      inventory.value.splice(invIndex, 1)
+    }
   }
   modal.closeModal()
 }

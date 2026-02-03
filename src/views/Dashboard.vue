@@ -11,28 +11,28 @@
       <MetricCard
         icon="trending-up"
         label="Общая выручка"
-        :value="formatCurrencyAmount(4651)"
+        :value="formatCurrencyAmount(totalRevenue)"
         change="+12.5%"
         changeType="positive"
       />
       <MetricCard
         icon="package"
         label="Активные заказы"
-        value="5"
+        :value="String(activeOrders)"
         change="+8.3%"
         changeType="positive"
       />
       <MetricCard
         icon="box"
         label="На складе единиц"
-        value="3,815"
+        :value="String(totalInventory)"
         change="-5.2%"
         changeType="negative"
       />
       <MetricCard
         icon="zap"
         label="Произведено сегодня"
-        value="2,420"
+        :value="String(productionCount)"
         change="+15.7%"
         changeType="positive"
       />
@@ -157,7 +157,7 @@
           >
             <div>
               <p class="text-sm text-green-700">Доход от продаж</p>
-              <p class="font-semibold text-green-900">{{ formatCurrencyAmount(3681) }}</p>
+              <p class="font-semibold text-green-900">{{ formatCurrencyAmount(totalIncome) }}</p>
             </div>
             <svg
               class="w-8 h-8 text-green-600"
@@ -180,7 +180,7 @@
           >
             <div>
               <p class="text-sm text-red-700">Расходы</p>
-              <p class="font-semibold text-red-900">{{ formatCurrencyAmount(6650) }}</p>
+              <p class="font-semibold text-red-900">{{ formatCurrencyAmount(totalExpense) }}</p>
             </div>
             <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -198,7 +198,7 @@
           >
             <div>
               <p class="text-sm text-slate-700">Баланс</p>
-              <p class="font-semibold text-slate-900">{{ formatCurrencyAmount(-2969) }}</p>
+              <p class="font-semibold text-slate-900">{{ formatCurrencyAmount(balance) }}</p>
             </div>
             <svg
               class="w-8 h-8 text-slate-600"
@@ -309,7 +309,8 @@ import ModalBase from '../components/ModalBase.vue'
 
 const router = useRouter()
 const modal = useModal()
-const { orders, products, rawMaterials } = useAppState()
+const { orders, products, rawMaterials, financialRecords, productionBatches, inventory } =
+  useAppState()
 const { checkMaterialWarnings, checkOrderWarnings, checkStockPrewarnings } =
   useWarningNotifications()
 
@@ -319,6 +320,41 @@ onMounted(() => {
     checkOrderWarnings(orders.value)
     checkStockPrewarnings(rawMaterials.value)
   }, 1000)
+})
+
+// Calculate dashboard metrics from real data
+const totalRevenue = computed(() => {
+  return orders.value.reduce((sum, order) => sum + order.totalAmount, 0)
+})
+
+const activeOrders = computed(() => {
+  return orders.value.filter((o) => o.status === 'принят' || o.status === 'в производстве').length
+})
+
+const totalInventory = computed(() => {
+  return inventory.value.reduce((sum, item) => sum + item.quantity, 0)
+})
+
+const productionCount = computed(() => {
+  return productionBatches.value
+    .filter((b) => b.status === 'completed')
+    .reduce((sum, b) => sum + b.quantity, 0)
+})
+
+const totalIncome = computed(() => {
+  return financialRecords.value
+    .filter((r) => r.type === 'income')
+    .reduce((sum, r) => sum + r.amount, 0)
+})
+
+const totalExpense = computed(() => {
+  return financialRecords.value
+    .filter((r) => r.type === 'expense')
+    .reduce((sum, r) => sum + r.amount, 0)
+})
+
+const balance = computed(() => {
+  return totalIncome.value - totalExpense.value
 })
 
 const recentOrders = computed(() => orders.value.slice(0, 3))

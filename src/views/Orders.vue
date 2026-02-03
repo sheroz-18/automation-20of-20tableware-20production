@@ -421,7 +421,7 @@ import ModalBase from '../components/ModalBase.vue'
 import type { Order } from '../types'
 
 const modal = useModal()
-const { orders } = useAppState()
+const { orders, financialRecords, products, productionBatches } = useAppState()
 const { addNotification } = useNotification()
 
 const searchQuery = ref('')
@@ -513,6 +513,67 @@ const openCreateOrderModal = () => {
   modal.openCreateModal('order')
 }
 
+const createFinancialRecord = (order: Order, type: 'income' | 'expense') => {
+  const existingRecord = financialRecords.value.find(
+    (r) => r.reference === order.orderNumber && r.type === type,
+  )
+
+  if (!existingRecord) {
+    const newRecord = {
+      id: `fin-${Date.now()}`,
+      date: new Date().toISOString().split('T')[0],
+      description:
+        type === 'income'
+          ? `Заказ ${order.orderNumber} доставлен`
+          : `Расходы на заказ ${order.orderNumber}`,
+      type: type,
+      amount: order.totalAmount,
+      category: 'Продажи',
+      reference: order.orderNumber,
+    }
+    financialRecords.value.push(newRecord)
+  }
+}
+
+const createProductionBatches = (order: Order) => {
+  // Create a production batch for each unique product in the order
+  order.items.forEach((item) => {
+    const existingBatch = productionBatches.value.find(
+      (b) => b.productId === item.productId && b.status !== 'completed',
+    )
+
+    if (!existingBatch) {
+      const product = products.value.find((p) => p.id === item.productId)
+      const newBatchNumber = `BATCH-${new Date().getFullYear()}-${String(productionBatches.value.length + 1).padStart(3, '0')}`
+
+      const stages = [
+        { stageNumber: 1, stageName: 'подготовка сырья', completed: false },
+        { stageNumber: 2, stageName: 'формовка', completed: false },
+        { stageNumber: 3, stageName: 'обжиг/обработка', completed: false },
+        { stageNumber: 4, stageName: 'упаковка', completed: false },
+        { stageNumber: 5, stageName: 'готовность', completed: false },
+      ]
+
+      const newBatch = {
+        id: `batch-${Date.now()}-${item.productId}`,
+        batchNumber: newBatchNumber,
+        productId: item.productId,
+        productName: item.productName,
+        quantity: item.quantity,
+        status: 'in_progress',
+        startDate: new Date().toISOString().split('T')[0],
+        endDate: '',
+        createdDate: new Date().toISOString().split('T')[0],
+        category: product?.category || '',
+        currentStage: 1,
+        stages: stages,
+      }
+
+      productionBatches.value.push(newBatch)
+    }
+  })
+}
+
 const saveOrder = () => {
   try {
     if (!formData.value.orderNumber?.trim()) {
@@ -531,10 +592,17 @@ const saveOrder = () => {
     if (modal.isEditModal.value && modal.selectedItem.value) {
       const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
       if (index !== -1) {
+        const oldStatus = orders.value[index].status
         orders.value[index] = {
           ...modal.selectedItem.value,
           ...formData.value,
         } as Order
+
+        // If order is now complete/shipped, create a financial record
+        if (formData.value.status === 'отправлен' && oldStatus !== 'отправлен') {
+          createFinancialRecord(orders.value[index], 'income')
+        }
+
         addNotification('success', 'Успешно', 'Заказ обновлен')
       }
     } else if (modal.isCreateModal.value) {
@@ -550,6 +618,17 @@ const saveOrder = () => {
         items: formData.value.items || [],
       }
       orders.value.push(newOrder)
+
+      // Create production batches if order has items
+      if (newOrder.items && newOrder.items.length > 0) {
+        createProductionBatches(newOrder)
+      }
+
+      // If order is created with 'отправлен' status, create financial record
+      if (newOrder.status === 'отправлен') {
+        createFinancialRecord(newOrder, 'income')
+      }
+
       addNotification('success', 'Успешно', 'Заказ создан')
     }
     modal.closeModal()

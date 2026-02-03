@@ -4,25 +4,33 @@
       <div class="max-w-7xl mx-auto px-3 sm:px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <div
-            class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0"
+            class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center flex-shrink-0"
           >
             <svg
               class="w-5 h-5 sm:w-6 sm:h-6 text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              stroke-width="2"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19.428 15.428a2 2 0 00-1.414-.586h-.028a2 2 0 00-1.414.586m0 0L21 21m-2.428-2.428l6.868-6.868a2 2 0 00-2.828-2.828l-6.868 6.868m0 0L9 12m0 0l2.428 2.428m0 0l6.868-6.868"
-              />
+              <!-- Plate circle -->
+              <circle cx="12" cy="12" r="8" stroke-linecap="round" stroke-linejoin="round" />
+              <!-- Fork tines -->
+              <line x1="9" y1="8" x2="9" y2="16" stroke-linecap="round" />
+              <line x1="11" y1="8" x2="11" y2="16" stroke-linecap="round" />
+              <line x1="13" y1="8" x2="13" y2="16" stroke-linecap="round" />
+              <!-- Fork handle -->
+              <line x1="11" y1="16" x2="11" y2="18" stroke-linecap="round" />
+              <!-- Spoon -->
+              <circle cx="16" cy="9" r="2" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="16" y1="11" x2="16" y2="18" stroke-linecap="round" />
             </svg>
           </div>
           <div class="min-w-0">
-            <h1 class="text-lg sm:text-xl font-bold text-slate-900 truncate">ProduceFlow</h1>
-            <p class="text-xs text-slate-500 hidden sm:block">Автоматизация производства посуды</p>
+            <h1 class="text-lg sm:text-xl font-bold text-slate-900 truncate">ПосудаПро</h1>
+            <p class="text-xs text-slate-500 hidden sm:block">
+              Управление производством кухонной утвари
+            </p>
           </div>
         </div>
 
@@ -110,7 +118,7 @@
       <div class="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 mb-8">
           <div>
-            <h3 class="font-semibold text-slate-900 mb-4">ProduceFlow</h3>
+            <h3 class="font-semibold text-slate-900 mb-4">ПосудаПро</h3>
             <p class="text-sm text-slate-600">
               Полная автоматизация производства посуды и кухонной утвари
             </p>
@@ -144,7 +152,7 @@
           class="border-t border-slate-200 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4"
         >
           <p class="text-xs sm:text-sm text-slate-600 text-center sm:text-left">
-            &copy; 2024 ProduceFlow. Все права защищены.
+            &copy; 2024 ПосудаПро. Все права защищены.
           </p>
           <div class="flex gap-4 sm:gap-6">
             <a href="#" class="text-slate-600 hover:text-blue-600">
@@ -167,8 +175,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useNotification } from './composables/useNotification'
+import { useAppState } from './composables/useAppState'
 import NotificationToast from './components/NotificationToast.vue'
 import NotificationPanel from './components/NotificationPanel.vue'
+
+// Initialize app state (loads data from localStorage on startup)
+useAppState()
 
 const { getUnreadCount } = useNotification()
 const showNotificationPanel = ref(false)
