@@ -597,9 +597,9 @@ const saveOrder = () => {
           ...formData.value,
         } as Order
 
-        // If order is now complete/shipped, create a financial record
-        if (formData.value.status === 'отправлен' && oldStatus !== 'отправлен') {
-          createFinancialRecord(orders.value[index], 'income')
+        // If order status changes to 'получен', create income record
+        if (formData.value.status === 'получен' && oldStatus !== 'получен') {
+          createFinancialRecord(orders.value[index])
         }
 
         addNotification('success', 'Успешно', 'Заказ обновлен')
