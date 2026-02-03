@@ -527,25 +527,10 @@ const openCreateOrderModal = () => {
   modal.openCreateModal('order')
 }
 
-const createFinancialRecord = (order: Order, type: 'income' | 'expense') => {
-  const existingRecord = financialRecords.value.find(
-    (r) => r.reference === order.orderNumber && r.type === type,
-  )
-
-  if (!existingRecord) {
-    const newRecord = {
-      id: `fin-${Date.now()}`,
-      date: new Date().toISOString().split('T')[0],
-      description:
-        type === 'income'
-          ? `Заказ ${order.orderNumber} доставлен`
-          : `Расходы на заказ ${order.orderNumber}`,
-      type: type,
-      amount: order.totalAmount,
-      category: 'Продажи',
-      reference: order.orderNumber,
-    }
-    financialRecords.value.push(newRecord)
+const createFinancialRecord = (order: Order) => {
+  // Only create income record when order status is 'получен'
+  if (!transactionExists(order.orderNumber, 'income')) {
+    createIncomeTransaction(order.orderNumber, order.totalAmount, order.customerName)
   }
 }
 
