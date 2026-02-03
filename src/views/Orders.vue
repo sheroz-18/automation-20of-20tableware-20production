@@ -370,6 +370,7 @@
             <option value="в производстве">В производстве</option>
             <option value="на складе">На складе</option>
             <option value="отправлен">Отправлен</option>
+            <option value="получен">Получен (Оплачено)</option>
           </select>
         </div>
 
@@ -425,6 +426,7 @@ import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
 import { useNotification } from '../composables/useNotification'
 import { useOrderManagement } from '../composables/useOrderManagement'
+import { useFinancialTransaction } from '../composables/useFinancialTransaction'
 import { exportOrdersToCSV, exportOrdersToPrint, exportInvoiceToXLSX } from '../utils/exportUtils'
 import { formatCurrencyAmount } from '../utils/currency'
 import ModalBase from '../components/ModalBase.vue'
@@ -434,6 +436,8 @@ const modal = useModal()
 const { orders, financialRecords, products, productionBatches } = useAppState()
 const { addNotification } = useNotification()
 const { markOrderAsReceived } = useOrderManagement()
+const { createIncomeTransaction, transactionExists, deleteTransactionsByReference } =
+  useFinancialTransaction()
 
 const searchQuery = ref('')
 const statusFilter = ref('')
@@ -524,25 +528,10 @@ const openCreateOrderModal = () => {
   modal.openCreateModal('order')
 }
 
-const createFinancialRecord = (order: Order, type: 'income' | 'expense') => {
-  const existingRecord = financialRecords.value.find(
-    (r) => r.reference === order.orderNumber && r.type === type,
-  )
-
-  if (!existingRecord) {
-    const newRecord = {
-      id: `fin-${Date.now()}`,
-      date: new Date().toISOString().split('T')[0],
-      description:
-        type === 'income'
-          ? `Заказ ${order.orderNumber} доставлен`
-          : `Расходы на заказ ${order.orderNumber}`,
-      type: type,
-      amount: order.totalAmount,
-      category: 'Продажи',
-      reference: order.orderNumber,
-    }
-    financialRecords.value.push(newRecord)
+const createFinancialRecord = (order: Order) => {
+  // Only create income record when order status is 'получен'
+  if (!transactionExists(order.orderNumber, 'income')) {
+    createIncomeTransaction(order.orderNumber, order.totalAmount, order.customerName)
   }
 }
 
@@ -609,9 +598,9 @@ const saveOrder = () => {
           ...formData.value,
         } as Order
 
-        // If order is now complete/shipped, create a financial record
-        if (formData.value.status === 'отправлен' && oldStatus !== 'отправлен') {
-          createFinancialRecord(orders.value[index], 'income')
+        // If order status changes to 'получен', create income record
+        if (formData.value.status === 'получен' && oldStatus !== 'получен') {
+          createFinancialRecord(orders.value[index])
         }
 
         addNotification('success', 'Успешно', 'Заказ обновлен')
@@ -635,9 +624,9 @@ const saveOrder = () => {
         createProductionBatches(newOrder)
       }
 
-      // If order is created with 'отправлен' status, create financial record
-      if (newOrder.status === 'отправлен') {
-        createFinancialRecord(newOrder, 'income')
+      // If order is created with 'получен' status, create income record
+      if (newOrder.status === 'получен') {
+        createFinancialRecord(newOrder)
       }
 
       addNotification('success', 'Успешно', 'Заказ создан')
@@ -654,6 +643,8 @@ const deleteOrder = () => {
     const index = orders.value.findIndex((o) => o.id === modal.selectedItem.value?.id)
     if (index !== -1) {
       const orderNumber = modal.selectedItem.value?.orderNumber
+      // Remove corresponding financial records
+      deleteTransactionsByReference(orderNumber!)
       orders.value.splice(index, 1)
       addNotification('success', 'Успешно', `Заказ ${orderNumber} удален`)
     }
@@ -700,15 +691,24 @@ const exportToPdf = () => {
 }
 
 const completeOrder = (order: Order) => {
-  const success = markOrderAsReceived(order.id)
-  if (success) {
-    addNotification(
-      'success',
-      `Заказ ${order.orderNumber} завершён`,
-      `Сумма ${formatCurrencyAmount(order.totalAmount)} добавлена в доходы`,
-    )
-  } else {
-    addNotification('error', 'Ошибка', 'Не удалось завершить заказ')
+  const index = orders.value.findIndex((o) => o.id === order.id)
+  if (index === -1) {
+    addNotification('error', 'Ошибка', 'Заказ не найден')
+    return
   }
+
+  // Update order status
+  orders.value[index].status = 'получен'
+
+  // Create income transaction if not exists
+  if (!transactionExists(order.orderNumber, 'income')) {
+    createIncomeTransaction(order.orderNumber, order.totalAmount, order.customerName)
+  }
+
+  addNotification(
+    'success',
+    `Заказ ${order.orderNumber} завершён`,
+    `Сумма ${formatCurrencyAmount(order.totalAmount)} добавлена в доходы`,
+  )
 }
 </script>

@@ -321,11 +321,13 @@
 import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
+import { useFinancialTransaction } from '../composables/useFinancialTransaction'
 import ModalBase from '../components/ModalBase.vue'
 import type { InventoryItem } from '../types'
 
 const modal = useModal()
 const { inventory, products } = useAppState()
+const { createInventoryExpense, createTransaction } = useFinancialTransaction()
 
 const searchQuery = ref('')
 const statusFilter = ref('')
@@ -418,10 +420,24 @@ const saveInventory = () => {
         products.value.push(newProduct)
         newItem.productId = newProduct.id
       }
+
+      // Create financial record for new inventory
+      const product = products.value.find((p) => p.id === newItem.productId)
+      if (product && product.unitCost > 0 && (formData.value.quantity || 0) > 0) {
+        createInventoryExpense(
+          newItem.productName,
+          formData.value.quantity || 0,
+          product.unitCost,
+          `INV-${newItem.id}`,
+        )
+      }
     } else if (modal.isEditModal.value && modal.selectedItem.value) {
       const index = inventory.value.findIndex((i) => i.id === modal.selectedItem.value?.id)
       if (index !== -1) {
+        const oldQuantity = inventory.value[index].quantity
         const newQuantity = formData.value.quantity || 0
+        const quantityDifference = newQuantity - oldQuantity
+
         inventory.value[index] = {
           ...modal.selectedItem.value,
           ...formData.value,
@@ -433,6 +449,7 @@ const saveInventory = () => {
             (p) => p.id === inventory.value[index].productId,
           )
           if (prodIndex !== -1) {
+            const product = products.value[prodIndex]
             products.value[prodIndex].quantity = newQuantity
             products.value[prodIndex].status =
               newQuantity === 0
@@ -440,6 +457,28 @@ const saveInventory = () => {
                 : newQuantity < products.value[prodIndex].reorderLevel
                   ? 'low_stock'
                   : 'in_stock'
+
+            // Create financial record for inventory change
+            if (quantityDifference !== 0 && product.unitCost > 0) {
+              if (quantityDifference < 0) {
+                // Quantity decreased - record as expense
+                createInventoryExpense(
+                  inventory.value[index].productName,
+                  Math.abs(quantityDifference),
+                  product.unitCost,
+                  `INV-${inventory.value[index].id}-${Date.now()}`,
+                )
+              } else {
+                // Quantity increased - record as income (stock in)
+                createTransaction({
+                  description: `Приход товара: ${inventory.value[index].productName} (${quantityDifference} ед.)`,
+                  type: 'income',
+                  amount: quantityDifference * product.unitCost,
+                  category: 'Производство',
+                  reference: `INV-${inventory.value[index].id}-${Date.now()}`,
+                })
+              }
+            }
           }
         }
       }

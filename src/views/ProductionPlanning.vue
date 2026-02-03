@@ -349,11 +349,14 @@
 import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
+import { useFinancialTransaction } from '../composables/useFinancialTransaction'
 import ModalBase from '../components/ModalBase.vue'
 import type { ProductionBatch, ProductionStage } from '../types'
 
 const modal = useModal()
-const { products, productionBatches } = useAppState()
+const { products, productionBatches, rawMaterials } = useAppState()
+const { createProductionExpense, transactionExists, deleteTransactionsByReference } =
+  useFinancialTransaction()
 
 const searchQuery = ref('')
 const statusFilter = ref('')
@@ -415,6 +418,16 @@ const openViewModal = (batch: ProductionBatch, type: any) => {
   modal.openViewModal(batch, type)
 }
 
+const calculateProductionCost = (productId: string, quantity: number): number => {
+  // Calculate estimated production cost based on product unit cost and quantity
+  const product = products.value.find((p) => p.id === productId)
+  if (!product) return 0
+
+  // Estimate production cost as 40% of product unit cost (covers materials and labor)
+  const estimatedUnitCost = product.unitCost * 0.4
+  return estimatedUnitCost * quantity
+}
+
 const saveBatch = () => {
   try {
     if (!formData.value.batchNumber?.trim()) {
@@ -454,9 +467,19 @@ const saveBatch = () => {
         stages: initializeStages(),
       }
       productionBatches.value.push(newBatch)
+
+      // Create production expense record when batch is created
+      const productionCost = calculateProductionCost(
+        formData.value.productId,
+        formData.value.quantity || 0,
+      )
+      if (productionCost > 0) {
+        createProductionExpense(newBatch.batchNumber, productionCost, newBatch.productName)
+      }
     } else if (modal.isEditModal.value && modal.selectedItem.value) {
       const index = productionBatches.value.findIndex((b) => b.id === modal.selectedItem.value?.id)
       if (index !== -1) {
+        const oldStatus = productionBatches.value[index].status
         const selectedProduct = products.value.find((p) => p.id === formData.value.productId)
         productionBatches.value[index] = {
           ...modal.selectedItem.value,
@@ -464,6 +487,21 @@ const saveBatch = () => {
           productName: selectedProduct?.name || modal.selectedItem.value.productName,
           category: selectedProduct?.category || modal.selectedItem.value.category,
         } as ProductionBatch
+
+        // If batch status changed to 'completed', create additional completion record
+        if (formData.value.status === 'completed' && oldStatus !== 'completed') {
+          const completionCost = calculateProductionCost(
+            formData.value.productId || modal.selectedItem.value.productId,
+            0.1,
+          )
+          if (completionCost > 0) {
+            createProductionExpense(
+              productionBatches.value[index].batchNumber,
+              completionCost,
+              `${productionBatches.value[index].productName} (финализация)`,
+            )
+          }
+        }
       }
     }
     modal.closeModal()
@@ -476,6 +514,9 @@ const deleteBatch = () => {
   try {
     const index = productionBatches.value.findIndex((b) => b.id === modal.selectedItem.value?.id)
     if (index !== -1) {
+      const batchNumber = productionBatches.value[index].batchNumber
+      // Remove corresponding financial records
+      deleteTransactionsByReference(batchNumber)
       productionBatches.value.splice(index, 1)
     }
     modal.closeModal()
