@@ -8,16 +8,22 @@
           >
             <svg
               class="w-5 h-5 sm:w-6 sm:h-6 text-white"
-              fill="currentColor"
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
+              stroke-width="2"
             >
-              <!-- Plate with fork and spoon -->
-              <circle cx="12" cy="12" r="9" stroke="white" stroke-width="1.5" fill="none"/>
-              <!-- Fork -->
-              <path d="M8 8V16M7.5 8H8.5M7 10H9M7 12H9M7 14H9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Plate circle -->
+              <circle cx="12" cy="12" r="8" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Fork tines -->
+              <line x1="9" y1="8" x2="9" y2="16" stroke-linecap="round"/>
+              <line x1="11" y1="8" x2="11" y2="16" stroke-linecap="round"/>
+              <line x1="13" y1="8" x2="13" y2="16" stroke-linecap="round"/>
+              <!-- Fork handle -->
+              <line x1="11" y1="16" x2="11" y2="18" stroke-linecap="round"/>
               <!-- Spoon -->
-              <ellipse cx="15" cy="8.5" rx="1.5" ry="2" fill="white"/>
-              <path d="M15 10.5V16" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="16" cy="9" r="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="16" y1="11" x2="16" y2="18" stroke-linecap="round"/>
             </svg>
           </div>
           <div class="min-w-0">
