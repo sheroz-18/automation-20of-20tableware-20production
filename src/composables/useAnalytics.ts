@@ -7,7 +7,10 @@ export function useAnalytics() {
 
   // Прибыль по типам товара
   const profitByProduct = computed(() => {
-    const productProfits: Record<string, { name: string; revenue: number; cost: number; profit: number }> = {}
+    const productProfits: Record<
+      string,
+      { name: string; revenue: number; cost: number; profit: number }
+    > = {}
 
     // Считаем доход по товарам
     orders.value.forEach((order) => {
@@ -43,11 +46,12 @@ export function useAnalytics() {
   // Рентабельность по партиям
   const batchProfitability = computed(() => {
     return productionBatches.value.map((batch) => {
-      const cost = (batch.quantity * (products.value.find((p) => p.id === batch.productId)?.unitCost || 0))
+      const cost =
+        batch.quantity * (products.value.find((p) => p.id === batch.productId)?.unitCost || 0)
 
       // Находим связанные заказы
       const relatedOrderItems = orders.value.flatMap((order) =>
-        order.items.filter((item) => item.productId === batch.productId)
+        order.items.filter((item) => item.productId === batch.productId),
       )
 
       const revenue = relatedOrderItems.reduce((sum, item) => sum + item.subtotal, 0)
@@ -76,7 +80,9 @@ export function useAnalytics() {
     return orders.value.map((order) => {
       const dueDate = new Date(order.dueDate)
       const createdDate = new Date(order.createdDate)
-      const daysPlanned = Math.ceil((dueDate.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24))
+      const daysPlanned = Math.ceil(
+        (dueDate.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24),
+      )
 
       let daysUsed = daysPlanned
       let onTime = true
@@ -108,32 +114,36 @@ export function useAnalytics() {
 
   // Скорость оборота товара (turnover rate)
   const inventoryTurnover = computed(() => {
-    return products.value.map((product) => {
-      // Количество продано в этот период
-      const unitsSold = orders.value
-        .flatMap((order) => order.items)
-        .filter((item) => item.productId === product.id)
-        .reduce((sum, item) => sum + item.quantity, 0)
+    return products.value
+      .map((product) => {
+        // Количество продано в этот период
+        const unitsSold = orders.value
+          .flatMap((order) => order.items)
+          .filter((item) => item.productId === product.id)
+          .reduce((sum, item) => sum + item.quantity, 0)
 
-      // Средний запас
-      const currentInventory = inventory.value.find((inv) => inv.productId === product.id)?.quantity || product.quantity
+        // Средний запас
+        const currentInventory =
+          inventory.value.find((inv) => inv.productId === product.id)?.quantity || product.quantity
 
-      // Скорость оборота (раз в период)
-      const turnoverRate = currentInventory > 0 ? (unitsSold / currentInventory).toFixed(2) : '0'
+        // Скорость оборота (раз в период)
+        const turnoverRate = currentInventory > 0 ? (unitsSold / currentInventory).toFixed(2) : '0'
 
-      // Дни хранения = 365 / turnover rate
-      const daysInStock = parseFloat(turnoverRate) > 0 ? (365 / parseFloat(turnoverRate)).toFixed(0) : '0'
+        // Дни хранения = 365 / turnover rate
+        const daysInStock =
+          parseFloat(turnoverRate) > 0 ? (365 / parseFloat(turnoverRate)).toFixed(0) : '0'
 
-      return {
-        productName: product.name,
-        sku: product.sku,
-        unitsSold,
-        currentStock: currentInventory,
-        turnoverRate: parseFloat(turnoverRate),
-        daysInStock: parseInt(daysInStock),
-        category: product.category,
-      }
-    }).sort((a, b) => b.turnoverRate - a.turnoverRate)
+        return {
+          productName: product.name,
+          sku: product.sku,
+          unitsSold,
+          currentStock: currentInventory,
+          turnoverRate: parseFloat(turnoverRate),
+          daysInStock: parseInt(daysInStock),
+          category: product.category,
+        }
+      })
+      .sort((a, b) => b.turnoverRate - a.turnoverRate)
   })
 
   // Финансовые метрики

@@ -1,5 +1,8 @@
 <template>
-  <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div
+    v-if="isOpen"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
     <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
       <div class="p-6 border-b border-slate-200">
         <h2 class="text-lg font-semibold text-slate-900">Подтвердить очистку</h2>
@@ -7,8 +10,18 @@
 
       <div class="p-6 space-y-4">
         <div class="flex items-start gap-3">
-          <svg class="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4v2m0-12a9 9 0 110 18 9 9 0 010-18z" />
+          <svg
+            class="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 9v2m0 4v2m0-12a9 9 0 110 18 9 9 0 010-18z"
+            />
           </svg>
           <div>
             <p class="font-medium text-slate-900">{{ title }}</p>
@@ -25,7 +38,8 @@
 
         <div>
           <label class="text-sm font-medium text-slate-700 block mb-2">
-            Введите "<span class="font-bold text-red-600">{{ confirmText }}</span>" для подтверждения:
+            Введите "<span class="font-bold text-red-600">{{ confirmText }}</span
+            >" для подтверждения:
           </label>
           <input
             v-model="confirmInput"

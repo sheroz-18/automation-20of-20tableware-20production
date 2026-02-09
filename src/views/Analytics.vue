@@ -3,7 +3,9 @@
     <div class="flex items-center justify-between">
       <div>
         <h1 class="text-4xl font-bold text-slate-900">Отчёты и Аналитика</h1>
-        <p class="text-slate-600 mt-2">Анализ финансов, производительности и прибыльности в реальном времени</p>
+        <p class="text-slate-600 mt-2">
+          Анализ финансов, производительности и прибыльности в реальном времени
+        </p>
       </div>
       <div class="flex gap-3">
         <button
@@ -11,7 +13,12 @@
           class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold transition flex items-center gap-2"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            />
           </svg>
           Экспорт Excel
         </button>
@@ -20,7 +27,12 @@
           class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition flex items-center gap-2"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            />
           </svg>
           Экспорт CSV
         </button>
@@ -29,7 +41,12 @@
           class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition flex items-center gap-2"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+            />
           </svg>
           Печать
         </button>
@@ -59,7 +76,9 @@
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <p class="text-sm text-slate-600 mb-2">Выполнение сроков</p>
         <p class="text-3xl font-bold text-purple-600">{{ performanceMetrics.onTimeRate }}%</p>
-        <p class="text-xs text-slate-500 mt-2">Вовремя: {{ performanceMetrics.onTimeOrders }}/{{ performanceMetrics.totalOrders }}</p>
+        <p class="text-xs text-slate-500 mt-2">
+          Вовремя: {{ performanceMetrics.onTimeOrders }}/{{ performanceMetrics.totalOrders }}
+        </p>
       </div>
     </div>
 
@@ -94,7 +113,9 @@
               <p class="font-medium text-slate-900">{{ product.name }}</p>
               <p class="text-xs text-slate-500">Доход: ${{ product.revenue.toFixed(2) }}</p>
             </div>
-            <p class="font-bold text-red-600">{{ product.profit < 0 ? '-' : '' }}${{ Math.abs(product.profit).toFixed(2) }}</p>
+            <p class="font-bold text-red-600">
+              {{ product.profit < 0 ? '-' : '' }}${{ Math.abs(product.profit).toFixed(2) }}
+            </p>
           </div>
         </div>
       </div>
@@ -112,7 +133,9 @@
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Номер партии</th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Товар</th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Количество</th>
-              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Себестоимость</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">
+                Себестоимость
+              </th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Доход</th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Прибыль</th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Маржа</th>
@@ -184,10 +207,16 @@
             <tr class="border-b border-slate-200 bg-slate-50">
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Заказ</th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Клиент</th>
-              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Планирование (дн.)</th>
-              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Использовано (дн.)</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">
+                Планирование (дн.)
+              </th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">
+                Использовано (дн.)
+              </th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Статус</th>
-              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Просрочка (дн.)</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">
+                Просрочка (дн.)
+              </th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Сумма</th>
             </tr>
           </thead>
@@ -233,7 +262,9 @@
     <!-- Скорость оборота товара -->
     <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
       <div class="p-6 border-b border-slate-200">
-        <h3 class="text-lg font-semibold text-slate-900">Скорость оборота товара (Inventory Turnover)</h3>
+        <h3 class="text-lg font-semibold text-slate-900">
+          Скорость оборота товара (Inventory Turnover)
+        </h3>
         <p class="text-sm text-slate-600 mt-2">
           Показатель того, как часто товар продаётся и пополняется
         </p>
@@ -246,8 +277,12 @@
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">SKU</th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Категория</th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Продано</th>
-              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Текущий запас</th>
-              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Скорость оборота</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">
+                Текущий запас
+              </th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">
+                Скорость оборота
+              </th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900">Дни в запасе</th>
             </tr>
           </thead>
@@ -408,16 +443,7 @@ const exportToExcel = () => {
   const batchData = [
     ['РЕНТАБЕЛЬНОСТЬ ПАРТИЙ'],
     [''],
-    [
-      'Номер партии',
-      'Товар',
-      'Количество',
-      'Себестоимость',
-      'Доход',
-      'Прибыль',
-      'Маржа',
-      'Статус',
-    ],
+    ['Номер партии', 'Товар', 'Количество', 'Себестоимость', 'Доход', 'Прибыль', 'Маржа', 'Статус'],
     ...batchProfitability.value.map((batch) => [
       batch.batchNumber,
       batch.productName,
@@ -446,7 +472,15 @@ const exportToExcel = () => {
   const performanceData = [
     ['ВЫПОЛНЕНИЕ СРОКОВ ЗАКАЗОВ'],
     [''],
-    ['Заказ', 'Клиент', 'Планирование (дн.)', 'Использовано (дн.)', 'Статус', 'Просрочка (дн.)', 'Сумма'],
+    [
+      'Заказ',
+      'Клиент',
+      'Планирование (дн.)',
+      'Использовано (дн.)',
+      'Статус',
+      'Просрочка (дн.)',
+      'Сумма',
+    ],
     ...orderPerformance.value.map((order) => [
       order.orderNumber,
       order.customerName,
@@ -482,15 +516,17 @@ const exportToExcel = () => {
       'Скорость оборота',
       'Дни в запасе',
     ],
-    ...inventoryTurnover.value.slice(0, 15).map((item) => [
-      item.productName,
-      item.sku,
-      item.category,
-      item.unitsSold,
-      item.currentStock,
-      item.turnoverRate,
-      item.daysInStock,
-    ]),
+    ...inventoryTurnover.value
+      .slice(0, 15)
+      .map((item) => [
+        item.productName,
+        item.sku,
+        item.category,
+        item.unitsSold,
+        item.currentStock,
+        item.turnoverRate,
+        item.daysInStock,
+      ]),
   ]
   const turnoverSheet = XLSX.utils.aoa_to_sheet(turnoverData)
   turnoverSheet['!cols'] = [
@@ -662,7 +698,7 @@ const printReport = () => {
               <td>$${batch.profit}</td>
               <td>${batch.profitMargin}%</td>
             </tr>
-          `
+          `,
             )
             .join('')}
         </table>
@@ -686,7 +722,7 @@ const printReport = () => {
               <td>${order.daysOverdue}</td>
               <td>$${order.totalAmount.toFixed(2)}</td>
             </tr>
-          `
+          `,
             )
             .join('')}
         </table>
