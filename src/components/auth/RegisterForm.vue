@@ -23,7 +23,7 @@
         v-model="email"
         type="email"
         required
-        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-black"
         placeholder="вы@пример.com"
       />
     </div>
@@ -37,7 +37,7 @@
         v-model="password"
         type="password"
         required
-        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-black"
         placeholder="Минимум 6 символов"
       />
       <p class="text-xs text-slate-500 mt-1">Минимум 6 символов</p>
@@ -52,7 +52,7 @@
         v-model="confirmPassword"
         type="password"
         required
-        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-black"
         placeholder="Повторите пароль"
       />
     </div>
