@@ -86,7 +86,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/admin/products',
     name: 'AdminProducts',
-    component: Products,
+    component: ProductManagementPage,
     meta: { requiresAdmin: true },
   },
   {
