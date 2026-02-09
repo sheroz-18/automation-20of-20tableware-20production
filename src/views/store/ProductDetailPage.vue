@@ -85,7 +85,7 @@
               v-model.number="quantity"
               type="number"
               min="1"
-              class="w-16 text-center border-l border-r border-slate-300 py-2 outline-none"
+              class="w-16 text-center border-l border-r border-slate-300 py-2 outline-none text-black"
             />
             <button
               @click="increaseQuantity"
