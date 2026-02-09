@@ -469,4 +469,21 @@ const getModalTitle = () => {
   if (modal.contentType.value === 'product') return 'Информация о товаре'
   return 'Информация'
 }
+
+// Data management
+const { clearAllData } = useDataManagement()
+const showClearModal = ref(false)
+
+const openClearModal = () => {
+  showClearModal.value = true
+}
+
+const handleClearConfirm = () => {
+  showClearModal.value = false
+  clearAllData()
+}
+
+const handleClearCancel = () => {
+  showClearModal.value = false
+}
 </script>
