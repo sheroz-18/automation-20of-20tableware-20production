@@ -22,6 +22,7 @@ import Finance from '../views/Finance.vue'
 import Analytics from '../views/Analytics.vue'
 import ProductionPlanning from '../views/ProductionPlanning.vue'
 import Warehouse from '../views/Warehouse.vue'
+import ProductManagementPage from '../views/admin/ProductManagementPage.vue'
 
 const routes: RouteRecordRaw[] = [
   {
