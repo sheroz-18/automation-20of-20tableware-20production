@@ -79,7 +79,7 @@ withDefaults(defineProps<Props>(), {
   confirmText: 'УДАЛИТЬ',
 })
 
-defineEmits<Emits>()
+const emit = defineEmits<Emits>()
 
 const confirmInput = ref('')
 
@@ -92,6 +92,4 @@ const onConfirm = () => {
   confirmInput.value = ''
   emit('confirm')
 }
-
-const emit = defineEmits<Emits>()
 </script>
