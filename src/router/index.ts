@@ -8,15 +8,15 @@ import RegisterPage from '../views/auth/RegisterPage.vue'
 // Store views
 import StorePage from '../views/store/StorePage.vue'
 
-// Admin views
-import Dashboard from '../views/admin/Dashboard.vue'
-import Inventory from '../views/admin/Inventory.vue'
-import Products from '../views/admin/Products.vue'
-import Orders from '../views/admin/Orders.vue'
-import Finance from '../views/admin/Finance.vue'
-import Analytics from '../views/admin/Analytics.vue'
-import ProductionPlanning from '../views/admin/ProductionPlanning.vue'
-import Warehouse from '../views/admin/Warehouse.vue'
+// Admin views (currently in root views folder, can be moved to admin subfolder later)
+import Dashboard from '../views/Dashboard.vue'
+import Inventory from '../views/Inventory.vue'
+import Products from '../views/Products.vue'
+import Orders from '../views/Orders.vue'
+import Finance from '../views/Finance.vue'
+import Analytics from '../views/Analytics.vue'
+import ProductionPlanning from '../views/ProductionPlanning.vue'
+import Warehouse from '../views/Warehouse.vue'
 
 const routes: RouteRecordRaw[] = [
   {
