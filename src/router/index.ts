@@ -7,6 +7,7 @@ import RegisterPage from '../views/auth/RegisterPage.vue'
 
 // Store views
 import StorePage from '../views/store/StorePage.vue'
+import CartPage from '../views/store/CartPage.vue'
 
 // Admin views (currently in root views folder, can be moved to admin subfolder later)
 import Dashboard from '../views/Dashboard.vue'
