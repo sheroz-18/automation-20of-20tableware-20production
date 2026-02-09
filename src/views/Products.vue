@@ -409,7 +409,9 @@
 import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
+import { useDataManagement } from '../composables/useDataManagement'
 import ModalBase from '../components/ModalBase.vue'
+import ConfirmClearModal from '../components/ConfirmClearModal.vue'
 import type { Product } from '../types'
 
 const modal = useModal()
