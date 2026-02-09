@@ -338,6 +338,7 @@
 
 <script setup lang="ts">
 import { useAnalytics } from '../composables/useAnalytics'
+import * as XLSX from 'xlsx'
 
 const {
   profitByProduct,
