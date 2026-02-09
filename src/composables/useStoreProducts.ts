@@ -297,3 +297,6 @@ export function useStoreProducts() {
     toggleProductPublished,
   }
 }
+
+// Re-export types
+export type { Product }
