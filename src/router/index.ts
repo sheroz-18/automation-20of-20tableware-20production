@@ -92,4 +92,29 @@ const router = createRouter({
   routes,
 })
 
+// Route guards for authentication
+router.beforeEach((to, from, next) => {
+  const { isLoggedIn, isAdmin } = useAuth()
+
+  if (to.meta.requiresAdmin) {
+    if (!isAdmin()) {
+      next('/login')
+      return
+    }
+  }
+
+  if (to.meta.requiresAuth && !isLoggedIn()) {
+    next('/login')
+    return
+  }
+
+  // Redirect authenticated users away from auth pages
+  if ((to.path === '/login' || to.path === '/register') && isLoggedIn()) {
+    next('/store')
+    return
+  }
+
+  next()
+})
+
 export default router
