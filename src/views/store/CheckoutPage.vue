@@ -50,7 +50,7 @@
               <input
                 v-model="shippingInfo.name"
                 type="text"
-                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-black"
                 placeholder="Иван Петров"
               />
             </div>
@@ -60,7 +60,7 @@
               <input
                 v-model="shippingInfo.phone"
                 type="tel"
-                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-black"
                 placeholder="+992 XX XXX XX XX"
               />
             </div>
@@ -70,7 +70,7 @@
               <input
                 v-model="shippingInfo.address"
                 type="text"
-                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-black"
                 placeholder="ул. Центральная, д. 10, кв. 5"
               />
             </div>
@@ -80,7 +80,7 @@
               <select
                 v-model="shippingInfo.regionId"
                 @change="selectRegionHandler"
-                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white"
+                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-black"
               >
                 <option value="">Выберите регион</option>
                 <option v-for="region in regions" :key="region.id" :value="region.id">
