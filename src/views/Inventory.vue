@@ -325,6 +325,15 @@
         </div>
       </div>
     </ModalBase>
+
+    <ConfirmClearModal
+      :is-open="showClearModal"
+      title="Очистить ВСЕ инвентаризацию?"
+      message="Это удалит все записи инвентаризации из системы. Данные о товарах останутся, но инвентаризация будет полностью очищена."
+      confirm-text="УДАЛИТЬ"
+      @confirm="handleClearConfirm"
+      @cancel="handleClearCancel"
+    />
   </div>
 </template>
 
