@@ -1,53 +1,89 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Dashboard from '../views/Dashboard.vue'
-import Inventory from '../views/Inventory.vue'
-import Products from '../views/Products.vue'
-import Orders from '../views/Orders.vue'
-import Finance from '../views/Finance.vue'
-import Analytics from '../views/Analytics.vue'
-import ProductionPlanning from '../views/ProductionPlanning.vue'
-import Warehouse from '../views/Warehouse.vue'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { useAuth } from '@/composables/useAuth'
 
-const routes = [
+// Auth views
+import LoginPage from '../views/auth/LoginPage.vue'
+import RegisterPage from '../views/auth/RegisterPage.vue'
+
+// Store views
+import StorePage from '../views/store/StorePage.vue'
+
+// Admin views
+import Dashboard from '../views/admin/Dashboard.vue'
+import Inventory from '../views/admin/Inventory.vue'
+import Products from '../views/admin/Products.vue'
+import Orders from '../views/admin/Orders.vue'
+import Finance from '../views/admin/Finance.vue'
+import Analytics from '../views/admin/Analytics.vue'
+import ProductionPlanning from '../views/admin/ProductionPlanning.vue'
+import Warehouse from '../views/admin/Warehouse.vue'
+
+const routes: RouteRecordRaw[] = [
   {
-    path: '/',
-    name: 'Dashboard',
+    path: '/login',
+    name: 'Login',
+    component: LoginPage,
+    meta: { layout: 'auth' },
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterPage,
+    meta: { layout: 'auth' },
+  },
+  {
+    path: '/store',
+    name: 'Store',
+    component: StorePage,
+    meta: { requiresAuth: false },
+  },
+  {
+    path: '/admin',
+    name: 'AdminDashboard',
     component: Dashboard,
+    meta: { requiresAdmin: true },
   },
   {
-    path: '/inventory',
-    name: 'Inventory',
+    path: '/admin/inventory',
+    name: 'AdminInventory',
     component: Inventory,
+    meta: { requiresAdmin: true },
   },
   {
-    path: '/products',
-    name: 'Products',
+    path: '/admin/products',
+    name: 'AdminProducts',
     component: Products,
+    meta: { requiresAdmin: true },
   },
   {
-    path: '/orders',
-    name: 'Orders',
+    path: '/admin/orders',
+    name: 'AdminOrders',
     component: Orders,
+    meta: { requiresAdmin: true },
   },
   {
-    path: '/finance',
-    name: 'Finance',
+    path: '/admin/finance',
+    name: 'AdminFinance',
     component: Finance,
+    meta: { requiresAdmin: true },
   },
   {
-    path: '/analytics',
-    name: 'Analytics',
+    path: '/admin/analytics',
+    name: 'AdminAnalytics',
     component: Analytics,
+    meta: { requiresAdmin: true },
   },
   {
-    path: '/production-planning',
-    name: 'ProductionPlanning',
+    path: '/admin/production-planning',
+    name: 'AdminProductionPlanning',
     component: ProductionPlanning,
+    meta: { requiresAdmin: true },
   },
   {
-    path: '/warehouse',
-    name: 'Warehouse',
+    path: '/admin/warehouse',
+    name: 'AdminWarehouse',
     component: Warehouse,
+    meta: { requiresAdmin: true },
   },
 ]
 
