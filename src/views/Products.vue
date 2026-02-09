@@ -594,4 +594,21 @@ const getStatusLabel = (status: string) => {
 const getProgressPercent = (quantity: number, reorderLevel: number) => {
   return Math.min((quantity / (reorderLevel * 2)) * 100, 100)
 }
+
+// Data management
+const { clearProducts } = useDataManagement()
+const showClearModal = ref(false)
+
+const openClearProductsModal = () => {
+  showClearModal.value = true
+}
+
+const handleClearConfirm = () => {
+  showClearModal.value = false
+  clearProducts()
+}
+
+const handleClearCancel = () => {
+  showClearModal.value = false
+}
 </script>
