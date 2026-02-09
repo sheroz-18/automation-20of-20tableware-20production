@@ -39,6 +39,12 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: false },
   },
   {
+    path: '/cart',
+    name: 'Cart',
+    component: CartPage,
+    meta: { requiresAuth: false },
+  },
+  {
     path: '/admin',
     name: 'AdminDashboard',
     component: Dashboard,
