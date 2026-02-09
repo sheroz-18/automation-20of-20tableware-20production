@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue'
-import { Product } from './useStoreProducts'
+import type { Product } from './useStoreProducts'
 
 export interface CartItem {
   productId: string
