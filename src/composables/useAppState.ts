@@ -1,4 +1,4 @@
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import {
   orders as mockOrders,
   products as mockProducts,
