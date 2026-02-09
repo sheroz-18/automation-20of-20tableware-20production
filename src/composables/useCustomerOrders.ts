@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue'
-import { CartItem } from './useCart'
+import type { CartItem } from './useCart'
 
 export interface ShippingAddress {
   name: string
