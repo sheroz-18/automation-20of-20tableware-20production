@@ -141,14 +141,14 @@
             v-model="searchQuery"
             type="text"
             placeholder="Введите название товара..."
-            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-slate-900 placeholder-slate-500 font-medium"
+            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-black placeholder-slate-500 font-medium"
           />
         </div>
         <div>
           <label class="block text-sm font-semibold text-slate-700 mb-2">Категория</label>
           <select
             v-model="selectedCategory"
-            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-slate-900 font-medium cursor-pointer"
+            class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-black font-medium cursor-pointer"
           >
             <option value="">Все категории</option>
             <option v-for="cat in categories" :key="cat" :value="cat">
