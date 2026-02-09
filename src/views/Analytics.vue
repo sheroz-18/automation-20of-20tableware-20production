@@ -379,22 +379,32 @@ const getTurnoverBadge = (turnover: number) => {
 const exportToCSV = () => {
   const timestamp = new Date().toLocaleDateString('ru-RU')
 
+  // Функция для экранирования CSV значений
+  const escapeCSV = (value: string | number): string => {
+    const stringValue = String(value)
+    // Если значение содержит запятую, кавычку или новую строку, оборачиваем в кавычки
+    if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
+      return `"${stringValue.replace(/"/g, '""')}"`
+    }
+    return stringValue
+  }
+
   // Подготовка данных для CSV
   let csvContent = 'ОТЧЁТ АНАЛИТИКИ\n'
   csvContent += `Дата: ${timestamp}\n\n`
 
   // Финансовые метрики
   csvContent += 'ФИНАНСОВЫЕ МЕТРИКИ\n'
-  csvContent += `Общий доход,${financialMetrics.totalIncome}\n`
-  csvContent += `Общие расходы,${financialMetrics.totalExpense}\n`
-  csvContent += `Прибыль,${financialMetrics.profit}\n`
-  csvContent += `Маржа прибыли,%,${financialMetrics.profitMargin}\n\n`
+  csvContent += `Общий доход,${escapeCSV(financialMetrics.totalIncome)}\n`
+  csvContent += `Общие расходы,${escapeCSV(financialMetrics.totalExpense)}\n`
+  csvContent += `Прибыль,${escapeCSV(financialMetrics.profit)}\n`
+  csvContent += `Маржа прибыли,%,${escapeCSV(financialMetrics.profitMargin)}\n\n`
 
   // Таблица рентабельности партий
   csvContent += 'РЕНТАБЕЛЬНОСТЬ ПАРТИЙ\n'
   csvContent += 'Номер партии,Товар,Количество,Себестоимость,Доход,Прибыль,Маржа\n'
   batchProfitability.value.forEach((batch) => {
-    csvContent += `${batch.batchNumber},${batch.productName},${batch.quantity},${batch.cost},${batch.revenue},${batch.profit},${batch.profitMargin}%\n`
+    csvContent += `${escapeCSV(batch.batchNumber)},${escapeCSV(batch.productName)},${escapeCSV(batch.quantity)},${escapeCSV(batch.cost)},${escapeCSV(batch.revenue)},${escapeCSV(batch.profit)},${escapeCSV(batch.profitMargin)}%\n`
   })
   csvContent += '\n'
 
@@ -402,7 +412,8 @@ const exportToCSV = () => {
   csvContent += 'ВЫПОЛНЕНИЕ СРОКОВ ЗАКАЗОВ\n'
   csvContent += 'Заказ,Клиент,Планирование,Использовано,Статус,Просрочка,Сумма\n'
   orderPerformance.value.forEach((order) => {
-    csvContent += `${order.orderNumber},${order.customerName},${order.daysPlanned},${order.daysUsed},${order.onTime ? 'Вовремя' : 'Просрочка'},${order.daysOverdue},$${order.totalAmount.toFixed(2)}\n`
+    const status = order.onTime ? 'Вовремя' : 'Просрочка'
+    csvContent += `${escapeCSV(order.orderNumber)},${escapeCSV(order.customerName)},${escapeCSV(order.daysPlanned)},${escapeCSV(order.daysUsed)},${escapeCSV(status)},${escapeCSV(order.daysOverdue)},$${escapeCSV(order.totalAmount.toFixed(2))}\n`
   })
   csvContent += '\n'
 
@@ -410,17 +421,20 @@ const exportToCSV = () => {
   csvContent += 'СКОРОСТЬ ОБОРОТА ТОВАРА\n'
   csvContent += 'Товар,SKU,Категория,Продано,Текущий запас,Скорость оборота,Дни в запасе\n'
   inventoryTurnover.value.slice(0, 15).forEach((item) => {
-    csvContent += `${item.productName},${item.sku},${item.category},${item.unitsSold},${item.currentStock},${item.turnoverRate.toFixed(2)}x,${item.daysInStock}\n`
+    csvContent += `${escapeCSV(item.productName)},${escapeCSV(item.sku)},${escapeCSV(item.category)},${escapeCSV(item.unitsSold)},${escapeCSV(item.currentStock)},${escapeCSV(item.turnoverRate.toFixed(2))}x,${escapeCSV(item.daysInStock)}\n`
   })
 
-  // Загрузка файла
-  const element = document.createElement('a')
-  element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent))
-  element.setAttribute('download', `analytics-report-${timestamp}.csv`)
-  element.style.display = 'none'
-  document.body.appendChild(element)
-  element.click()
-  document.body.removeChild(element)
+  // Загрузка файла с правильной кодировкой UTF-8
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+  const link = document.createElement('a')
+  const url = URL.createObjectURL(blob)
+  link.setAttribute('href', url)
+  link.setAttribute('download', `analytics-report-${timestamp}.csv`)
+  link.style.display = 'none'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  URL.revokeObjectURL(url)
 }
 
 const printReport = () => {
