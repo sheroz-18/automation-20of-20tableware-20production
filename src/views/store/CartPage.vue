@@ -95,7 +95,7 @@
                     :value="item.quantity"
                     @change="(e) => updateQuantity(item.productId, parseInt(e.target.value))"
                     min="1"
-                    class="w-12 text-center border border-slate-300 rounded py-1 text-sm"
+                    class="w-12 text-center border border-slate-300 rounded py-1 text-sm text-black"
                   />
                   <button
                     @click="updateQuantity(item.productId, item.quantity + 1)"
