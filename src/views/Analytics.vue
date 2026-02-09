@@ -445,6 +445,7 @@ const printReport = () => {
     let htmlContent = `
       <html>
       <head>
+        <meta charset="UTF-8">
         <title>Отчёт аналитики</title>
         <style>
           body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
