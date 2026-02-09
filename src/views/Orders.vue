@@ -438,9 +438,11 @@ import { useAppState } from '../composables/useAppState'
 import { useNotification } from '../composables/useNotification'
 import { useOrderManagement } from '../composables/useOrderManagement'
 import { useFinancialTransaction } from '../composables/useFinancialTransaction'
+import { useDataManagement } from '../composables/useDataManagement'
 import { exportOrdersToCSV, exportOrdersToPrint, exportInvoiceToXLSX } from '../utils/exportUtils'
 import { formatCurrencyAmount } from '../utils/currency'
 import ModalBase from '../components/ModalBase.vue'
+import ConfirmClearModal from '../components/ConfirmClearModal.vue'
 import type { Order } from '../types'
 
 const modal = useModal()
