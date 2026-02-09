@@ -79,7 +79,7 @@
               <label class="block text-sm font-medium text-slate-700 mb-1">Регион доставки</label>
               <select
                 v-model="shippingInfo.regionId"
-                @change="selectRegion"
+                @change="selectRegionHandler"
                 class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white"
               >
                 <option value="">Выберите регион</option>
