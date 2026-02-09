@@ -109,3 +109,6 @@ export function useCart() {
     getCartItems,
   }
 }
+
+// Re-export types
+export type { CartItem }
