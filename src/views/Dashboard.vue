@@ -317,16 +317,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
 import { useWarningNotifications } from '../composables/useWarningNotifications'
 import { useOrderManagement } from '../composables/useOrderManagement'
 import { useNotification } from '../composables/useNotification'
+import { useDataManagement } from '../composables/useDataManagement'
 import { formatCurrencyAmount } from '../utils/currency'
 import MetricCard from '../components/MetricCard.vue'
 import ModalBase from '../components/ModalBase.vue'
+import ConfirmClearModal from '../components/ConfirmClearModal.vue'
 import type { Order } from '../types'
 
 const router = useRouter()
