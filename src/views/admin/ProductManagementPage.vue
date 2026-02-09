@@ -13,7 +13,7 @@
           v-model="searchQuery"
           type="text"
           placeholder="Поиск товара..."
-          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
+          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-black"
         />
       </div>
       <div class="flex gap-3">
