@@ -272,6 +272,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useNotification } from './composables/useNotification'
 import { useAppState } from './composables/useAppState'
 import { useAuth } from './composables/useAuth'
+import { useCart } from './composables/useCart'
 import NotificationToast from './components/NotificationToast.vue'
 import NotificationPanel from './components/NotificationPanel.vue'
 
@@ -282,6 +283,7 @@ const route = useRoute()
 useAppState()
 const { getUnreadCount } = useNotification()
 const { isLoggedIn, isAdmin: checkIsAdmin, currentUser, logout } = useAuth()
+const { itemCount: cartItemCount } = useCart()
 
 const showNotificationPanel = ref(false)
 const showUserMenu = ref(false)
