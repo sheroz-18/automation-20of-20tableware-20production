@@ -724,4 +724,21 @@ const completeOrder = (order: Order) => {
     `Сумма ${formatCurrencyAmount(order.totalAmount)} добавлена в доходы`,
   )
 }
+
+// Data management
+const { clearOrders } = useDataManagement()
+const showClearModal = ref(false)
+
+const openClearOrdersModal = () => {
+  showClearModal.value = true
+}
+
+const handleClearConfirm = () => {
+  showClearModal.value = false
+  clearOrders()
+}
+
+const handleClearCancel = () => {
+  showClearModal.value = false
+}
 </script>
