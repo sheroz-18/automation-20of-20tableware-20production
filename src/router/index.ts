@@ -36,9 +36,19 @@ const routes: RouteRecordRaw[] = [
     meta: { layout: 'auth' },
   },
   {
+    path: '/',
+    redirect: '/store',
+  },
+  {
     path: '/store',
     name: 'Store',
     component: StorePage,
+    meta: { requiresAuth: false },
+  },
+  {
+    path: '/store/product/:id',
+    name: 'ProductDetail',
+    component: ProductDetailPage,
     meta: { requiresAuth: false },
   },
   {
