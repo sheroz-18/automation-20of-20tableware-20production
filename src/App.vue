@@ -1,18 +1,20 @@
 <template>
-  <div class="min-h-screen bg-slate-50">
+  <div v-if="isAuthPage" class="w-full">
+    <router-view />
+  </div>
+
+  <div v-else class="min-h-screen bg-slate-50 flex flex-col">
+    <!-- Navbar -->
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
       <div class="max-w-7xl mx-auto px-3 sm:px-6 py-4 flex items-center justify-between">
-        <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+        <!-- Logo -->
+        <router-link to="/store" class="flex items-center gap-2 sm:gap-3 flex-shrink-0 hover:opacity-80 transition">
           <div
             class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0 relative overflow-hidden shadow-md"
           >
-            <!-- Modern elegant dishware logo -->
             <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" viewBox="0 0 24 24">
-              <!-- Abstract elegant plate silhouette -->
               <ellipse cx="12" cy="12" rx="8" ry="7.5" fill="currentColor" opacity="0.15" />
               <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.3" />
-
-              <!-- Elegant fork (left) -->
               <g transform="translate(5, 9)">
                 <path
                   d="M 2 0 L 2 4 M 3.5 0 L 3.5 4"
@@ -30,8 +32,6 @@
                   stroke-linejoin="round"
                 />
               </g>
-
-              <!-- Modern knife (right) -->
               <g transform="translate(13, 8.5)">
                 <path
                   d="M 0.5 0 L 2 3 L 2.2 5 Q 1.2 5.5 0.5 5.5 Q 0.3 3.5 0.5 0"
@@ -51,38 +51,54 @@
                   stroke-linecap="round"
                 />
               </g>
-
-              <!-- Center dot accent -->
               <circle cx="12" cy="12" r="0.9" fill="currentColor" opacity="0.7" />
             </svg>
           </div>
           <div class="min-w-0">
             <h1 class="text-lg sm:text-xl font-bold text-slate-900 truncate">ПосудаПро</h1>
-            <p class="text-xs text-slate-500 hidden sm:block">
-              Управление производством кухонной утвари
-            </p>
+            <p class="text-xs text-slate-500 hidden sm:block">{{ headerSubtitle }}</p>
           </div>
-        </div>
+        </router-link>
 
+        <!-- Navigation and user menu -->
         <div class="flex items-center gap-2 sm:gap-8">
+          <!-- Admin/Store nav -->
           <div class="hidden lg:flex gap-1">
-            <router-link
-              v-for="nav in navItems"
-              :key="nav.path"
-              :to="nav.path"
-              :class="[
-                'px-3 py-2 text-sm rounded-lg font-medium transition-colors whitespace-nowrap',
-                $route.path === nav.path
-                  ? 'bg-blue-100 text-blue-700'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100',
-              ]"
-            >
-              {{ nav.label }}
-            </router-link>
+            <template v-if="isAdmin">
+              <router-link
+                v-for="nav in adminNavItems"
+                :key="nav.path"
+                :to="nav.path"
+                :class="[
+                  'px-3 py-2 text-sm rounded-lg font-medium transition-colors whitespace-nowrap',
+                  $route.path === nav.path || $route.path.startsWith(nav.path + '/')
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100',
+                ]"
+              >
+                {{ nav.label }}
+              </router-link>
+            </template>
+            <template v-else>
+              <router-link
+                to="/store"
+                :class="[
+                  'px-3 py-2 text-sm rounded-lg font-medium transition-colors whitespace-nowrap',
+                  $route.path === '/store'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100',
+                ]"
+              >
+                Магазин
+              </router-link>
+            </template>
           </div>
 
+          <!-- Right side buttons -->
           <div class="flex items-center gap-1 sm:gap-3">
+            <!-- Notifications (admin only) -->
             <button
+              v-if="isAdmin"
               @click="showNotificationPanel = !showNotificationPanel"
               class="relative p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
               :class="{ 'bg-blue-100 text-blue-700': showNotificationPanel }"
@@ -97,31 +113,63 @@
                 />
               </svg>
               <span
-                v-if="unreadCount > 0"
+                v-if="isAdmin && unreadCount > 0"
                 class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"
               ></span>
             </button>
 
-            <button
-              class="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
-              title="Настройки"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                />
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-            </button>
+            <!-- User menu -->
+            <div class="relative">
+              <button
+                @click="showUserMenu = !showUserMenu"
+                class="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+                title="Профиль"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </button>
 
+              <!-- User dropdown menu -->
+              <div
+                v-if="showUserMenu"
+                class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 z-10"
+              >
+                <div class="px-4 py-3 border-b border-slate-200">
+                  <p class="text-sm font-semibold text-slate-900">{{ currentUser?.name }}</p>
+                  <p class="text-xs text-slate-600">{{ currentUser?.email }}</p>
+                  <p v-if="isAdmin" class="text-xs text-blue-600 font-semibold">Администратор</p>
+                  <p v-else class="text-xs text-slate-600">Покупатель</p>
+                </div>
+                <button
+                  v-if="isAdmin"
+                  @click="goToAdmin"
+                  class="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition"
+                >
+                  Админ-панель
+                </button>
+                <button
+                  v-if="!isAdmin"
+                  @click="goToStore"
+                  class="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition"
+                >
+                  Магазин
+                </button>
+                <button
+                  @click="handleLogout"
+                  class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition border-t border-slate-200"
+                >
+                  Выход
+                </button>
+              </div>
+            </div>
+
+            <!-- Mobile menu button -->
             <button
               class="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg lg:hidden transition-colors"
               title="Меню"
@@ -140,41 +188,41 @@
       </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
+    <!-- Main content -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-6 py-6 sm:py-8">
       <router-view />
     </main>
 
-    <footer class="border-t border-slate-200 mt-12 sm:mt-16 bg-white">
+    <!-- Footer -->
+    <footer v-if="!isAdmin" class="border-t border-slate-200 mt-12 sm:mt-16 bg-white">
       <div class="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 mb-8">
           <div>
             <h3 class="font-semibold text-slate-900 mb-4">ПосудаПро</h3>
-            <p class="text-sm text-slate-600">
-              Полная автоматизация производства посуды и кухонной утвари
-            </p>
+            <p class="text-sm text-slate-600">Премиум посуда и кухонная утварь высокого качества</p>
           </div>
           <div>
             <h4 class="font-semibold text-slate-900 mb-4">Продукт</h4>
             <ul class="space-y-2 text-sm text-slate-600">
-              <li><a href="#" class="hover:text-blue-600">Особенности</a></li>
-              <li><a href="#" class="hover:text-blue-600">Цены</a></li>
-              <li><a href="#" class="hover:text-blue-600">Демо</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-semibold text-slate-900 mb-4">Компания</h4>
-            <ul class="space-y-2 text-sm text-slate-600">
+              <li><a href="#" class="hover:text-blue-600">Каталог</a></li>
+              <li><a href="#" class="hover:text-blue-600">Специальные предложения</a></li>
               <li><a href="#" class="hover:text-blue-600">О нас</a></li>
-              <li><a href="#" class="hover:text-blue-600">Блог</a></li>
-              <li><a href="#" class="hover:text-blue-600">Контакты</a></li>
             </ul>
           </div>
           <div>
-            <h4 class="font-semibold text-slate-900 mb-4">Поддержка</h4>
+            <h4 class="font-semibold text-slate-900 mb-4">Помощь</h4>
             <ul class="space-y-2 text-sm text-slate-600">
-              <li><a href="#" class="hover:text-blue-600">Справка</a></li>
-              <li><a href="#" class="hover:text-blue-600">Документация</a></li>
-              <li><a href="#" class="hover:text-blue-600">API</a></li>
+              <li><a href="#" class="hover:text-blue-600">Доставка</a></li>
+              <li><a href="#" class="hover:text-blue-600">Возвраты</a></li>
+              <li><a href="#" class="hover:text-blue-600">FAQ</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-slate-900 mb-4">Контакты</h4>
+            <ul class="space-y-2 text-sm text-slate-600">
+              <li>Email: info@posudapro.tj</li>
+              <li>Телефон: +992 37 XXXXXX</li>
+              <li>г. Душанбе, Таджикистан</li>
             </ul>
           </div>
         </div>
@@ -184,46 +232,76 @@
           <p class="text-xs sm:text-sm text-slate-600 text-center sm:text-left">
             &copy; 2024 ПосудаПро. Все права защищены.
           </p>
-          <div class="flex gap-4 sm:gap-6">
-            <a href="#" class="text-slate-600 hover:text-blue-600">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
-                />
-              </svg>
-            </a>
-          </div>
         </div>
       </div>
     </footer>
 
-    <NotificationToast />
-    <NotificationPanel :is-open="showNotificationPanel" @close="showNotificationPanel = false" />
+    <!-- Notification components (admin only) -->
+    <NotificationToast v-if="isAdmin" />
+    <NotificationPanel v-if="isAdmin" :is-open="showNotificationPanel" @close="showNotificationPanel = false" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useNotification } from './composables/useNotification'
 import { useAppState } from './composables/useAppState'
+import { useAuth } from './composables/useAuth'
 import NotificationToast from './components/NotificationToast.vue'
 import NotificationPanel from './components/NotificationPanel.vue'
 
-// Initialize app state (loads data from localStorage on startup)
+const router = useRouter()
+const route = useRoute()
+
+// Initialize app state and auth
 useAppState()
-
 const { getUnreadCount } = useNotification()
-const showNotificationPanel = ref(false)
-const unreadCount = computed(() => getUnreadCount())
+const { isLoggedIn, isAdmin: checkIsAdmin, currentUser, logout } = useAuth()
 
-const navItems = [
-  { path: '/', label: 'Панель управления' },
-  { path: '/inventory', label: 'Инвентаризация' },
-  { path: '/products', label: 'Товары' },
-  { path: '/orders', label: 'Заказы' },
-  { path: '/finance', label: 'Финансы' },
-  { path: '/analytics', label: 'Аналитика' },
-  { path: '/production-planning', label: 'Производство' },
-  { path: '/warehouse', label: 'Склад' },
+const showNotificationPanel = ref(false)
+const showUserMenu = ref(false)
+const unreadCount = computed(() => getUnreadCount())
+const isAdmin = computed(() => checkIsAdmin())
+
+// Determine if we're on auth page
+const isAuthPage = computed(() => {
+  return route.path === '/login' || route.path === '/register'
+})
+
+// Header subtitle based on role
+const headerSubtitle = computed(() => {
+  if (isAdmin.value) {
+    return 'Управление производством'
+  }
+  return 'Премиум посуда и кухонная утварь'
+})
+
+// Navigation items for admin
+const adminNavItems = [
+  { path: '/admin', label: 'Дашборд' },
+  { path: '/admin/orders', label: 'Заказы' },
+  { path: '/admin/products', label: 'Товары' },
+  { path: '/admin/inventory', label: 'Склад' },
+  { path: '/admin/finance', label: 'Финансы' },
+  { path: '/admin/analytics', label: 'Аналитика' },
+  { path: '/admin/production-planning', label: 'Производство' },
+  { path: '/admin/warehouse', label: 'Хранилище' },
 ]
+
+const handleLogout = () => {
+  logout()
+  showUserMenu.value = false
+  router.push('/login')
+}
+
+const goToAdmin = () => {
+  router.push('/admin')
+  showUserMenu.value = false
+}
+
+const goToStore = () => {
+  router.push('/store')
+  showUserMenu.value = false
+}
 </script>
