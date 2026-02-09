@@ -1,4 +1,4 @@
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import {
   orders as mockOrders,
   products as mockProducts,
@@ -87,11 +87,10 @@ const initializeAppState = () => {
   isInitialized = true
 }
 
-export function useAppState() {
-  onMounted(() => {
-    initializeAppState()
-  })
+// Initialize synchronously when the module loads to ensure data is ready
+initializeAppState()
 
+export function useAppState() {
   return {
     products,
     orders,

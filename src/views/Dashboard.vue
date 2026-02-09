@@ -1,10 +1,26 @@
 <template>
   <div class="space-y-8">
-    <div>
-      <h1 class="text-4xl font-bold text-slate-900">Панель управления производством</h1>
-      <p class="text-slate-600 mt-2">
-        Контролируйте процесс производства посуды в реальном времени
-      </p>
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-4xl font-bold text-slate-900">Панель управления производством</h1>
+        <p class="text-slate-600 mt-2">
+          Контролируйте процесс производства посуды в реальном времени
+        </p>
+      </div>
+      <button
+        @click="openClearModal"
+        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-semibold transition flex items-center gap-2"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+          />
+        </svg>
+        Очистить все
+      </button>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -302,20 +318,31 @@
         </div>
       </div>
     </ModalBase>
+
+    <ConfirmClearModal
+      :is-open="showClearModal"
+      title="Очистить ВСЕ данные?"
+      message="Это удалит ВСЕ данные в системе: заказы, товары, финансовые записи, инвентаризацию и производство. Система вернется в исходное состояние."
+      confirm-text="УДАЛИТЬ"
+      @confirm="handleClearConfirm"
+      @cancel="handleClearCancel"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
 import { useWarningNotifications } from '../composables/useWarningNotifications'
 import { useOrderManagement } from '../composables/useOrderManagement'
 import { useNotification } from '../composables/useNotification'
+import { useDataManagement } from '../composables/useDataManagement'
 import { formatCurrencyAmount } from '../utils/currency'
 import MetricCard from '../components/MetricCard.vue'
 import ModalBase from '../components/ModalBase.vue'
+import ConfirmClearModal from '../components/ConfirmClearModal.vue'
 import type { Order } from '../types'
 
 const router = useRouter()
@@ -455,5 +482,22 @@ const getModalTitle = () => {
   if (modal.contentType.value === 'order') return 'Информация о заказе'
   if (modal.contentType.value === 'product') return 'Информация о товаре'
   return 'Информация'
+}
+
+// Data management
+const { clearAllData } = useDataManagement()
+const showClearModal = ref(false)
+
+const openClearModal = () => {
+  showClearModal.value = true
+}
+
+const handleClearConfirm = () => {
+  showClearModal.value = false
+  clearAllData()
+}
+
+const handleClearCancel = () => {
+  showClearModal.value = false
 }
 </script>

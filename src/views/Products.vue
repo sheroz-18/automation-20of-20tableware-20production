@@ -5,12 +5,28 @@
         <h1 class="text-4xl font-bold text-slate-900">Каталог товаров</h1>
         <p class="text-slate-600 mt-2">Управление ассортиментом продукции</p>
       </div>
-      <button
-        @click="openCreateModal('product')"
-        class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition"
-      >
-        + Новый товар
-      </button>
+      <div class="flex gap-3">
+        <button
+          @click="openCreateModal('product')"
+          class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition"
+        >
+          + Новый товар
+        </button>
+        <button
+          @click="openClearProductsModal"
+          class="px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-semibold transition flex items-center gap-2"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+            />
+          </svg>
+          Очистить
+        </button>
+      </div>
     </div>
 
     <div class="flex gap-4 flex-wrap">
@@ -391,6 +407,15 @@
         </div>
       </div>
     </ModalBase>
+
+    <ConfirmClearModal
+      :is-open="showClearModal"
+      title="Очистить ВСЕ товары?"
+      message="Это удалит все товары из системы, включая связанную инвентаризацию. Все партии производства, заказы и финансовые записи, созданные на основе этих товаров, останутся."
+      confirm-text="УДАЛИТЬ"
+      @confirm="handleClearConfirm"
+      @cancel="handleClearCancel"
+    />
   </div>
 </template>
 
@@ -398,7 +423,9 @@
 import { ref, computed } from 'vue'
 import { useModal } from '../composables/useModal'
 import { useAppState } from '../composables/useAppState'
+import { useDataManagement } from '../composables/useDataManagement'
 import ModalBase from '../components/ModalBase.vue'
+import ConfirmClearModal from '../components/ConfirmClearModal.vue'
 import type { Product } from '../types'
 
 const modal = useModal()
@@ -580,5 +607,22 @@ const getStatusLabel = (status: string) => {
 
 const getProgressPercent = (quantity: number, reorderLevel: number) => {
   return Math.min((quantity / (reorderLevel * 2)) * 100, 100)
+}
+
+// Data management
+const { clearProducts } = useDataManagement()
+const showClearModal = ref(false)
+
+const openClearProductsModal = () => {
+  showClearModal.value = true
+}
+
+const handleClearConfirm = () => {
+  showClearModal.value = false
+  clearProducts()
+}
+
+const handleClearCancel = () => {
+  showClearModal.value = false
 }
 </script>
