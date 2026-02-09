@@ -543,4 +543,21 @@ const getStatusLabel = (quantity: number) => {
   }
   return 'На складе'
 }
+
+// Data management
+const { clearInventory } = useDataManagement()
+const showClearModal = ref(false)
+
+const openClearInventoryModal = () => {
+  showClearModal.value = true
+}
+
+const handleClearConfirm = () => {
+  showClearModal.value = false
+  clearInventory()
+}
+
+const handleClearCancel = () => {
+  showClearModal.value = false
+}
 </script>
