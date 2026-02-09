@@ -428,6 +428,15 @@
         </div>
       </div>
     </ModalBase>
+
+    <ConfirmClearModal
+      :is-open="showClearModal"
+      title="Очистить ВСЕ заказы?"
+      message="Это удалит все заказы из системы. Все связанные партии производства и финансовые записи, созданные на основе этих заказов, останутся, но сами заказы будут удалены."
+      confirm-text="УДАЛИТЬ"
+      @confirm="handleClearConfirm"
+      @cancel="handleClearCancel"
+    />
   </div>
 </template>
 
