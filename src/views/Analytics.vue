@@ -386,6 +386,156 @@ const getTurnoverBadge = (turnover: number) => {
   return 'px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium font-semibold'
 }
 
+const exportToExcel = () => {
+  const timestamp = new Date().toLocaleDateString('ru-RU')
+  const workbook = XLSX.utils.book_new()
+
+  // Лист 1: Финансовые метрики
+  const financialData = [
+    ['ФИНАНСОВЫЕ МЕТРИКИ'],
+    [''],
+    ['Показатель', 'Значение'],
+    ['Общий доход', financialMetrics.totalIncome],
+    ['Общие расходы', financialMetrics.totalExpense],
+    ['Прибыль', financialMetrics.profit],
+    ['Маржа прибыли', financialMetrics.profitMargin + '%'],
+  ]
+  const financialSheet = XLSX.utils.aoa_to_sheet(financialData)
+  financialSheet['!cols'] = [{ wch: 25 }, { wch: 15 }]
+  XLSX.utils.book_append_sheet(workbook, financialSheet, 'Финансы')
+
+  // Лист 2: Рентабельность партий
+  const batchData = [
+    ['РЕНТАБЕЛЬНОСТЬ ПАРТИЙ'],
+    [''],
+    [
+      'Номер партии',
+      'Товар',
+      'Количество',
+      'Себестоимость',
+      'Доход',
+      'Прибыль',
+      'Маржа',
+      'Статус',
+    ],
+    ...batchProfitability.value.map((batch) => [
+      batch.batchNumber,
+      batch.productName,
+      batch.quantity,
+      parseFloat(batch.cost),
+      parseFloat(batch.revenue),
+      parseFloat(batch.profit),
+      parseFloat(batch.profitMargin),
+      batch.status,
+    ]),
+  ]
+  const batchSheet = XLSX.utils.aoa_to_sheet(batchData)
+  batchSheet['!cols'] = [
+    { wch: 15 },
+    { wch: 25 },
+    { wch: 12 },
+    { wch: 15 },
+    { wch: 15 },
+    { wch: 15 },
+    { wch: 12 },
+    { wch: 15 },
+  ]
+  XLSX.utils.book_append_sheet(workbook, batchSheet, 'Партии')
+
+  // Лист 3: Выполнение сроков
+  const performanceData = [
+    ['ВЫПОЛНЕНИЕ СРОКОВ ЗАКАЗОВ'],
+    [''],
+    ['Заказ', 'Клиент', 'Планирование (дн.)', 'Использовано (дн.)', 'Статус', 'Просрочка (дн.)', 'Сумма'],
+    ...orderPerformance.value.map((order) => [
+      order.orderNumber,
+      order.customerName,
+      order.daysPlanned,
+      order.daysUsed,
+      order.onTime ? 'Вовремя' : 'Просрочка',
+      order.daysOverdue,
+      order.totalAmount,
+    ]),
+  ]
+  const performanceSheet = XLSX.utils.aoa_to_sheet(performanceData)
+  performanceSheet['!cols'] = [
+    { wch: 15 },
+    { wch: 25 },
+    { wch: 15 },
+    { wch: 15 },
+    { wch: 12 },
+    { wch: 15 },
+    { wch: 12 },
+  ]
+  XLSX.utils.book_append_sheet(workbook, performanceSheet, 'Заказы')
+
+  // Лист 4: Оборот товара
+  const turnoverData = [
+    ['СКОРОСТЬ ОБОРОТА ТОВАРА'],
+    [''],
+    [
+      'Товар',
+      'SKU',
+      'Категория',
+      'Продано (шт)',
+      'Текущий запас (шт)',
+      'Скорость оборота',
+      'Дни в запасе',
+    ],
+    ...inventoryTurnover.value.slice(0, 15).map((item) => [
+      item.productName,
+      item.sku,
+      item.category,
+      item.unitsSold,
+      item.currentStock,
+      item.turnoverRate,
+      item.daysInStock,
+    ]),
+  ]
+  const turnoverSheet = XLSX.utils.aoa_to_sheet(turnoverData)
+  turnoverSheet['!cols'] = [
+    { wch: 25 },
+    { wch: 12 },
+    { wch: 15 },
+    { wch: 12 },
+    { wch: 15 },
+    { wch: 15 },
+    { wch: 12 },
+  ]
+  XLSX.utils.book_append_sheet(workbook, turnoverSheet, 'Оборот')
+
+  // Лист 5: Распределение расходов
+  const expenseData = [
+    ['РАСПРЕДЕЛЕНИЕ РАСХОДОВ'],
+    [''],
+    ['Категория', 'Сумма'],
+    ...Object.entries(financialMetrics.expensesByCategory).map(([category, amount]) => [
+      category,
+      amount,
+    ]),
+  ]
+  const expenseSheet = XLSX.utils.aoa_to_sheet(expenseData)
+  expenseSheet['!cols'] = [{ wch: 25 }, { wch: 15 }]
+  XLSX.utils.book_append_sheet(workbook, expenseSheet, 'Расходы')
+
+  // Лист 6: Распределение доходов
+  const incomeData = [
+    ['РАСПРЕДЕЛЕНИЕ ДОХОДОВ'],
+    [''],
+    ['Категория', 'Сумма'],
+    ...Object.entries(financialMetrics.incomeByCategory).map(([category, amount]) => [
+      category,
+      amount,
+    ]),
+  ]
+  const incomeSheet = XLSX.utils.aoa_to_sheet(incomeData)
+  incomeSheet['!cols'] = [{ wch: 25 }, { wch: 15 }]
+  XLSX.utils.book_append_sheet(workbook, incomeSheet, 'Доходы')
+
+  // Сохранение файла
+  XLSX.writeFile(workbook, `analytics-report-${timestamp}.xlsx`)
+}
+
 const exportToCSV = () => {
   const timestamp = new Date().toLocaleDateString('ru-RU')
 
