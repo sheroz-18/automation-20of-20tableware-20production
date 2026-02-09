@@ -98,7 +98,7 @@ interface Props {
   product: Product
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const router = useRouter()
 const { addToCart } = useCart()
@@ -111,8 +111,6 @@ const formatPrice = (price: number) => {
 const goToProduct = () => {
   router.push(`/store/product/${props.product.id}`)
 }
-
-const props = defineProps<Props>()
 
 const handleAddToCart = () => {
   isAdding.value = true
