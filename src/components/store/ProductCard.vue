@@ -4,7 +4,9 @@
     @click="goToProduct"
   >
     <!-- Product image -->
-    <div class="relative w-full h-48 bg-gradient-to-br from-slate-200 to-slate-300 overflow-hidden group">
+    <div
+      class="relative w-full h-48 bg-gradient-to-br from-slate-200 to-slate-300 overflow-hidden group"
+    >
       <img
         v-if="product.image"
         :src="product.image"

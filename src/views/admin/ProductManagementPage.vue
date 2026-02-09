@@ -7,7 +7,9 @@
     </div>
 
     <!-- Controls -->
-    <div class="bg-white rounded-lg shadow p-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+    <div
+      class="bg-white rounded-lg shadow p-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between"
+    >
       <div class="flex-1 max-w-md">
         <input
           v-model="searchQuery"
@@ -40,7 +42,12 @@
     <!-- Products table -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
       <div v-if="filteredProducts.length === 0" class="p-12 text-center">
-        <svg class="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          class="w-16 h-16 text-slate-300 mx-auto mb-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -49,7 +56,9 @@
           />
         </svg>
         <h2 class="text-xl font-semibold text-slate-900 mb-2">Товаров не найдено</h2>
-        <p class="text-slate-600">{{ showOnlyPublished ? 'Нет опубликованных товаров' : 'Добавьте первый товар' }}</p>
+        <p class="text-slate-600">
+          {{ showOnlyPublished ? 'Нет опубликованных товаров' : 'Добавьте первый товар' }}
+        </p>
       </div>
 
       <div v-else class="overflow-x-auto">
@@ -57,31 +66,45 @@
           <!-- Table header -->
           <thead class="bg-slate-50 border-b border-slate-200">
             <tr>
-              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900 w-40">Название</th>
-              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900 w-20">Категория</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900 w-40">
+                Название
+              </th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900 w-20">
+                Категория
+              </th>
               <th class="px-6 py-4 text-left text-sm font-semibold text-slate-900 w-20">Цена</th>
-              <th class="px-6 py-4 text-center text-sm font-semibold text-slate-900 w-20">В наличии</th>
-              <th class="px-6 py-4 text-center text-sm font-semibold text-slate-900 w-24">Статус</th>
-              <th class="px-6 py-4 text-right text-sm font-semibold text-slate-900 w-32">Действия</th>
+              <th class="px-6 py-4 text-center text-sm font-semibold text-slate-900 w-20">
+                В наличии
+              </th>
+              <th class="px-6 py-4 text-center text-sm font-semibold text-slate-900 w-24">
+                Статус
+              </th>
+              <th class="px-6 py-4 text-right text-sm font-semibold text-slate-900 w-32">
+                Действия
+              </th>
             </tr>
           </thead>
 
           <!-- Table body -->
           <tbody class="divide-y divide-slate-200">
-            <tr v-for="product in filteredProducts" :key="product.id" class="hover:bg-slate-50 transition">
+            <tr
+              v-for="product in filteredProducts"
+              :key="product.id"
+              class="hover:bg-slate-50 transition"
+            >
               <td class="px-6 py-4">
                 <div class="font-semibold text-slate-900">{{ product.name }}</div>
                 <p class="text-xs text-slate-600 mt-1">ID: {{ product.id }}</p>
               </td>
               <td class="px-6 py-4 text-slate-700">{{ product.category }}</td>
-              <td class="px-6 py-4 font-semibold text-slate-900">{{ formatPrice(product.price) }} сом</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">
+                {{ formatPrice(product.price) }} сом
+              </td>
               <td class="px-6 py-4 text-center">
                 <div
                   :class="[
                     'inline-block px-3 py-1 rounded-full text-sm font-semibold',
-                    product.inStock
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-red-100 text-red-700',
+                    product.inStock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700',
                   ]"
                 >
                   {{ product.inStock ? 'Есть' : 'Нет' }}
@@ -144,15 +167,21 @@
         <p class="text-sm text-blue-700 font-semibold mb-2">Всего товаров</p>
         <p class="text-3xl font-bold text-blue-900">{{ products.length }}</p>
       </div>
-      <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200">
+      <div
+        class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200"
+      >
         <p class="text-sm text-green-700 font-semibold mb-2">Опубликовано</p>
         <p class="text-3xl font-bold text-green-900">{{ publishedCount }}</p>
       </div>
-      <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-6 border border-yellow-200">
+      <div
+        class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-6 border border-yellow-200"
+      >
         <p class="text-sm text-yellow-700 font-semibold mb-2">В наличии</p>
         <p class="text-3xl font-bold text-yellow-900">{{ inStockCount }}</p>
       </div>
-      <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 border border-purple-200">
+      <div
+        class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 border border-purple-200"
+      >
         <p class="text-sm text-purple-700 font-semibold mb-2">Скрыто</p>
         <p class="text-3xl font-bold text-purple-900">{{ products.length - publishedCount }}</p>
       </div>
@@ -208,6 +237,8 @@ const deleteProduct = (productId: string) => {
 }
 
 const openAddProductForm = () => {
-  alert('Добавление новых товаров будет доступно в будущих версиях.\n\nПока вы можете использовать встроенные товары.')
+  alert(
+    'Добавление новых товаров будет доступно в будущих версиях.\n\nПока вы можете использовать встроенные товары.',
+  )
 }
 </script>

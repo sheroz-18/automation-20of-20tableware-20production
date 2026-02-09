@@ -1,11 +1,19 @@
 <template>
   <div class="space-y-8">
     <!-- Hero Banner with Animation -->
-    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 shadow-2xl">
+    <div
+      class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 shadow-2xl"
+    >
       <div class="absolute inset-0 opacity-20">
-        <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-        <div class="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-        <div class="absolute bottom-0 left-1/2 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+        <div
+          class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-3xl animate-blob"
+        ></div>
+        <div
+          class="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"
+        ></div>
+        <div
+          class="absolute bottom-0 left-1/2 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"
+        ></div>
       </div>
 
       <div class="relative px-6 sm:px-8 py-12 sm:py-16">
@@ -19,7 +27,8 @@
               Премиум посуда высочайшего качества
             </h1>
             <p class="text-lg text-blue-100 mb-6">
-              Выбирайте из огромного ассортимента кухонной утвари от ведущих производителей. Быстрая доставка по всему Таджикистану!
+              Выбирайте из огромного ассортимента кухонной утвари от ведущих производителей. Быстрая
+              доставка по всему Таджикистану!
             </p>
 
             <!-- Stats -->
@@ -48,9 +57,15 @@
 
           <!-- Image placeholder with animation -->
           <div class="relative h-96 hidden md:block">
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-400/30 to-blue-600/30 rounded-xl backdrop-blur-sm flex items-center justify-center animate-float">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-blue-400/30 to-blue-600/30 rounded-xl backdrop-blur-sm flex items-center justify-center animate-float"
+            >
               <div class="text-center">
-                <svg class="w-32 h-32 text-white/80 mx-auto mb-4 animate-spin-slow" fill="none" viewBox="0 0 24 24">
+                <svg
+                  class="w-32 h-32 text-white/80 mx-auto mb-4 animate-spin-slow"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
                   <ellipse cx="12" cy="12" rx="8" ry="7.5" fill="currentColor" opacity="0.15" />
                   <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.3" />
                   <g transform="translate(5, 9)">
@@ -101,34 +116,68 @@
 
     <!-- Delivery Info Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6 hover:shadow-lg transition">
+      <div
+        class="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6 hover:shadow-lg transition"
+      >
         <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
           <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+            />
           </svg>
         </div>
         <h3 class="text-lg font-bold text-slate-900 mb-2">Быстрая доставка</h3>
-        <p class="text-slate-600 text-sm">Доставка от 50 сом в любой регион Таджикистана. Сроки от 1 до 5 дней в зависимости от региона.</p>
+        <p class="text-slate-600 text-sm">
+          Доставка от 50 сом в любой регион Таджикистана. Сроки от 1 до 5 дней в зависимости от
+          региона.
+        </p>
       </div>
 
-      <div class="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-xl p-6 hover:shadow-lg transition">
+      <div
+        class="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-xl p-6 hover:shadow-lg transition"
+      >
         <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
           <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
         </div>
         <h3 class="text-lg font-bold text-slate-900 mb-2">Выгодные цены</h3>
-        <p class="text-slate-600 text-sm">Скидки и акции на популярные товары. Оптимальное соотношение цены и качества.</p>
+        <p class="text-slate-600 text-sm">
+          Скидки и акции на популярные товары. Оптимальное соотношение цены и качества.
+        </p>
       </div>
 
-      <div class="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-xl p-6 hover:shadow-lg transition">
+      <div
+        class="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-xl p-6 hover:shadow-lg transition"
+      >
         <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+          <svg
+            class="w-6 h-6 text-purple-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
+            />
           </svg>
         </div>
         <h3 class="text-lg font-bold text-slate-900 mb-2">Поддержка 24/7</h3>
-        <p class="text-slate-600 text-sm">Помощь и консультации доступны всегда. Мы помогаем с выбором товара и решаем любые вопросы.</p>
+        <p class="text-slate-600 text-sm">
+          Помощь и консультации доступны всегда. Мы помогаем с выбором товара и решаем любые
+          вопросы.
+        </p>
       </div>
     </div>
 
@@ -177,11 +226,7 @@
         <p class="text-slate-600">Самые востребованные товары нашего магазина</p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <ProductCard
-          v-for="product in featuredProducts"
-          :key="product.id"
-          :product="product"
-        />
+        <ProductCard v-for="product in featuredProducts" :key="product.id" :product="product" />
       </div>
     </div>
 
@@ -192,17 +237,21 @@
         <p class="text-slate-600">Найдено {{ filteredProducts.length }} товар(ов)</p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <ProductCard
-          v-for="product in filteredProducts"
-          :key="product.id"
-          :product="product"
-        />
+        <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" />
       </div>
     </div>
 
     <!-- No results -->
-    <div v-else-if="searchQuery !== '' || selectedCategory !== ''" class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border-2 border-dashed border-slate-300 p-12 text-center">
-      <svg class="w-20 h-20 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div
+      v-else-if="searchQuery !== '' || selectedCategory !== ''"
+      class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border-2 border-dashed border-slate-300 p-12 text-center"
+    >
+      <svg
+        class="w-20 h-20 text-slate-300 mx-auto mb-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -224,7 +273,8 @@
 
 <style scoped>
 @keyframes blob {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
   }
   33% {
@@ -236,7 +286,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -279,8 +330,13 @@ import { ref, computed } from 'vue'
 import { useStoreProducts } from '@/composables/useStoreProducts'
 import ProductCard from '@/components/store/ProductCard.vue'
 
-const { getPublishedProducts, getCategories, searchProducts, getProductsByCategory, getFeaturedProducts } =
-  useStoreProducts()
+const {
+  getPublishedProducts,
+  getCategories,
+  searchProducts,
+  getProductsByCategory,
+  getFeaturedProducts,
+} = useStoreProducts()
 
 const searchQuery = ref('')
 const selectedCategory = ref('')

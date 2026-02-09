@@ -8,11 +8,7 @@
     <!-- Steps indicator -->
     <div class="bg-white rounded-lg shadow p-6">
       <div class="flex items-center justify-between">
-        <div
-          v-for="(s, index) in steps"
-          :key="index"
-          class="flex flex-col items-center flex-1"
-        >
+        <div v-for="(s, index) in steps" :key="index" class="flex flex-col items-center flex-1">
           <div
             :class="[
               'w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 transition',
@@ -133,7 +129,9 @@
                 <p class="font-semibold text-slate-900">{{ item.name }}</p>
                 <p class="text-xs text-slate-600">x{{ item.quantity }}</p>
               </div>
-              <span class="font-semibold text-slate-900">{{ formatPrice(item.price * item.quantity) }} сом</span>
+              <span class="font-semibold text-slate-900"
+                >{{ formatPrice(item.price * item.quantity) }} сом</span
+              >
             </div>
           </div>
 
@@ -196,7 +194,14 @@ import { useAuth } from '@/composables/useAuth'
 
 const router = useRouter()
 const { items, total: subtotal, itemCount, clearCart } = useCart()
-const { getShippingRegions, getRegionById, selectRegion, getSelectedRegion, getShippingCost, validateShippingInfo } = useShipping()
+const {
+  getShippingRegions,
+  getRegionById,
+  selectRegion,
+  getSelectedRegion,
+  getShippingCost,
+  validateShippingInfo,
+} = useShipping()
 const { createOrder } = useCustomerOrders()
 const { currentUser } = useAuth()
 

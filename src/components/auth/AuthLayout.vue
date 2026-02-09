@@ -1,5 +1,7 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-blue-700 flex items-center justify-center p-4">
+  <div
+    class="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-blue-700 flex items-center justify-center p-4"
+  >
     <!-- Background pattern -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div
@@ -62,9 +64,7 @@
       </div>
 
       <!-- Title -->
-      <h1 class="text-2xl sm:text-3xl font-bold text-center text-slate-900 mb-2">
-        ПосудаПро
-      </h1>
+      <h1 class="text-2xl sm:text-3xl font-bold text-center text-slate-900 mb-2">ПосудаПро</h1>
       <p class="text-center text-slate-500 text-sm mb-8">
         {{ subtitle }}
       </p>

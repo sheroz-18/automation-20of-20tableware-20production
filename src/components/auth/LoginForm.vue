@@ -1,9 +1,7 @@
 <template>
   <form @submit.prevent="handleLogin" class="space-y-4">
     <div>
-      <label for="email" class="block text-sm font-medium text-slate-700 mb-1">
-        Email адрес
-      </label>
+      <label for="email" class="block text-sm font-medium text-slate-700 mb-1"> Email адрес </label>
       <input
         id="email"
         v-model="email"
@@ -15,9 +13,7 @@
     </div>
 
     <div>
-      <label for="password" class="block text-sm font-medium text-slate-700 mb-1">
-        Пароль
-      </label>
+      <label for="password" class="block text-sm font-medium text-slate-700 mb-1"> Пароль </label>
       <input
         id="password"
         v-model="password"

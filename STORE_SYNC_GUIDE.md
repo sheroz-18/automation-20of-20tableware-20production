@@ -5,6 +5,7 @@
 Все товары в магазине теперь управляются через **Админ-панель**.
 
 ### Данные хранятся в localStorage:
+
 ```
 localStorage['storeProducts'] - содержит все товары в JSON формате
 ```
@@ -12,9 +13,11 @@ localStorage['storeProducts'] - содержит все товары в JSON ф�
 ## Процесс синхронизации
 
 ### 1️⃣ Админ-панель управляет товарами
+
 **Маршрут:** `/admin/products`
 
 **Админ может:**
+
 - ✅ Просматривать все товары
 - ✅ Публиковать товары (они появляются в магазине)
 - ✅ Снимать товары с продажи (скрывать из магазина)
@@ -23,9 +26,11 @@ localStorage['storeProducts'] - содержит все товары в JSON ф�
 - 📊 Видеть статистику товаров
 
 ### 2️⃣ Магазин показывает только опубликованные товары
+
 **Маршрут:** `/store`
 
 **Покупатель видит:**
+
 - ✅ Только товары с `published: true`
 - ✅ Красивый каталог
 - ✅ Поиск и фильтрацию
@@ -34,7 +39,9 @@ localStorage['storeProducts'] - содержит все товары в JSON ф�
 ## Пошаговый сценарий
 
 ### Сценарий 1: Добавить товар в магазин
+
 1. Войдите с логином админа:
+
    - Email: `admin@posudapro.ru`
    - Пароль: `admin123`
 
@@ -51,6 +58,7 @@ localStorage['storeProducts'] - содержит все товары в JSON ф�
 7. Перейдите на `/store` и обновите страницу - товар появится/исчезнет!
 
 ### Сценарий 2: Скрыть товар из магазина
+
 1. Войдите как админ
 2. Перейдите на `/admin/products`
 3. Найдите товар в таблице
@@ -59,6 +67,7 @@ localStorage['storeProducts'] - содержит все товары в JSON ф�
 6. Товар исчезнет из магазина для покупателей
 
 ### Сценарий 3: Покупатель видит изменения
+
 1. Покупатель заходит на `/store`
 2. Видит только товары с `published: true`
 3. Может искать, фильтровать и покупать
@@ -68,28 +77,29 @@ localStorage['storeProducts'] - содержит все товары в JSON ф�
 
 ```typescript
 interface Product {
-  id: string              // Уникальный ID
-  name: string            // Название товара
-  category: string        // Категория
-  price: number           // Цена (в сомах)
-  oldPrice?: number       // Старая цена (скидка)
-  description: string     // Короткое описание
+  id: string // Уникальный ID
+  name: string // Название товара
+  category: string // Категория
+  price: number // Цена (в сомах)
+  oldPrice?: number // Старая цена (скидка)
+  description: string // Короткое описание
   longDescription: string // Полное описание
-  image: string           // URL изображения
-  inStock: boolean        // Есть ли в наличии
-  sku: string             // Артикул
-  material: string        // Материал
-  dimensions: string      // Размеры
-  weight: number          // Вес
-  rating: number          // Рейтинг (0-5)
-  reviewCount: number     // Количество отзывов
-  published: boolean      // ГЛАВНОЕ: Опубликован ли товар в магазине
+  image: string // URL изображения
+  inStock: boolean // Есть ли в наличии
+  sku: string // Артикул
+  material: string // Материал
+  dimensions: string // Размеры
+  weight: number // Вес
+  rating: number // Рейтинг (0-5)
+  reviewCount: number // Количество отзывов
+  published: boolean // ГЛАВНОЕ: Опубликован ли товар в магазине
 }
 ```
 
 ## Где находятся данные
 
 ### LocalStorage структура:
+
 ```javascript
 localStorage['storeProducts'] = [
   {
@@ -108,7 +118,7 @@ localStorage['storeProducts'] = [
     weight: 1.2,
     rating: 4.8,
     reviewCount: 156,
-    published: true  // ← КЛЮЧЕВОЕ ПОЛЕ!
+    published: true, // ← КЛЮЧЕВОЕ ПОЛЕ!
   },
   // ... ещё товары
 ]
@@ -120,25 +130,25 @@ localStorage['storeProducts'] = [
 const {
   // Получить только опубликованные товары
   getPublishedProducts(),  // → возвращает только товары с published: true
-  
+
   // Получить товар по ID
   getProductById(id),      // → Product | undefined
-  
+
   // Поиск по названию/описанию
   searchProducts(query),   // → Product[]
-  
+
   // Фильтр по категории
   getProductsByCategory(category), // → Product[]
-  
+
   // Получить все категории
   getCategories(),         // → string[]
-  
+
   // Популярные товары
   getFeaturedProducts(limit), // → Product[]
-  
+
   // Обновить товар
   updateProduct(id, updates), // → void
-  
+
   // ГЛАВНЫЙ МЕТОД: переключить публикацию
   toggleProductPublished(id), // → true/false
 } = useStoreProducts()
@@ -147,6 +157,7 @@ const {
 ## Интеграция с UI
 
 ### Админ-панель (/admin/products):
+
 ```vue
 <!-- Кнопка переключения статуса -->
 <button @click="togglePublish(product.id)">
@@ -155,6 +166,7 @@ const {
 ```
 
 ### Магазин (/store):
+
 ```typescript
 // Автоматически берёт только опубликованные товары
 const { getPublishedProducts } = useStoreProducts()
@@ -164,6 +176,7 @@ const products = getPublishedProducts() // [only published]
 ## Статистика в админ-панели
 
 Показывается 4 метрики:
+
 - **Всего товаров** - все товары в системе
 - **Опубликовано** - товары с `published: true`
 - **В наличии** - товары с `inStock: true`
@@ -172,12 +185,14 @@ const products = getPublishedProducts() // [only published]
 ## Будущие улучшения
 
 Сейчас реализовано:
+
 - ✅ Просмотр товаров
 - ✅ Публикация/скрытие товаров
 - ✅ Поиск и фильтрация
 - ✅ Статистика
 
 Можно добавить:
+
 - 📝 Редактирование товаров (форма)
 - ➕ Добавление новых товаров
 - 🗑️ Удаление товаров
@@ -200,6 +215,7 @@ const products = getPublishedProducts() // [only published]
 ## Отладка
 
 ### Проверить товары в консоли:
+
 ```javascript
 // В консоли браузера:
 JSON.parse(localStorage.getItem('storeProducts'))
@@ -207,6 +223,7 @@ JSON.parse(localStorage.getItem('storeProducts'))
 ```
 
 ### Очистить товары (вернуть демо):
+
 ```javascript
 localStorage.removeItem('storeProducts')
 // Перезагрузить страницу
@@ -215,6 +232,7 @@ localStorage.removeItem('storeProducts')
 ## Заключение
 
 Теперь Админ-панель полностью управляет товарами в магазине через:
+
 - ✅ Публикацию/снятие товаров
 - ✅ Управление статусом (опубликован/скрыт)
 - ✅ Синхронизацией через localStorage

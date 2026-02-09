@@ -8,7 +8,10 @@
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
       <div class="max-w-7xl mx-auto px-3 sm:px-6 py-4 flex items-center justify-between">
         <!-- Logo -->
-        <router-link to="/store" class="flex items-center gap-2 sm:gap-3 flex-shrink-0 hover:opacity-80 transition">
+        <router-link
+          to="/store"
+          class="flex items-center gap-2 sm:gap-3 flex-shrink-0 hover:opacity-80 transition"
+        >
           <div
             class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0 relative overflow-hidden shadow-md"
           >
@@ -262,7 +265,11 @@
 
     <!-- Notification components (admin only) -->
     <NotificationToast v-if="isAdmin" />
-    <NotificationPanel v-if="isAdmin" :is-open="showNotificationPanel" @close="showNotificationPanel = false" />
+    <NotificationPanel
+      v-if="isAdmin"
+      :is-open="showNotificationPanel"
+      @close="showNotificationPanel = false"
+    />
   </div>
 </template>
 

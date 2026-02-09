@@ -6,7 +6,12 @@
     </div>
 
     <div v-if="items.length === 0" class="bg-white rounded-lg shadow p-12 text-center">
-      <svg class="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg
+        class="w-16 h-16 text-slate-300 mx-auto mb-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -29,7 +34,9 @@
       <div class="lg:col-span-2 space-y-4">
         <div class="bg-white rounded-lg shadow overflow-hidden">
           <!-- Header -->
-          <div class="hidden sm:grid grid-cols-12 gap-4 px-6 py-4 border-b border-slate-200 bg-slate-50 font-semibold text-sm text-slate-700">
+          <div
+            class="hidden sm:grid grid-cols-12 gap-4 px-6 py-4 border-b border-slate-200 bg-slate-50 font-semibold text-sm text-slate-700"
+          >
             <div class="col-span-6">Товар</div>
             <div class="col-span-2 text-right">Цена</div>
             <div class="col-span-2 text-center">Кол-во</div>
@@ -52,7 +59,12 @@
                   class="w-16 h-16 object-cover rounded"
                 />
                 <div v-else class="w-16 h-16 bg-slate-200 rounded flex items-center justify-center">
-                  <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    class="w-8 h-8 text-slate-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -87,7 +99,12 @@
                     class="p-1 hover:bg-slate-200 rounded transition"
                   >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M20 12H4"
+                      />
                     </svg>
                   </button>
                   <input
@@ -120,7 +137,12 @@
                   class="p-1 hover:bg-slate-200 rounded transition"
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M20 12H4"
+                    />
                   </svg>
                 </button>
                 <input
@@ -148,7 +170,9 @@
               <!-- Total (mobile) -->
               <div class="col-span-6 sm:col-span-2 sm:hidden flex justify-between">
                 <span class="text-slate-600">Итого:</span>
-                <span class="font-bold text-slate-900">{{ formatPrice(item.price * item.quantity) }} сом</span>
+                <span class="font-bold text-slate-900"
+                  >{{ formatPrice(item.price * item.quantity) }} сом</span
+                >
               </div>
 
               <!-- Total (desktop) -->

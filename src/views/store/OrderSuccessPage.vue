@@ -4,7 +4,12 @@
       <!-- Success icon -->
       <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6">
         <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"
+          />
         </svg>
       </div>
 
@@ -25,26 +30,22 @@
         <!-- Order info -->
         <div class="space-y-4">
           <div>
-            <h3 class="text-sm font-semibold text-slate-700 uppercase mb-2">Информация о доставке</h3>
+            <h3 class="text-sm font-semibold text-slate-700 uppercase mb-2">
+              Информация о доставке
+            </h3>
             <div class="space-y-2 text-slate-600">
-              <p>
-                <strong>Имя:</strong> {{ order.shippingAddress.name }}
-              </p>
-              <p>
-                <strong>Телефон:</strong> {{ order.shippingAddress.phone }}
-              </p>
-              <p>
-                <strong>Адрес:</strong> {{ order.shippingAddress.address }}
-              </p>
-              <p>
-                <strong>Регион:</strong> {{ order.shippingAddress.regionName }}
-              </p>
+              <p><strong>Имя:</strong> {{ order.shippingAddress.name }}</p>
+              <p><strong>Телефон:</strong> {{ order.shippingAddress.phone }}</p>
+              <p><strong>Адрес:</strong> {{ order.shippingAddress.address }}</p>
+              <p><strong>Регион:</strong> {{ order.shippingAddress.regionName }}</p>
             </div>
           </div>
 
           <div>
             <h3 class="text-sm font-semibold text-slate-700 uppercase mb-2">Статус заказа</h3>
-            <div class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
+            <div
+              class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold"
+            >
               {{ getStatusLabel(order.status) }}
             </div>
           </div>
@@ -64,7 +65,9 @@
                 <p class="font-semibold text-slate-900">{{ item.name }}</p>
                 <p class="text-sm text-slate-600">x{{ item.quantity }}</p>
               </div>
-              <span class="font-semibold text-slate-900">{{ formatPrice(item.price * item.quantity) }} сом</span>
+              <span class="font-semibold text-slate-900"
+                >{{ formatPrice(item.price * item.quantity) }} сом</span
+              >
             </div>
           </div>
 
