@@ -10,6 +10,7 @@ import StorePage from '../views/store/StorePage.vue'
 import CartPage from '../views/store/CartPage.vue'
 import CheckoutPage from '../views/store/CheckoutPage.vue'
 import OrderSuccessPage from '../views/store/OrderSuccessPage.vue'
+import ProductDetailPage from '../views/store/ProductDetailPage.vue'
 
 // Admin views (currently in root views folder, can be moved to admin subfolder later)
 import Dashboard from '../views/Dashboard.vue'
